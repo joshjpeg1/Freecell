@@ -1,13 +1,29 @@
 package cs3500.hw02.card;
 
 /**
- * Created by josh_jpeg on 5/14/17.
+ * Represents all variations of Suits of a Card in a game of Freecell.
  */
 public enum Suit {
-  CLUBS("Clubs"), DIAMONDS("Diamonds"), HEARTS("Hearts"), SPADES("Spades");
+  CLUBS("♣"), DIAMONDS("♦"), HEARTS("♥"), SPADES("♠");
 
-  String value;
+  private String value;
+
+  /**
+   * Constructs a {@code Suit} object.
+   *
+   * @param value      the value of a suit
+   */
   Suit(String value) {
     this.value = value;
+  }
+
+  /**
+   * Returns a {@code Suit} as a String.
+   *
+   * @return the suit as a String
+   */
+  @Override
+  public String toString() {
+    return value;
   }
 }

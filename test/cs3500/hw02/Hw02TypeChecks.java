@@ -2,15 +2,13 @@ package cs3500.hw02;
 
 import java.util.List;
 
-import cs3500.hw02.PileType;
-
 /**
  * Do not modify this file. This file should compile correctly with your code!
  */
 public class Hw02TypeChecks {
 
   public static void main(String[] args) {
-    helper(new cs3500.hw02.FreecellModel());
+    helper(new FreecellModel());
   }
 
   private static <T> void helper(cs3500.hw02.FreecellOperations<T> model) {
