@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * This is the interface of the Freecell model. It is parameterized over the
- * card type
+ * slot type
  */
 public interface IFreeCellModel<K> {
 
@@ -38,12 +38,12 @@ public interface IFreeCellModel<K> {
           throws IllegalArgumentException;
 
   /**
-   * Move a card from the given source pile to the given destination pile, if
+   * Move a slot from the given source pile to the given destination pile, if
    * the move is valid.
    *
    * @param sourceType       the type of the source pile (see {@link PileType})
    * @param sourcePileNumber the pile number of the given type, starting at 0
-   * @param cardIndex        the index of the card to be moved from the source pile, starting at 0
+   * @param cardIndex        the index of the slot to be moved from the source pile, starting at 0
    * @param destType         the type of the destination pile (see {@link PileType})
    * @param destPileNumber   the pile number of the given type, starting at 0
    * @throws IllegalArgumentException if the move is not possible

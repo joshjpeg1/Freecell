@@ -1,14 +1,14 @@
 package cs3500.hw02;
 
-import cs3500.hw02.card.Card;
+import cs3500.hw02.slot.ASlot;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by josh_jpeg on 5/14/17.
- */
+/** Tests for {@link FreecellModel}. */
 public class FreecellModelTest {
   FreecellModel fcm = new FreecellModel();
 
@@ -49,14 +49,14 @@ public class FreecellModelTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void startGameTooLargeDeck() {
-    List<Card> deck = fcm.getDeck();
+    List<ASlot> deck = fcm.getDeck();
     deck.add(deck.get(0));
     fcm.startGame(deck, 6, 2, true);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void startGameDuplicatesInDeck() {
-    List<Card> deck = fcm.getDeck();
+    List<ASlot> deck = fcm.getDeck();
     deck.remove(deck.size() - 1);
     deck.add(deck.get(0));
     fcm.startGame(deck, 6, 2, true);

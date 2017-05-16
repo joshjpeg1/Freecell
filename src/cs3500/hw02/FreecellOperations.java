@@ -4,19 +4,20 @@ import java.util.List;
 
 /**
  * This is the interface of the Freecell model. It is parameterized over the
- * card type, i.e. when you implement it, you can substitute K with your
- * implementation of a card.
+ * slot type, i.e. when you implement it, you can substitute K with your
+ * implementation of a slot.
  */
 public interface FreecellOperations<K> {
 
   /**
-   * Return a valid and complete deck of cards for a game of Freecell. There is no restriction imposed on the ordering of these cards in the deck.
+   * Return a valid and complete deck of cards for a game of Freecell.
+   * There is no restriction imposed on the ordering of these cards in the deck.
    *
    * An invalid deck is defined as a deck that has one or more of these flaws:
    * <ul>
    *   <li>It does not have 52 cards</li>
    *   <li>It has duplicate cards</li>
-   *   <li>It has at least one invalid card (invalid suit or invalid number)
+   *   <li>It has at least one invalid slot (invalid suit or invalid number)
    *   </li>
    * </ul>
    *
@@ -48,19 +49,20 @@ public interface FreecellOperations<K> {
           IllegalArgumentException;
 
   /**
-   * Move a card from the given source pile to the given destination pile, if
+   * Move a slot from the given source pile to the given destination pile, if
    * the move is valid
    *
    * @param source         the type of the source pile see @link{PileType}
    * @param pileNumber     the pile number of the given type, starting at 0
-   * @param cardIndex      the index of the card to be moved from the source
+   * @param cardIndex      the index of the slot to be moved from the source
    *                       pile, starting at 0
    * @param destination    the type of the destination pile (see
    * @param destPileNumber the pile number of the given type, starting at 0
    * @throws IllegalArgumentException if the move is not possible
    * {@link PileType})
    */
-  void move(PileType source, int pileNumber, int cardIndex, PileType destination, int destPileNumber) throws IllegalArgumentException;
+  void move(PileType source, int pileNumber, int cardIndex, PileType destination,
+            int destPileNumber) throws IllegalArgumentException;
 
   /**
    * Signal if the game is over or not
