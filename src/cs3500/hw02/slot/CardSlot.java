@@ -5,26 +5,17 @@ import cs3500.hw02.PileType;
 /**
  * Represents a card slot in a game of Freecell.
  */
-public class CardSlot extends ASlot {
-  public static final int ACE = 1;
-  public static final int JACK = 11;
-  public static final int QUEEN = 12;
-  public static final int KING = 13;
-
-  public int value;
-  private Suit suit;
+public class CardSlot implements ASlot {
+  public CardValue value;
+  private CardSuit suit;
 
   /**
    * Constructs a {@code CardSlot} object.
    *
    * @param value      the value of a slot
    * @param suit       the suit of a slot
-   * @throws IllegalArgumentException if value is less than 1 or greater than 13
    */
-  public CardSlot(int value, Suit suit) {
-    if (value < 1 || value > 13) {
-      throw new IllegalArgumentException("Invalid CardSlot Value");
-    }
+  public CardSlot(CardValue value, CardSuit suit) {
     this.value = value;
     this.suit = suit;
   }
@@ -37,7 +28,7 @@ public class CardSlot extends ASlot {
     if (!(that instanceof CardSlot)) {
       return false;
     }
-    return this.value == ((CardSlot) that).value
+    return this.value.equals(((CardSlot) that).value)
       && this.suit.equals(((CardSlot) that).suit);
   }
 
@@ -45,13 +36,13 @@ public class CardSlot extends ASlot {
   public int hashCode() {
     switch (this.suit) {
       case CLUBS:
-        return (this.value * 10) + 1;
+        return (this.value.value * 10) + 1;
       case DIAMONDS:
-        return (this.value * 10) + 2;
+        return (this.value.value * 10) + 2;
       case SPADES:
-        return (this.value * 10) + 3;
+        return (this.value.value * 10) + 3;
       default:
-        return (this.value * 10) + 4;
+        return (this.value.value * 10) + 4;
     }
   }
 
@@ -62,18 +53,20 @@ public class CardSlot extends ASlot {
    */
   @Override
   public String toString() {
-    switch(this.value) {
-      case ACE:
-        return "A" + this.suit.toString();
-      case JACK:
-        return "J" + this.suit.toString();
-      case QUEEN:
-        return "Q" + this.suit.toString();
-      case KING:
-        return "K" + this.suit.toString();
-      default:
-        return Integer.toString(this.value) + this.suit.toString();
-    }
+    return this.value.toString() + this.suit.toString();
+  }
+
+  /**
+   * Returns whether moving this {@code CardSlot} onto the given {@code ASlot} in the given
+   * pile is possible.
+   *
+   * @param to         the slot to be move on
+   * @param where      the pile the desired slot is located
+   * @return whether this card can move to the other in the given pile
+   */
+  @Override
+  public boolean moveTo(ASlot to, PileType where) {
+    return to.moveFrom(this, where);
   }
 
   /**
@@ -85,13 +78,13 @@ public class CardSlot extends ASlot {
    * @return whether the given card can be moved on this card in the given pile
    */
   @Override
-  protected boolean moveTo(CardSlot from, PileType where) {
+  public boolean moveFrom(CardSlot from, PileType where) {
     switch (where) {
       case CASCADE:
-        return this.value - 1 == from.value
+        return this.value.getDifference(from.value) == 1
           && this.oppositeSuit(from);
       case FOUNDATION:
-        return this.value + 1 == from.value
+        return this.value.getDifference(from.value) == -1
           && this.suit.equals(from.suit);
       default:
         return false;

@@ -1,24 +1,24 @@
 package cs3500.hw02.slot;
 
 /**
- * Represents all variations of Suits of a CardSlot in a game of Freecell.
+ * Represents all variations of suits of a CardSlot in a game of Freecell.
  */
-public enum Suit {
+public enum CardSuit {
   CLUBS("♣"), DIAMONDS("♦"), HEARTS("♥"), SPADES("♠");
 
   private String value;
 
   /**
-   * Constructs a {@code Suit} object.
+   * Constructs a {@code CardSuit} object.
    *
    * @param value      the value of a suit
    */
-  Suit(String value) {
+  CardSuit(String value) {
     this.value = value;
   }
 
   /**
-   * Returns a {@code Suit} as a String.
+   * Returns a {@code CardSuit} as a String.
    *
    * @return the suit as a String
    */
@@ -33,7 +33,7 @@ public enum Suit {
    * @param other     the suit being compared against
    * @return whether the two suit are opposite colors
    */
-  protected boolean oppositeSuit(Suit other) {
+  protected boolean oppositeSuit(CardSuit other) {
     if (this.equals(DIAMONDS) || this.equals(HEARTS)) {
       return other.equals(CLUBS) || other.equals(SPADES);
     } else {

@@ -5,7 +5,7 @@ import cs3500.hw02.PileType;
 /**
  * Represents an empty slot in a game of Freecell.
  */
-public class EmptySlot extends ASlot {
+public class EmptySlot implements ASlot {
   /**
    * Constructs a {@code EmptySlot} object.
    */
@@ -38,6 +38,18 @@ public class EmptySlot extends ASlot {
   }
 
   /**
+   * Always returns true, as an {@code EmptySlot} can move anywhere since it's empty.
+   *
+   * @param to         the slot to be move on
+   * @param where      the pile the desired slot is located
+   * @return whether this empty can move to the other in the given pile
+   */
+  @Override
+  public boolean moveTo(ASlot to, PileType where) {
+    return true;
+  }
+
+  /**
    * Returns whether moving the given {@code CardSlot} onto this {@code EmptySlot} in the given
    * pile is possible.
    *
@@ -46,9 +58,9 @@ public class EmptySlot extends ASlot {
    * @return whether the given card can be moved on this ASlot in the given pile
    */
   @Override
-  protected boolean moveTo(CardSlot from, PileType where) {
+  public boolean moveFrom(CardSlot from, PileType where) {
     if (where.equals(PileType.FOUNDATION)) {
-      return from.value == CardSlot.ACE;
+      return from.value.equals(CardValue.ACE);
     }
     return true;
   }

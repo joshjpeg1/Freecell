@@ -34,17 +34,17 @@ public class FreecellModel implements FreecellOperations<ASlot> {
    * @param shuffle          if true, shuffle the deck else deal the deck as-is
    */
   public FreecellModel(int numCascadePiles, int numOpenPiles, boolean shuffle) {
-    rand = new Random();
-    foundations = new ArrayList<>(4);
+    this.rand = new Random();
+    this.foundations = new ArrayList<>(4);
     this.startGame(this.getDeck(), numCascadePiles, numOpenPiles, shuffle);
   }
 
   @Override
   public List<ASlot> getDeck() {
     List<ASlot> deck = new ArrayList<>();
-    for (int i = 1; i <= 13; i += 1) {
-      for (Suit suit : Suit.values()) {
-        deck.add(new CardSlot(i, suit));
+    for (CardValue val : CardValue.values()) {
+      for (CardSuit suit : CardSuit.values()) {
+        deck.add(new CardSlot(val, suit));
       }
     }
     return deck;
@@ -52,7 +52,7 @@ public class FreecellModel implements FreecellOperations<ASlot> {
 
   @Override
   public void startGame(List<ASlot> deck, int numCascadePiles, int numOpenPiles, boolean shuffle) throws IllegalArgumentException {
-    if (numCascadePiles < 4 || numCascadePiles > 8) {
+    if (numCascadePiles < 4) {
       throw new IllegalArgumentException("Invalid number of cascade piles.");
     }
     if (numOpenPiles < 1 || numOpenPiles > 4) {
@@ -82,8 +82,8 @@ public class FreecellModel implements FreecellOperations<ASlot> {
     while (deck.size() > 0) {
       for (int i = 0; i < this.cascades.size(); i++) {
         if (deck.size() > 0) {
-          if (this.cascades.contains(new EmptySlot())) {
-            this.cascades.remove(new EmptySlot());
+          if (this.cascades.get(i).contains(new EmptySlot())) {
+            this.cascades.get(i).remove(new EmptySlot());
           }
           this.cascades.get(i).add(deck.remove(0));
         }
@@ -114,7 +114,7 @@ public class FreecellModel implements FreecellOperations<ASlot> {
         throw new IndexOutOfBoundsException(source.toString() + " pile does not exist at " +
           "given source index.");
       }
-      if (cardIndex < 0 || cardIndex >= pile.get(pileNumber).size()) {
+      if (cardIndex != pile.get(pileNumber).size() - 1) {
         throw new IndexOutOfBoundsException("Card does not exist at given source index.");
       }
       from = pile.get(pileNumber).get(cardIndex);
@@ -152,20 +152,27 @@ public class FreecellModel implements FreecellOperations<ASlot> {
 
   @Override
   public boolean isGameOver() {
-    return false;
+    for (List<ASlot> pile : foundations) {
+      if (pile.size() != CardValue.values().length || !Utils.noDuplicates(pile)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   @Override
   public String getGameState() {
     String str = "";
     for (int i = 0; i < this.foundations.size(); i++) {
-      str += "F" + (i + 1) + ":" + Utils.listToString(this.foundations.get(i)) + "\n";
+      str += "F" + (i + 1) + ":" +  Utils.listToString(Utils.filterList(this.foundations.get(i),
+          new ArrayList<>(Arrays.asList(new EmptySlot())))) + "\n";
     }
     for (int i = 0; i < this.opens.size(); i++) {
       str += "O" + (i + 1) + ":" + this.opens.get(i).toString() + "\n";
     }
     for (int i = 0; i < this.cascades.size(); i++) {
-      str += "C" + (i + 1) + ":" + Utils.listToString(this.cascades.get(i));
+      str += "C" + (i + 1) + ":" + Utils.listToString(Utils.filterList(this.cascades.get(i),
+          new ArrayList<>(Arrays.asList(new EmptySlot()))));
       if (i < this.cascades.size() - 1) {
         str += "\n";
       }

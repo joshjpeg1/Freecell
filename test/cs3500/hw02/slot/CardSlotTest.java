@@ -7,139 +7,132 @@ import static org.junit.Assert.assertFalse;
 
 /** Tests for {@link CardSlot}. */
 public class CardSlotTest {
-  // Tests for the constructor
-  @Test(expected = IllegalArgumentException.class)
-  public void constructorValueTooLow() {
-    new CardSlot(0, Suit.CLUBS);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void constructorValueTooHigh() {
-    new CardSlot(14, Suit.CLUBS);
-  }
-
   // Tests for the equals() method
   @Test
   public void equalsSameObject() {
-    CardSlot card = new CardSlot(6, Suit.SPADES);
+    CardSlot card = new CardSlot(CardValue.SIX, CardSuit.SPADES);
     assertTrue(card.equals(card));
   }
 
   @Test
   public void equalsDiffObjectType() {
-    CardSlot card = new CardSlot(6, Suit.SPADES);
+    CardSlot card = new CardSlot(CardValue.SIX, CardSuit.SPADES);
     assertFalse(card.equals(15));
   }
 
   @Test
   public void equalsSameCard() {
-    assertTrue(new CardSlot(6, Suit.SPADES).equals(new CardSlot(6, Suit.SPADES)));
+    assertTrue(new CardSlot(CardValue.SIX, CardSuit.SPADES)
+        .equals(new CardSlot(CardValue.SIX, CardSuit.SPADES)));
   }
 
   @Test
   public void equalsDiffValue() {
-    assertFalse(new CardSlot(6, Suit.SPADES).equals(new CardSlot(7, Suit.SPADES)));
+    assertFalse(new CardSlot(CardValue.SIX, CardSuit.SPADES)
+        .equals(new CardSlot(CardValue.SEVEN, CardSuit.SPADES)));
   }
 
   @Test
   public void equalsDiffSuit() {
-    assertFalse(new CardSlot(6, Suit.SPADES).equals(new CardSlot(6, Suit.CLUBS)));
+    assertFalse(new CardSlot(CardValue.SIX, CardSuit.SPADES)
+        .equals(new CardSlot(CardValue.SIX, CardSuit.CLUBS)));
   }
 
   @Test
   public void equalsDiffCard() {
-    assertFalse(new CardSlot(6, Suit.SPADES).equals(new CardSlot(7, Suit.CLUBS)));
+    assertFalse(new CardSlot(CardValue.SIX, CardSuit.SPADES)
+        .equals(new CardSlot(CardValue.SEVEN, CardSuit.CLUBS)));
   }
 
   // Tests for the hashCode() method
   @Test
   public void hashCodeSingleDigitValue() {
-    assertEquals(21, new CardSlot(2, Suit.CLUBS).hashCode());
+    assertEquals(21, new CardSlot(CardValue.TWO, CardSuit.CLUBS).hashCode());
   }
 
   @Test
   public void hashCodeDoubleDigitValue() {
-    assertEquals(121, new CardSlot(CardSlot.QUEEN, Suit.CLUBS).hashCode());
+    assertEquals(121, new CardSlot(CardValue.QUEEN, CardSuit.CLUBS).hashCode());
   }
 
   @Test
   public void hashCodeClubs() {
-    assertEquals(61, new CardSlot(6, Suit.CLUBS).hashCode());
+    assertEquals(61, new CardSlot(CardValue.SIX, CardSuit.CLUBS).hashCode());
   }
 
   @Test
   public void hashCodeDiamonds() {
-    assertEquals(62, new CardSlot(6, Suit.DIAMONDS).hashCode());
+    assertEquals(62, new CardSlot(CardValue.SIX, CardSuit.DIAMONDS).hashCode());
   }
 
   @Test
   public void hashCodeSpades() {
-    assertEquals(63, new CardSlot(6, Suit.SPADES).hashCode());
+    assertEquals(63, new CardSlot(CardValue.SIX, CardSuit.SPADES).hashCode());
   }
 
   @Test
   public void hashCodeHearts() {
-    assertEquals(64, new CardSlot(6, Suit.HEARTS).hashCode());
+    assertEquals(64, new CardSlot(CardValue.SIX, CardSuit.HEARTS).hashCode());
   }
 
   // Tests for the toString() method
   @Test
   public void toStringAce() {
-    ASlot card = new CardSlot(CardSlot.ACE, Suit.CLUBS);
+    ASlot card = new CardSlot(CardValue.ACE, CardSuit.CLUBS);
     assertEquals("A♣", card.toString());
   }
 
   @Test
   public void toStringSingleDigitNumber() {
-    ASlot card = new CardSlot(2, Suit.CLUBS);
+    ASlot card = new CardSlot(CardValue.TWO, CardSuit.CLUBS);
     assertEquals("2♣", card.toString());
   }
 
   @Test
   public void toStringDoubleDigitNumber() {
-    ASlot card = new CardSlot(10, Suit.CLUBS);
+    ASlot card = new CardSlot(CardValue.TEN, CardSuit.CLUBS);
     assertEquals("10♣", card.toString());
   }
 
   @Test
   public void toStringJack() {
-    ASlot card = new CardSlot(CardSlot.JACK, Suit.CLUBS);
+    ASlot card = new CardSlot(CardValue.JACK, CardSuit.CLUBS);
     assertEquals("J♣", card.toString());
   }
 
   @Test
   public void toStringQueen() {
-    ASlot card = new CardSlot(CardSlot.QUEEN, Suit.CLUBS);
+    ASlot card = new CardSlot(CardValue.QUEEN, CardSuit.CLUBS);
     assertEquals("Q♣", card.toString());
   }
 
   @Test
   public void toStringKing() {
-    ASlot card = new CardSlot(CardSlot.KING, Suit.CLUBS);
+    ASlot card = new CardSlot(CardValue.KING, CardSuit.CLUBS);
     assertEquals("K♣", card.toString());
   }
 
   @Test
   public void toStringClubs() {
-    ASlot card = new CardSlot(3, Suit.CLUBS);
+    ASlot card = new CardSlot(CardValue.THREE, CardSuit.CLUBS);
     assertEquals("3♣", card.toString());
   }
 
   @Test
   public void toStringHearts() {
-    ASlot card = new CardSlot(1, Suit.HEARTS);
+    ASlot card = new CardSlot(CardValue.ACE, CardSuit.HEARTS);
     assertEquals("A♥", card.toString());
   }
 
   @Test
   public void toStringDiamonds() {
-    ASlot card = new CardSlot(10, Suit.DIAMONDS);
+    ASlot card = new CardSlot(CardValue.TEN, CardSuit.DIAMONDS);
     assertEquals("10♦", card.toString());
   }
 
   @Test
   public void toStringSpades() {
-    ASlot card = new CardSlot(CardSlot.KING, Suit.SPADES);
+    ASlot card = new CardSlot(CardValue.KING, CardSuit.SPADES);
     assertEquals("K♠", card.toString());
   }
 }

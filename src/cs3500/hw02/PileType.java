@@ -15,17 +15,5 @@ package cs3500.hw02;
  * The goal of the game is to fill up all the foundation piles
  */
 public enum PileType {
-  OPEN, CASCADE, FOUNDATION;
-
-  @Override
-  public String toString() {
-    switch (this) {
-      case OPEN:
-        return "Open";
-      case CASCADE:
-        return "Cascade";
-      default:
-        return "Foundation";
-    }
-  }
-}
+  OPEN, CASCADE, FOUNDATION
+};

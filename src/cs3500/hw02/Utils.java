@@ -56,6 +56,23 @@ public class Utils {
   }
 
   /**
+   * Returns the given {@code List}, without any of the items in the given filter {@code List}.
+   *
+   * @param list       a generic list of items
+   * @param filters    a generic list of items to be filtered
+   * @return a filtered list
+   */
+  public static <T> List<T> filterList(List<T> list, List<T> filters) {
+    List<T> finalList = new ArrayList<>();
+    for (T item : list) {
+      if (!filters.contains(item)) {
+        finalList.add(item);
+      }
+    }
+    return finalList;
+  }
+
+  /**
    * Returns a string representation of a {@code List}.
    *
    * @param list       a generic list of items
@@ -72,10 +89,35 @@ public class Utils {
     return str;
   }
 
+  /**
+   * Returns the last element in a {@code List}.
+   *
+   * @param list       a generic list of items
+   * @return the last element
+   * @throws IndexOutOfBoundsException if the given {@code List} is empty
+   */
   public static <T> T getLast(List<T> list) throws IndexOutOfBoundsException {
     if (list.size() == 0) {
       throw new IndexOutOfBoundsException("Can't get the last item of an empty list.");
     }
     return list.get(list.size() - 1);
+  }
+
+  /**
+   * Returns the last element in a {@code List}.
+   *
+   * @param list       a generic list of items
+   * @return the last element
+   * @throws IndexOutOfBoundsException if the given {@code List} is empty
+   */
+  public static <T> List<T> reverse(List<T> list) {
+    if (list.size() > 1) {
+      List<T> copy = new ArrayList<>();
+      for (T item : list) {
+        copy.add(0, item);
+      }
+      return copy;
+    }
+    return list;
   }
 }

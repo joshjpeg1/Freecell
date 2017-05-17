@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
 /** Tests for {@link Utils}. */
 public class UtilsTest {
+  // Tests for the noDuplicates() method
   @Test
   public void noDuplicatesEmpty() {
     assertTrue(Utils.noDuplicates(new ArrayList<Integer>()));
@@ -40,6 +42,7 @@ public class UtilsTest {
     assertFalse(Utils.noDuplicates(new ArrayList<>(Arrays.asList(2, 3, 2))));
   }
 
+  // Tests for the shuffle() method
   @Test
   public void shuffleEmpty() {
     ArrayList<Integer> list = new ArrayList<>();
@@ -69,6 +72,80 @@ public class UtilsTest {
     assertEquals(list.size(), Utils.shuffle(list).size());
   }
 
+  // Tests for the filterList() method
+  @Test
+  public void filterListEmptyNoFilt() {
+    List<Integer> list = new ArrayList<>();
+    List<Integer> filter = new ArrayList<>();
+    assertEquals(list, Utils.filterList(list, filter));
+    assertEquals(filter, Utils.filterList(list, filter));
+  }
+
+  @Test
+  public void filterListEmptyFilter() {
+    List<Integer> list = new ArrayList<>();
+    List<Integer> filter = new ArrayList<>(Arrays.asList(1, 2, 3));
+    assertEquals(list, Utils.filterList(list, filter));
+    assertNotEquals(filter, Utils.filterList(list, filter));
+  }
+
+  @Test
+  public void filterListOneElemNoFilt() {
+    List<Integer> list = new ArrayList<>(Arrays.asList(1));
+    List<Integer> filter = new ArrayList<>();
+    assertEquals(list, Utils.filterList(list, filter));
+  }
+
+  @Test
+  public void filterListMultElemNoFilt() {
+    List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3));
+    List<Integer> filter = new ArrayList<>();
+    assertEquals(list, Utils.filterList(list, filter));
+  }
+
+  @Test
+  public void filterListOneElemFilterNothing() {
+    List<Integer> list = new ArrayList<>(Arrays.asList(1));
+    List<Integer> filter = new ArrayList<>(Arrays.asList(4, 5, 6));
+    assertEquals(list, Utils.filterList(list, filter));
+  }
+
+  @Test
+  public void filterListMultElemFilterNothing() {
+    List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3));
+    List<Integer> filter = new ArrayList<>(Arrays.asList(4, 5, 6));
+    assertEquals(list, Utils.filterList(list, filter));
+  }
+
+  @Test
+  public void filterListOneElemFilter() {
+    List<Integer> list = new ArrayList<>(Arrays.asList(1));
+    List<Integer> filter = new ArrayList<>(Arrays.asList(3, 1, 2));
+    assertEquals(new ArrayList<>(), Utils.filterList(list, filter));
+  }
+
+  @Test
+  public void filterListMultElemFilterSome() {
+    List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3));
+    List<Integer> filter = new ArrayList<>(Arrays.asList(4, 2, 6));
+    assertEquals(new ArrayList<>(Arrays.asList(1, 3)),
+      Utils.filterList(list, filter));
+  }
+
+  @Test
+  public void filterListMultElemFilterAll() {
+    List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3));
+    List<Integer> filter = new ArrayList<>(Arrays.asList(3, 1, 2));
+    assertEquals(new ArrayList<>(), Utils.filterList(list, filter));
+  }
+
+  @Test
+  public void filterListSameList() {
+    List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3));
+    assertEquals(new ArrayList<>(), Utils.filterList(list, list));
+  }
+
+  // Tests for the listToString() method
   @Test
   public void listToStringEmpty() {
     assertEquals("", Utils.listToString(new ArrayList<Integer>()));
@@ -87,5 +164,41 @@ public class UtilsTest {
   @Test
   public void listToStringMultElem() {
     assertEquals(" 2, 3, 4", Utils.listToString(new ArrayList<>(Arrays.asList(2, 3, 4))));
+  }
+
+  // Tests for the getLast() method
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void getLastEmpty() {
+    Utils.getLast(new ArrayList<>());
+  }
+
+  @Test
+  public void getLastOneElem() {
+    assertEquals((Integer) 1, Utils.getLast(new ArrayList<>(Arrays.asList(1))));
+  }
+
+  @Test
+  public void getLastMultElem() {
+    assertEquals((Integer) 3, Utils.getLast(new ArrayList<>(Arrays.asList(1, 2, 3))));
+  }
+
+  // Tests for the reverse() method
+  @Test
+  public void reverseEmpty() {
+    List<Integer> list = new ArrayList<>();
+    assertEquals(list, Utils.reverse(list));
+  }
+
+  @Test
+  public void reverseOneElem() {
+    List<Integer> list = new ArrayList<>(Arrays.asList(1));
+    assertEquals(list, Utils.reverse(list));
+  }
+
+  @Test
+  public void reverseMultElem() {
+    List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3));
+    List<Integer> rev = new ArrayList<>(Arrays.asList(3, 2, 1));
+    assertEquals(rev, Utils.reverse(list));
   }
 }
