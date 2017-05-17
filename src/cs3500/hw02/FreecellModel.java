@@ -91,69 +91,63 @@ public class FreecellModel implements FreecellOperations<ASlot> {
     }
   }
 
+  public List getPile(PileType type) {
+    switch (type) {
+      case CASCADE:
+        return cascades;
+      case FOUNDATION:
+        return foundations;
+      case OPEN:
+        return opens;
+      default:
+        return new ArrayList();
+    }
+  }
+
   @Override
   public void move(PileType source, int pileNumber, int cardIndex, PileType destination,
                    int destPileNumber) throws IllegalArgumentException, IndexOutOfBoundsException {
     ASlot from;
-    switch (source) {
-      case CASCADE:
-        if (pileNumber < 0 || pileNumber >= cascades.size()) {
-          throw new IndexOutOfBoundsException("Cascade pile does not exist at " +
-            "given source index.");
-        }
-        if (cardIndex < 0 || cardIndex >= cascades.get(pileNumber).size()) {
-          throw new IndexOutOfBoundsException("Card does not exist at given source index.");
-        }
-        from = cascades.get(pileNumber).get(cardIndex);
-        break;
-      case FOUNDATION:
-        if (pileNumber < 0 || pileNumber >= foundations.size()) {
-          throw new IndexOutOfBoundsException("Foundation pile does not exist at " +
-            "given source index.");
-        }
-        if (cardIndex < 0 || cardIndex >= foundations.get(pileNumber).size()) {
-          throw new IndexOutOfBoundsException("Card does not exist at given source index.");
-        }
-        from = opens.get(pileNumber);
-        break;
-      default:
-        if (pileNumber < 0 || pileNumber >= opens.size()) {
-          throw new IndexOutOfBoundsException("Open pile does not exist at " +
-            "given source index.");
-        }
-        if (cardIndex != 0) {
-          throw new IndexOutOfBoundsException("Card does not exist at given source index.");
-        }
-        from = opens.get(pileNumber);
+    if (source.equals(PileType.CASCADE) || source.equals(PileType.FOUNDATION)) {
+      List<List<ASlot>> pile = getPile(source);
+      if (pileNumber < 0 || pileNumber >= pile.size()) {
+        throw new IndexOutOfBoundsException(source.toString() + " pile does not exist at " +
+          "given source index.");
+      }
+      if (cardIndex < 0 || cardIndex >= pile.get(pileNumber).size()) {
+        throw new IndexOutOfBoundsException("Card does not exist at given source index.");
+      }
+      from = pile.get(pileNumber).get(cardIndex);
+    } else {
+      if (pileNumber < 0 || pileNumber >= opens.size()) {
+        throw new IndexOutOfBoundsException("Open pile does not exist at " +
+          "given source index.");
+      }
+      if (cardIndex != 0) {
+        throw new IndexOutOfBoundsException("Card does not exist at given source index.");
+      }
+      from = opens.get(pileNumber);
     }
-    switch (destination) {
-      case CASCADE:
-        if (destPileNumber < 0 || destPileNumber >= cascades.size()) {
-          throw new IndexOutOfBoundsException("Cascade pile does not exist at " +
-            "given destination index.");
-        }
-        if (!from.moveTo(Utils.getLast(cascades.get(destPileNumber)), PileType.CASCADE)) {
-          throw new IllegalArgumentException("Move is illegal.");
-        }
-        break;
-      case FOUNDATION:
-        if (destPileNumber < 0 || destPileNumber >= foundations.size()) {
-          throw new IndexOutOfBoundsException("Foundation pile does not exist at " +
-            "given destination index.");
-        }
-        if (!from.moveTo(Utils.getLast(foundations.get(pileNumber)), PileType.FOUNDATION)) {
-          throw new IllegalArgumentException("Move is illegal.");
-        }
-        break;
-      default:
-        if (destPileNumber < 0 || destPileNumber >= opens.size()) {
-          throw new IndexOutOfBoundsException("Open pile does not exist at " +
-            "given destination index.");
-        }
-        if (!from.moveTo(opens.get(destPileNumber), PileType.OPEN)) {
-          throw new IllegalArgumentException("Move is illegal.");
-        }
+
+    if (destination.equals(PileType.CASCADE) || destination.equals(PileType.FOUNDATION)) {
+      List<List<ASlot>> pile = getPile(destination);
+      if (destPileNumber < 0 || destPileNumber >= pile.size()) {
+        throw new IndexOutOfBoundsException(destination.toString() + " pile does not exist at " +
+          "given destination index.");
+      }
+      if (!from.moveTo(Utils.getLast(pile.get(destPileNumber)), destination)) {
+        throw new IllegalArgumentException("Move is illegal.");
+      }
+    } else {
+      if (destPileNumber < 0 || destPileNumber >= opens.size()) {
+        throw new IndexOutOfBoundsException("Open pile does not exist at " +
+          "given destination index.");
+      }
+      if (!from.moveTo(opens.get(destPileNumber), PileType.OPEN)) {
+        throw new IllegalArgumentException("Move is illegal.");
+      }
     }
+
   }
 
   @Override
