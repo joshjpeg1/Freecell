@@ -5,9 +5,9 @@ import cs3500.hw02.PileType;
 /**
  * Represents a card slot in a game of Freecell.
  */
-public class CardSlot implements ASlot {
-  public CardValue value;
-  private CardSuit suit;
+public class CardSlot implements ISlot {
+  public final CardValue value;
+  private final CardSuit suit;
 
   /**
    * Constructs a {@code CardSlot} object.
@@ -36,13 +36,13 @@ public class CardSlot implements ASlot {
   public int hashCode() {
     switch (this.suit) {
       case CLUBS:
-        return (this.value.value * 10) + 1;
+        return (this.value.id * 10) + 1;
       case DIAMONDS:
-        return (this.value.value * 10) + 2;
+        return (this.value.id * 10) + 2;
       case SPADES:
-        return (this.value.value * 10) + 3;
+        return (this.value.id * 10) + 3;
       default:
-        return (this.value.value * 10) + 4;
+        return (this.value.id * 10) + 4;
     }
   }
 
@@ -57,7 +57,7 @@ public class CardSlot implements ASlot {
   }
 
   /**
-   * Returns whether moving this {@code CardSlot} onto the given {@code ASlot} in the given
+   * Returns whether moving this {@code CardSlot} onto the given {@code ISlot} in the given
    * pile is possible.
    *
    * @param to         the slot to be move on
@@ -65,7 +65,7 @@ public class CardSlot implements ASlot {
    * @return whether this card can move to the other in the given pile
    */
   @Override
-  public boolean moveTo(ASlot to, PileType where) {
+  public boolean moveTo(ISlot to, PileType where) {
     return to.moveFrom(this, where);
   }
 
@@ -82,9 +82,9 @@ public class CardSlot implements ASlot {
     switch (where) {
       case CASCADE:
         return this.value.getDifference(from.value) == 1
-          && this.oppositeSuit(from);
+          && this.oppositeColor(from);
       case FOUNDATION:
-        return this.value.getDifference(from.value) == -1
+        return from.value.getDifference(this.value) == 1
           && this.suit.equals(from.suit);
       default:
         return false;
@@ -97,7 +97,7 @@ public class CardSlot implements ASlot {
    * @param other       the card being compared against
    * @return whether the two cards are opposite colors
    */
-  private boolean oppositeSuit(CardSlot other) {
-    return this.suit.oppositeSuit(other.suit);
+  public boolean oppositeColor(CardSlot other) {
+    return this.suit.oppositeColor(other.suit);
   }
 }

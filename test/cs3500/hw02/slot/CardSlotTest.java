@@ -2,6 +2,7 @@ package cs3500.hw02.slot;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
@@ -11,37 +12,37 @@ public class CardSlotTest {
   @Test
   public void equalsSameObject() {
     CardSlot card = new CardSlot(CardValue.SIX, CardSuit.SPADES);
-    assertTrue(card.equals(card));
+    assertEquals(card, card);
   }
 
   @Test
   public void equalsDiffObjectType() {
     CardSlot card = new CardSlot(CardValue.SIX, CardSuit.SPADES);
-    assertFalse(card.equals(15));
+    assertNotEquals(card, new EmptySlot());
   }
 
   @Test
   public void equalsSameCard() {
-    assertTrue(new CardSlot(CardValue.SIX, CardSuit.SPADES)
-        .equals(new CardSlot(CardValue.SIX, CardSuit.SPADES)));
+    assertEquals(new CardSlot(CardValue.SIX, CardSuit.SPADES),
+        new CardSlot(CardValue.SIX, CardSuit.SPADES));
   }
 
   @Test
   public void equalsDiffValue() {
-    assertFalse(new CardSlot(CardValue.SIX, CardSuit.SPADES)
-        .equals(new CardSlot(CardValue.SEVEN, CardSuit.SPADES)));
+    assertNotEquals(new CardSlot(CardValue.SIX, CardSuit.SPADES),
+        new CardSlot(CardValue.SEVEN, CardSuit.SPADES));
   }
 
   @Test
   public void equalsDiffSuit() {
-    assertFalse(new CardSlot(CardValue.SIX, CardSuit.SPADES)
-        .equals(new CardSlot(CardValue.SIX, CardSuit.CLUBS)));
+    assertNotEquals(new CardSlot(CardValue.SIX, CardSuit.SPADES),
+        new CardSlot(CardValue.SIX, CardSuit.CLUBS));
   }
 
   @Test
   public void equalsDiffCard() {
-    assertFalse(new CardSlot(CardValue.SIX, CardSuit.SPADES)
-        .equals(new CardSlot(CardValue.SEVEN, CardSuit.CLUBS)));
+    assertNotEquals(new CardSlot(CardValue.SIX, CardSuit.SPADES),
+        new CardSlot(CardValue.SEVEN, CardSuit.CLUBS));
   }
 
   // Tests for the hashCode() method
@@ -78,61 +79,94 @@ public class CardSlotTest {
   // Tests for the toString() method
   @Test
   public void toStringAce() {
-    ASlot card = new CardSlot(CardValue.ACE, CardSuit.CLUBS);
+    ISlot card = new CardSlot(CardValue.ACE, CardSuit.CLUBS);
     assertEquals("A♣", card.toString());
   }
 
   @Test
   public void toStringSingleDigitNumber() {
-    ASlot card = new CardSlot(CardValue.TWO, CardSuit.CLUBS);
+    ISlot card = new CardSlot(CardValue.TWO, CardSuit.CLUBS);
     assertEquals("2♣", card.toString());
   }
 
   @Test
   public void toStringDoubleDigitNumber() {
-    ASlot card = new CardSlot(CardValue.TEN, CardSuit.CLUBS);
+    ISlot card = new CardSlot(CardValue.TEN, CardSuit.CLUBS);
     assertEquals("10♣", card.toString());
   }
 
   @Test
   public void toStringJack() {
-    ASlot card = new CardSlot(CardValue.JACK, CardSuit.CLUBS);
+    ISlot card = new CardSlot(CardValue.JACK, CardSuit.CLUBS);
     assertEquals("J♣", card.toString());
   }
 
   @Test
   public void toStringQueen() {
-    ASlot card = new CardSlot(CardValue.QUEEN, CardSuit.CLUBS);
+    ISlot card = new CardSlot(CardValue.QUEEN, CardSuit.CLUBS);
     assertEquals("Q♣", card.toString());
   }
 
   @Test
   public void toStringKing() {
-    ASlot card = new CardSlot(CardValue.KING, CardSuit.CLUBS);
+    ISlot card = new CardSlot(CardValue.KING, CardSuit.CLUBS);
     assertEquals("K♣", card.toString());
   }
 
   @Test
   public void toStringClubs() {
-    ASlot card = new CardSlot(CardValue.THREE, CardSuit.CLUBS);
+    ISlot card = new CardSlot(CardValue.THREE, CardSuit.CLUBS);
     assertEquals("3♣", card.toString());
   }
 
   @Test
   public void toStringHearts() {
-    ASlot card = new CardSlot(CardValue.ACE, CardSuit.HEARTS);
+    ISlot card = new CardSlot(CardValue.ACE, CardSuit.HEARTS);
     assertEquals("A♥", card.toString());
   }
 
   @Test
   public void toStringDiamonds() {
-    ASlot card = new CardSlot(CardValue.TEN, CardSuit.DIAMONDS);
+    ISlot card = new CardSlot(CardValue.TEN, CardSuit.DIAMONDS);
     assertEquals("10♦", card.toString());
   }
 
   @Test
   public void toStringSpades() {
-    ASlot card = new CardSlot(CardValue.KING, CardSuit.SPADES);
+    ISlot card = new CardSlot(CardValue.KING, CardSuit.SPADES);
     assertEquals("K♠", card.toString());
+  }
+
+  // Tests for the moveTo() method
+
+  // Tests for the moveFrom() method
+
+  // Tests for the oppositeColor() method
+  @Test
+  public void oppositeColorSameSuit() {
+    CardSlot card1 = new CardSlot(CardValue.ACE, CardSuit.CLUBS);
+    CardSlot card2 = new CardSlot(CardValue.ACE, CardSuit.CLUBS);
+    assertFalse(card1.oppositeColor(card2));
+  }
+
+  @Test
+  public void oppositeColorSameColor() {
+    CardSlot card1 = new CardSlot(CardValue.ACE, CardSuit.CLUBS);
+    CardSlot card2 = new CardSlot(CardValue.ACE, CardSuit.SPADES);
+    assertFalse(card1.oppositeColor(card2));
+  }
+
+  @Test
+  public void oppositeColorBlackRed() {
+    CardSlot card1 = new CardSlot(CardValue.ACE, CardSuit.CLUBS);
+    CardSlot card2 = new CardSlot(CardValue.ACE, CardSuit.HEARTS);
+    assertTrue(card1.oppositeColor(card2));
+  }
+
+  @Test
+  public void oppositeColorRedBlack() {
+    CardSlot card1 = new CardSlot(CardValue.ACE, CardSuit.SPADES);
+    CardSlot card2 = new CardSlot(CardValue.ACE, CardSuit.DIAMONDS);
+    assertTrue(card2.oppositeColor(card1));
   }
 }

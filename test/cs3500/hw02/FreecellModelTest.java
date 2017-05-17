@@ -1,6 +1,7 @@
 package cs3500.hw02;
 
-import cs3500.hw02.slot.ASlot;
+import cs3500.hw02.slot.EmptySlot;
+import cs3500.hw02.slot.ISlot;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -29,15 +30,6 @@ public class FreecellModelTest {
     fcm.startGame(fcm.getDeck(), 3, 3, true);
   }
 
-  @Test
-  public void startGameHighCascades() {
-    List<ASlot> deck = fcm.getDeck();
-    fcm.startGame(deck, deck.size(), 3, true);
-    for (List<ASlot> pile : fcm.cascades) {
-      assertEquals(pile.size(), 1);
-    }
-  }
-
   @Test(expected = IllegalArgumentException.class)
   public void startGameLowOpens() {
     fcm.startGame(fcm.getDeck(), 6, 0, true);
@@ -55,17 +47,39 @@ public class FreecellModelTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void startGameTooLargeDeck() {
-    List<ASlot> deck = fcm.getDeck();
+    List<ISlot> deck = fcm.getDeck();
     deck.add(deck.get(0));
     fcm.startGame(deck, 6, 2, true);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void startGameDuplicatesInDeck() {
-    List<ASlot> deck = fcm.getDeck();
+    List<ISlot> deck = fcm.getDeck();
     deck.remove(deck.size() - 1);
     deck.add(deck.get(0));
     fcm.startGame(deck, 6, 2, true);
+  }
+
+  @Test
+  public void startGameHighCascades() {
+    List<ISlot> deck = fcm.getDeck();
+    fcm.startGame(deck, deck.size(), 3, true);
+    for (List<ISlot> pile : fcm.cascades) {
+      assertEquals(pile.size(), 1);
+    }
+  }
+
+  @Test
+  public void startGameVeryHighCascades() {
+    int emptyPiles = 20;
+    List<ISlot> deck = fcm.getDeck();
+    fcm.startGame(deck, deck.size() + emptyPiles, 3, true);
+    for (List<ISlot> pile : fcm.cascades) {
+      if (pile.contains(new EmptySlot())) {
+        emptyPiles -= 1;
+      }
+    }
+    assertEquals(emptyPiles, 0);
   }
 
   // Tests for the getGameState() method

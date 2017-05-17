@@ -6,7 +6,7 @@ package cs3500.hw02.slot;
 public enum CardSuit {
   CLUBS("♣"), DIAMONDS("♦"), HEARTS("♥"), SPADES("♠");
 
-  private String value;
+  private final String value;
 
   /**
    * Constructs a {@code CardSuit} object.
@@ -33,7 +33,7 @@ public enum CardSuit {
    * @param other     the suit being compared against
    * @return whether the two suit are opposite colors
    */
-  protected boolean oppositeSuit(CardSuit other) {
+  protected boolean oppositeColor(CardSuit other) {
     if (this.equals(DIAMONDS) || this.equals(HEARTS)) {
       return other.equals(CLUBS) || other.equals(SPADES);
     } else {

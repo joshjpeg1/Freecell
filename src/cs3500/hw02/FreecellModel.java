@@ -5,23 +5,19 @@ import cs3500.hw02.slot.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Reprsents the model of a game of Freecell.
  */
-public class FreecellModel implements FreecellOperations<ASlot> {
-  private Random rand;
-  public List<List<ASlot>> cascades;
-  private List<ASlot> opens;
-  private List<List<ASlot>> foundations;
+public class FreecellModel implements FreecellOperations<ISlot> {
+  public List<List<ISlot>> cascades;
+  private List<ISlot> opens;
+  private List<List<ISlot>> foundations;
 
   /**
    * Constructs a {@code FreecellModel} object.
    */
   public FreecellModel() {
-    this.rand = new Random();
-    this.foundations = new ArrayList<>(4);
     this.startGame(this.getDeck(), 8, 4, true);
   }
 
@@ -34,14 +30,12 @@ public class FreecellModel implements FreecellOperations<ASlot> {
    * @param shuffle          if true, shuffle the deck else deal the deck as-is
    */
   public FreecellModel(int numCascadePiles, int numOpenPiles, boolean shuffle) {
-    this.rand = new Random();
-    this.foundations = new ArrayList<>(4);
     this.startGame(this.getDeck(), numCascadePiles, numOpenPiles, shuffle);
   }
 
   @Override
-  public List<ASlot> getDeck() {
-    List<ASlot> deck = new ArrayList<>();
+  public List<ISlot> getDeck() {
+    List<ISlot> deck = new ArrayList<>();
     for (CardValue val : CardValue.values()) {
       for (CardSuit suit : CardSuit.values()) {
         deck.add(new CardSlot(val, suit));
@@ -51,7 +45,7 @@ public class FreecellModel implements FreecellOperations<ASlot> {
   }
 
   @Override
-  public void startGame(List<ASlot> deck, int numCascadePiles, int numOpenPiles, boolean shuffle) throws IllegalArgumentException {
+  public void startGame(List<ISlot> deck, int numCascadePiles, int numOpenPiles, boolean shuffle) throws IllegalArgumentException {
     if (numCascadePiles < 4) {
       throw new IllegalArgumentException("Invalid number of cascade piles.");
     }
@@ -107,9 +101,9 @@ public class FreecellModel implements FreecellOperations<ASlot> {
   @Override
   public void move(PileType source, int pileNumber, int cardIndex, PileType destination,
                    int destPileNumber) throws IllegalArgumentException, IndexOutOfBoundsException {
-    ASlot from;
+    ISlot from;
     if (source.equals(PileType.CASCADE) || source.equals(PileType.FOUNDATION)) {
-      List<List<ASlot>> pile = getPile(source);
+      List<List<ISlot>> pile = getPile(source);
       if (pileNumber < 0 || pileNumber >= pile.size()) {
         throw new IndexOutOfBoundsException(source.toString() + " pile does not exist at " +
           "given source index.");
@@ -130,7 +124,7 @@ public class FreecellModel implements FreecellOperations<ASlot> {
     }
 
     if (destination.equals(PileType.CASCADE) || destination.equals(PileType.FOUNDATION)) {
-      List<List<ASlot>> pile = getPile(destination);
+      List<List<ISlot>> pile = getPile(destination);
       if (destPileNumber < 0 || destPileNumber >= pile.size()) {
         throw new IndexOutOfBoundsException(destination.toString() + " pile does not exist at " +
           "given destination index.");
@@ -152,7 +146,7 @@ public class FreecellModel implements FreecellOperations<ASlot> {
 
   @Override
   public boolean isGameOver() {
-    for (List<ASlot> pile : foundations) {
+    for (List<ISlot> pile : foundations) {
       if (pile.size() != CardValue.values().length || !Utils.noDuplicates(pile)) {
         return false;
       }
