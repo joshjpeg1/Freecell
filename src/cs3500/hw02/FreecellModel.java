@@ -14,24 +14,59 @@ public class FreecellModel implements FreecellOperations<ISlot> {
   private List<ISlot> opens;
   private List<List<ISlot>> foundations;
 
+  public static final class Builder {
+    private int numCascadePiles;
+    private int numOpenPiles;
+    private boolean shuffle;
+
+    public Builder() {
+      numCascadePiles(8);
+      numOpenPiles(4);
+      shuffle(false);
+    }
+
+    public Builder numCascadePiles(int numCascadePiles) {
+      this.numCascadePiles = numCascadePiles;
+      return this;
+    }
+
+    public Builder numOpenPiles(int numOpenPiles) {
+      this.numOpenPiles = numOpenPiles;
+      return this;
+    }
+
+    public Builder shuffle(boolean shuffle) {
+      this.shuffle = shuffle;
+      return this;
+    }
+
+    public FreecellModel build() {
+      return new FreecellModel(this);
+    }
+  }
+
+  public FreecellModel(Builder builder) {
+    this.startGame(this.getDeck(), builder.numCascadePiles, builder.numOpenPiles, builder.shuffle);
+  }
+
   /**
    * Constructs a {@code FreecellModel} object.
    */
-  public FreecellModel() {
+  /*private FreecellModel() {
     this(8, 4, false);
-  }
+  }*/
 
   /**
    * Constructs a {@code FreecellModel} object, with a defined number of cascade piles, open piles,
    * and whether the deck is shuffled from the beginning.
    *
-   * @param numCascadePiles  number of cascade piles, ranging from 4 to 8
-   * @param numOpenPiles     number of open piles, ranging from 1 to 4
-   * @param shuffle          if true, shuffle the deck else deal the deck as-is
+   * //@param numCascadePiles  number of cascade piles, ranging from 4 to 8
+   * //@param numOpenPiles     number of open piles, ranging from 1 to 4
+   * //@param shuffle          if true, shuffle the deck else deal the deck as-is
    */
-  public FreecellModel(int numCascadePiles, int numOpenPiles, boolean shuffle) {
+  /*private FreecellModel(int numCascadePiles, int numOpenPiles, boolean shuffle) {
     this.startGame(this.getDeck(), numCascadePiles, numOpenPiles, shuffle);
-  }
+  }*/
 
   @Override
   public List<ISlot> getDeck() {
@@ -45,7 +80,8 @@ public class FreecellModel implements FreecellOperations<ISlot> {
   }
 
   @Override
-  public void startGame(List<ISlot> deck, int numCascadePiles, int numOpenPiles, boolean shuffle) throws IllegalArgumentException {
+  public void startGame(List<ISlot> deck, int numCascadePiles, int numOpenPiles,
+                        boolean shuffle) throws IllegalArgumentException {
     if (numCascadePiles < 4) {
       throw new IllegalArgumentException("Invalid number of cascade piles.");
     }

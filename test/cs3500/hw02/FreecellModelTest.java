@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 /** Tests for {@link FreecellModel}. */
 public class FreecellModelTest {
-  FreecellModel fcm = new FreecellModel();
+  FreecellModel fcm = new FreecellModel.Builder().build();
 
   // Tests for the getDeck() method
   @Test

@@ -8,7 +8,7 @@ import java.util.List;
 public class Hw02TypeChecks {
 
   public static void main(String[] args) {
-    helper(new FreecellModel());
+    helper(new FreecellModel.Builder().build());
   }
 
   private static <T> void helper(cs3500.hw02.FreecellOperations<T> model) {
