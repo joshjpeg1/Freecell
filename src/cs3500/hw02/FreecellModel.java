@@ -10,7 +10,7 @@ import java.util.List;
  * Reprsents the model of a game of Freecell.
  */
 public class FreecellModel implements FreecellOperations<ISlot> {
-  public List<List<ISlot>> cascades;
+  protected List<List<ISlot>> cascades;
   private List<ISlot> opens;
   private List<List<ISlot>> foundations;
 
@@ -20,7 +20,7 @@ public class FreecellModel implements FreecellOperations<ISlot> {
   public FreecellModel() {
     this.startGame(this.getDeck(), 8, 4, true);
   }
-
+  /*
   /**
    * Constructs a {@code FreecellModel} object, with a defined number of cascade piles, open piles,
    * and whether the deck is shuffled from the beginning.
@@ -29,9 +29,9 @@ public class FreecellModel implements FreecellOperations<ISlot> {
    * @param numOpenPiles     number of open piles, ranging from 1 to 4
    * @param shuffle          if true, shuffle the deck else deal the deck as-is
    */
-  public FreecellModel(int numCascadePiles, int numOpenPiles, boolean shuffle) {
+  /*public FreecellModel(int numCascadePiles, int numOpenPiles, boolean shuffle) {
     this.startGame(this.getDeck(), numCascadePiles, numOpenPiles, shuffle);
-  }
+  }*/
 
   @Override
   public List<ISlot> getDeck() {
@@ -85,19 +85,6 @@ public class FreecellModel implements FreecellOperations<ISlot> {
     }
   }
 
-  public List getPile(PileType type) {
-    switch (type) {
-      case CASCADE:
-        return cascades;
-      case FOUNDATION:
-        return foundations;
-      case OPEN:
-        return opens;
-      default:
-        return new ArrayList();
-    }
-  }
-
   @Override
   public void move(PileType source, int pileNumber, int cardIndex, PileType destination,
                    int destPileNumber) throws IllegalArgumentException, IndexOutOfBoundsException {
@@ -142,6 +129,65 @@ public class FreecellModel implements FreecellOperations<ISlot> {
       }
     }
 
+    switch (source) {
+      case CASCADE:
+        this.removeSafelyPile(cascades.get(pileNumber), cascades.get(pileNumber).indexOf(from));
+        break;
+      case FOUNDATION:
+        removeSafelyPile(foundations.get(pileNumber), foundations.get(pileNumber).indexOf(from));
+        break;
+      case OPEN:
+        opens.remove(pileNumber);
+        opens.add(pileNumber, new EmptySlot());
+        break;
+      default:
+        throw new IllegalArgumentException("Source PileType unknown.");
+    }
+
+    switch (destination) {
+      case CASCADE:
+        addSafelyPile(cascades.get(destPileNumber), from);
+        break;
+      case FOUNDATION:
+        addSafelyPile(foundations.get(destPileNumber), from);
+        break;
+      case OPEN:
+        opens.add(destPileNumber, from);
+        opens.remove(destPileNumber + 1);
+        break;
+      default:
+        throw new IllegalArgumentException("Source PileType unknown.");
+    }
+  }
+
+  private List getPile(PileType type) {
+    switch (type) {
+      case CASCADE:
+        return cascades;
+      case FOUNDATION:
+        return foundations;
+      case OPEN:
+        return opens;
+      default:
+        return new ArrayList();
+    }
+  }
+
+  private void removeSafelyPile(List<ISlot> pile, int index) {
+    if (Utils.filterList(pile, new ArrayList<>(Arrays.asList(new EmptySlot()))).size() == 1
+      && index == 0) {
+      pile.remove(0);
+      pile.add(new EmptySlot());
+    } else {
+      pile.remove(index);
+    }
+  }
+
+  private void addSafelyPile(List<ISlot> pile, ISlot slot) {
+    pile.add(slot);
+    if (pile.contains(new EmptySlot())) {
+      pile.remove(new EmptySlot());
+    }
   }
 
   @Override

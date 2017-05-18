@@ -17,7 +17,7 @@ public interface FreecellOperations<K> {
    * <ul>
    *   <li>It does not have 52 cards</li>
    *   <li>It has duplicate cards</li>
-   *   <li>It has at least one invalid slot (invalid suit or invalid number)
+   *   <li>It has at least one invalid card (invalid suit or invalid number)
    *   </li>
    * </ul>
    *

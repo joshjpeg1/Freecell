@@ -16,6 +16,9 @@ public class CardSlot implements ISlot {
    * @param suit       the suit of a slot
    */
   public CardSlot(CardValue value, CardSuit suit) {
+    if (value == null || suit == null) {
+      throw new IllegalArgumentException("Cannot give null as argument.");
+    }
     this.value = value;
     this.suit = suit;
   }

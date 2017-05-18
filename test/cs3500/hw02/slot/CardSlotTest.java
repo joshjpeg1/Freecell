@@ -1,5 +1,6 @@
 package cs3500.hw02.slot;
 
+import cs3500.hw02.PileType;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -138,8 +139,95 @@ public class CardSlotTest {
   }
 
   // Tests for the moveTo() method
+  @Test
+  public void moveToEmpty() {
+    CardSlot card = new CardSlot(CardValue.ACE, CardSuit.CLUBS);
+    ISlot empty = new EmptySlot();
+    assertEquals(card.moveTo(empty, PileType.CASCADE), empty.moveFrom(card, PileType.CASCADE));
+  }
+
+  @Test
+  public void moveToCard() {
+    CardSlot card1 = new CardSlot(CardValue.ACE, CardSuit.CLUBS);
+    ISlot card2 = new CardSlot(CardValue.EIGHT, CardSuit.DIAMONDS);
+    assertEquals(card1.moveTo(card2, PileType.CASCADE), card2.moveFrom(card1, PileType.CASCADE));
+  }
 
   // Tests for the moveFrom() method
+  @Test
+  public void moveFromSameValueCascade() {
+    CardSlot card1 = new CardSlot(CardValue.QUEEN, CardSuit.SPADES);
+    CardSlot card2 = new CardSlot(CardValue.QUEEN, CardSuit.HEARTS);
+    assertFalse(card2.moveFrom(card1, PileType.CASCADE));
+  }
+
+  @Test
+  public void moveFromSameColorCascade() {
+    CardSlot card1 = new CardSlot(CardValue.QUEEN, CardSuit.SPADES);
+    CardSlot card2 = new CardSlot(CardValue.KING, CardSuit.CLUBS);
+    assertFalse(card2.moveFrom(card1, PileType.CASCADE));
+  }
+
+  @Test
+  public void moveFromSameCardCascade() {
+    CardSlot card1 = new CardSlot(CardValue.QUEEN, CardSuit.SPADES);
+    assertFalse(card1.moveFrom(card1, PileType.CASCADE));
+  }
+
+  @Test
+  public void moveFromHighToLowCascade() {
+    CardSlot card1 = new CardSlot(CardValue.KING, CardSuit.SPADES);
+    CardSlot card2 = new CardSlot(CardValue.QUEEN, CardSuit.HEARTS);
+    assertFalse(card2.moveFrom(card1, PileType.CASCADE));
+  }
+
+  @Test
+  public void moveFromLowToHighCascade() {
+    CardSlot card1 = new CardSlot(CardValue.QUEEN, CardSuit.SPADES);
+    CardSlot card2 = new CardSlot(CardValue.KING, CardSuit.HEARTS);
+    assertTrue(card2.moveFrom(card1, PileType.CASCADE));
+  }
+
+  @Test
+  public void moveFromSameValueFoundation() {
+    CardSlot card1 = new CardSlot(CardValue.THREE, CardSuit.SPADES);
+    CardSlot card2 = new CardSlot(CardValue.THREE, CardSuit.CLUBS);
+    assertFalse(card2.moveFrom(card1, PileType.FOUNDATION));
+  }
+
+  @Test
+  public void moveFromDifferentSuitFoundation() {
+    CardSlot card1 = new CardSlot(CardValue.FOUR, CardSuit.SPADES);
+    CardSlot card2 = new CardSlot(CardValue.THREE, CardSuit.CLUBS);
+    assertFalse(card2.moveFrom(card1, PileType.FOUNDATION));
+  }
+
+  @Test
+  public void moveFromSameCardFoundation() {
+    CardSlot card1 = new CardSlot(CardValue.THREE, CardSuit.SPADES);
+    assertFalse(card1.moveFrom(card1, PileType.FOUNDATION));
+  }
+
+  @Test
+  public void moveFromLowToHighFoundation() {
+    CardSlot card1 = new CardSlot(CardValue.THREE, CardSuit.SPADES);
+    CardSlot card2 = new CardSlot(CardValue.FOUR, CardSuit.SPADES);
+    assertFalse(card2.moveFrom(card1, PileType.FOUNDATION));
+  }
+
+  @Test
+  public void moveFromHighToLowFoundation() {
+    CardSlot card1 = new CardSlot(CardValue.FOUR, CardSuit.SPADES);
+    CardSlot card2 = new CardSlot(CardValue.THREE, CardSuit.SPADES);
+    assertTrue(card2.moveFrom(card1, PileType.FOUNDATION));
+  }
+
+  @Test
+  public void moveFromOpen() {
+    CardSlot card1 = new CardSlot(CardValue.QUEEN, CardSuit.SPADES);
+    CardSlot card2 = new CardSlot(CardValue.KING, CardSuit.HEARTS);
+    assertFalse(card2.moveFrom(card1, PileType.OPEN));
+  }
 
   // Tests for the oppositeColor() method
   @Test
