@@ -18,9 +18,9 @@ public class FreecellModel implements FreecellOperations<ISlot> {
    * Constructs a {@code FreecellModel} object.
    */
   public FreecellModel() {
-    this.startGame(this.getDeck(), 8, 4, true);
+    this(8, 4, false);
   }
-  /*
+
   /**
    * Constructs a {@code FreecellModel} object, with a defined number of cascade piles, open piles,
    * and whether the deck is shuffled from the beginning.
@@ -29,9 +29,9 @@ public class FreecellModel implements FreecellOperations<ISlot> {
    * @param numOpenPiles     number of open piles, ranging from 1 to 4
    * @param shuffle          if true, shuffle the deck else deal the deck as-is
    */
-  /*public FreecellModel(int numCascadePiles, int numOpenPiles, boolean shuffle) {
+  public FreecellModel(int numCascadePiles, int numOpenPiles, boolean shuffle) {
     this.startGame(this.getDeck(), numCascadePiles, numOpenPiles, shuffle);
-  }*/
+  }
 
   @Override
   public List<ISlot> getDeck() {
