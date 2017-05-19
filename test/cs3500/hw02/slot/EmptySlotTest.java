@@ -45,6 +45,21 @@ public class EmptySlotTest {
   }
 
   // Tests for the moveTo() method
+  @Test(expected = IllegalArgumentException.class)
+  public void moveToNullISlot() {
+    new EmptySlot().moveTo(null, PileType.CASCADE);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void moveToNullPileType() {
+    new EmptySlot().moveTo(new EmptySlot(), null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void moveToBothNull() {
+    new EmptySlot().moveTo(null, null);
+  }
+
   @Test
   public void moveToEmpty() {
     assertTrue(new EmptySlot().moveTo(new EmptySlot(), PileType.CASCADE));
@@ -57,6 +72,21 @@ public class EmptySlotTest {
   }
 
   // Tests for the moveFrom() method
+  @Test(expected = IllegalArgumentException.class)
+  public void moveFromNullCardSlot() {
+    new EmptySlot().moveFrom(null, PileType.CASCADE);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void moveFromNullPileType() {
+    new EmptySlot().moveFrom(new CardSlot(CardValue.ACE, CardSuit.CLUBS), null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void moveFromBothNull() {
+    new EmptySlot().moveFrom(null, null);
+  }
+
   @Test
   public void moveFromCascade() {
     assertTrue(new EmptySlot().moveFrom(new CardSlot(CardValue.ACE,

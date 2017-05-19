@@ -32,6 +32,11 @@ public class CardSuitTest {
   }
 
   // Tests for the oppositeColor() method
+  @Test(expected = IllegalArgumentException.class)
+  public void oppositeColorNull() {
+    CardSuit.CLUBS.oppositeColor(null);
+  }
+
   @Test
   public void oppositeColorSameSuit() {
     assertFalse(CardSuit.CLUBS.oppositeColor(CardSuit.CLUBS));

@@ -25,6 +25,11 @@ public class CardSlotTest {
     new CardSlot(CardValue.ACE, null);
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void constructorBothNull() {
+    new CardSlot(null, null);
+  }
+
   // Tests for the equals() method
   @Test
   public void equalsSameObject() {
@@ -155,6 +160,24 @@ public class CardSlotTest {
   }
 
   // Tests for the moveTo() method
+  @Test(expected = IllegalArgumentException.class)
+  public void moveToNullSlot() {
+    CardSlot card = new CardSlot(CardValue.ACE, CardSuit.CLUBS);
+    card.moveTo(null, PileType.CASCADE);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void moveToNullPile() {
+    CardSlot card = new CardSlot(CardValue.ACE, CardSuit.CLUBS);
+    card.moveTo(new EmptySlot(), null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void moveToBothNull() {
+    CardSlot card = new CardSlot(CardValue.ACE, CardSuit.CLUBS);
+    card.moveTo(null, null);
+  }
+
   @Test
   public void moveToEmpty() {
     CardSlot card = new CardSlot(CardValue.ACE, CardSuit.CLUBS);
@@ -170,6 +193,24 @@ public class CardSlotTest {
   }
 
   // Tests for the moveFrom() method
+  @Test(expected = IllegalArgumentException.class)
+  public void moveFromNullCardSlot() {
+    CardSlot card = new CardSlot(CardValue.ACE, CardSuit.CLUBS);
+    card.moveFrom(null, PileType.CASCADE);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void moveFromNullPileType() {
+    CardSlot card = new CardSlot(CardValue.ACE, CardSuit.CLUBS);
+    card.moveFrom(new CardSlot(CardValue.TWO, CardSuit.CLUBS), null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void moveFromBothNull() {
+    CardSlot card = new CardSlot(CardValue.ACE, CardSuit.CLUBS);
+    card.moveFrom(null, null);
+  }
+
   @Test
   public void moveFromSameValueCascade() {
     CardSlot card1 = new CardSlot(CardValue.QUEEN, CardSuit.SPADES);
@@ -246,6 +287,12 @@ public class CardSlotTest {
   }
 
   // Tests for the oppositeColor() method
+  @Test(expected = IllegalArgumentException.class)
+  public void oppositeColorNull() {
+    CardSlot card1 = new CardSlot(CardValue.ACE, CardSuit.CLUBS);
+    card1.oppositeColor(null);
+  }
+
   @Test
   public void oppositeColorSameSuit() {
     CardSlot card1 = new CardSlot(CardValue.ACE, CardSuit.CLUBS);

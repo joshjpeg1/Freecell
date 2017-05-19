@@ -43,8 +43,12 @@ public enum CardValue {
    * Returns the difference of this and the given {@code CardValue}.
    *
    * @return the difference of two values' ids
+   * @throws IllegalArgumentException if given CardValue is null
    */
   protected int getDifference(CardValue other) {
+    if (other == null) {
+      throw new IllegalArgumentException("Cannot get difference of null");
+    }
     return this.id - other.id;
   }
 }

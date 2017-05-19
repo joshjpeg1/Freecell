@@ -14,8 +14,9 @@ public class CardSlot implements ISlot {
    *
    * @param value      the value of a slot
    * @param suit       the suit of a slot
+   * @throws IllegalArgumentException if given CardValue or CardSuit is null
    */
-  public CardSlot(CardValue value, CardSuit suit) {
+  public CardSlot(CardValue value, CardSuit suit) throws IllegalArgumentException {
     if (value == null || suit == null) {
       throw new IllegalArgumentException("Cannot give null as argument.");
     }
@@ -68,22 +69,30 @@ public class CardSlot implements ISlot {
    * @param to         the slot to be move on
    * @param where      the pile the desired slot is located
    * @return whether this card can move to the other in the given pile
+   * @throws IllegalArgumentException if given ISlot or PileType are null
    */
   @Override
-  public boolean moveTo(ISlot to, PileType where) {
+  public boolean moveTo(ISlot to, PileType where) throws IllegalArgumentException {
+    if (to == null || where == null) {
+      throw new IllegalArgumentException("ISlot or pile type are invalid.");
+    }
     return to.moveFrom(this, where);
   }
 
   /**
-   * Returns whether moving the given {@code CardSlot} onto this {@code CardSlot} in the given
-   * pile is possible.
+   * Helper to the {@code moveTo} method. Returns whether moving the given {@code CardSlot} onto
+   * this {@code CardSlot} in the given pile is possible.
    *
    * @param from       the card moving on this card
    * @param where      the pile this is located
    * @return whether the given card can be moved on this card in the given pile
+   * @throws IllegalArgumentException if given CardSlot or PileType are null
    */
   @Override
-  public boolean moveFrom(CardSlot from, PileType where) {
+  public boolean moveFrom(CardSlot from, PileType where) throws IllegalArgumentException {
+    if (from == null || where == null) {
+      throw new IllegalArgumentException("CardSlot or pile type are invalid.");
+    }
     switch (where) {
       case CASCADE:
         return this.value.getDifference(from.value) == 1
@@ -101,8 +110,12 @@ public class CardSlot implements ISlot {
    *
    * @param other       the card being compared against
    * @return whether the two cards are opposite colors
+   * @throws IllegalArgumentException if given CardSlot is null
    */
-  public boolean oppositeColor(CardSlot other) {
+  public boolean oppositeColor(CardSlot other) throws IllegalArgumentException {
+    if (other == null) {
+      throw new IllegalArgumentException("Cannot check opposite color against null.");
+    }
     return this.suit.oppositeColor(other.suit);
   }
 }

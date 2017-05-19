@@ -488,11 +488,12 @@ public class FreecellModelTest {
       }
     }
     assertEquals("F1: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠\n"
-      + "F2: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
-      + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
-      + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
-      + "O1:\nO2:\nO3:\nO4:\n"
-      + "C1:\nC2:\nC3:\nC4:\nC5:\nC6:\nC7:\nC8:", fcm.getGameState());
+        + "F2: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
+        + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
+        + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
+        + "O1:\nO2:\nO3:\nO4:\n"
+        + "C1:\nC2:\nC3:\nC4:\nC5:\nC6:\nC7:\nC8:",
+        fcm.getGameState());
   }
 
   @Test
@@ -500,11 +501,12 @@ public class FreecellModelTest {
     moveWin8Cascade();
     fcm.move(PileType.FOUNDATION, 0, 12, PileType.OPEN, 0);
     assertEquals("F1: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠\n"
-      + "F2: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
-      + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
-      + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
-      + "O1:\nO2:\nO3:\nO4:\n"
-      + "C1:\nC2:\nC3:\nC4:\nC5:\nC6:\nC7:\nC8:", fcm.getGameState());
+        + "F2: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
+        + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
+        + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
+        + "O1:\nO2:\nO3:\nO4:\n"
+        + "C1:\nC2:\nC3:\nC4:\nC5:\nC6:\nC7:\nC8:",
+        fcm.getGameState());
   }
 
   @Test

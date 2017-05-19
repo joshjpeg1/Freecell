@@ -17,6 +17,16 @@ import static org.junit.Assert.assertFalse;
 /** Tests for {@link Utils}. */
 public class UtilsTest {
   // Tests for the noDuplicates() method
+  @Test(expected = IllegalArgumentException.class)
+  public void noDuplicatesNull() {
+    Utils.noDuplicates(null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void noDuplicatesContainsNull() {
+    Utils.noDuplicates(new ArrayList<>(Arrays.asList("a", null, "b")));
+  }
+
   @Test
   public void noDuplicatesEmpty() {
     assertTrue(Utils.noDuplicates(new ArrayList<Integer>()));
@@ -48,6 +58,16 @@ public class UtilsTest {
   }
 
   // Tests for the shuffle() method
+  @Test(expected = IllegalArgumentException.class)
+  public void shuffleNull() {
+    Utils.shuffle(null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void shuffleContainsNull() {
+    Utils.shuffle(new ArrayList<>(Arrays.asList("a", null, "b")));
+  }
+
   @Test
   public void shuffleEmpty() {
     ArrayList<Integer> list = new ArrayList<>();
@@ -78,6 +98,42 @@ public class UtilsTest {
   }
 
   // Tests for the filterList() method
+  @Test(expected = IllegalArgumentException.class)
+  public void filterListNullList() {
+    Utils.filterList(null, new ArrayList<>());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void filterListNullFilt() {
+    Utils.filterList(new ArrayList<>(), null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void filterListBothNull() {
+    Utils.filterList(null, null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void filterListListContainsNull() {
+    List<String> list = new ArrayList<>(Arrays.asList("a", null, "b"));
+    List<String> filter = new ArrayList<>(Arrays.asList("a"));
+    Utils.filterList(list, filter);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void filterListFiltContainsNull() {
+    List<String> list = new ArrayList<>(Arrays.asList("a", "b"));
+    List<String> filter = new ArrayList<>(Arrays.asList("a", null));
+    Utils.filterList(list, filter);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void filterListBothContainNull() {
+    List<String> list = new ArrayList<>(Arrays.asList("a", null, "b"));
+    List<String> filter = new ArrayList<>(Arrays.asList("a", null));
+    Utils.filterList(list, filter);
+  }
+
   @Test
   public void filterListEmptyNoFilt() {
     List<Integer> list = new ArrayList<>();
@@ -151,6 +207,16 @@ public class UtilsTest {
   }
 
   // Tests for the listToString() method
+  @Test(expected = IllegalArgumentException.class)
+  public void listToStringNullList() {
+    Utils.listToString(null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void listToStringContainsNull() {
+    Utils.listToString(new ArrayList<>(Arrays.asList("a", null, "b")));
+  }
+
   @Test
   public void listToStringEmpty() {
     assertEquals("", Utils.listToString(new ArrayList<Integer>()));
@@ -172,7 +238,17 @@ public class UtilsTest {
   }
 
   // Tests for the getLast() method
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
+  public void getLastNull() {
+    Utils.getLast(null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void getLastContainsNull() {
+    Utils.getLast(new ArrayList<>(Arrays.asList("a", null, "b")));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
   public void getLastEmpty() {
     Utils.getLast(new ArrayList<>());
   }
@@ -188,6 +264,16 @@ public class UtilsTest {
   }
 
   // Tests for the reverse() method
+  @Test(expected = IllegalArgumentException.class)
+  public void reverseNull() {
+    Utils.reverse(null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void reverseContainsNull() {
+    Utils.reverse(new ArrayList<>(Arrays.asList("a", null, "b")));
+  }
+
   @Test
   public void reverseEmpty() {
     List<Integer> list = new ArrayList<>();

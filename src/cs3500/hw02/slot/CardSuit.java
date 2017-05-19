@@ -32,8 +32,12 @@ public enum CardSuit {
    *
    * @param other     the suit being compared against
    * @return whether the two suit are opposite colors
+   * @throws IllegalArgumentException if given CardSuit is null
    */
-  protected boolean oppositeColor(CardSuit other) {
+  protected boolean oppositeColor(CardSuit other) throws IllegalArgumentException {
+    if (other == null) {
+      throw new IllegalArgumentException("Cannot check opposite color against null.");
+    }
     if (this.equals(DIAMONDS) || this.equals(HEARTS)) {
       return other.equals(CLUBS) || other.equals(SPADES);
     } else {

@@ -13,9 +13,12 @@ public class Utils {
    *
    * @param list       a generic list of items
    * @return true if there are no duplicates; false otherwise
+   * @throws IllegalArgumentException if given List is or contains null
    */
-  public static <T> boolean noDuplicates(List<T> list) {
-    if (list.size() < 2) {
+  public static <T> boolean noDuplicates(List<T> list) throws IllegalArgumentException {
+    if (list == null || list.contains(null)) {
+      throw new IllegalArgumentException("Cannot give a list that is or contains null.");
+    } else if (list.size() < 2) {
       return true;
     }
     List<T> tempList = new ArrayList<>();
@@ -38,9 +41,12 @@ public class Utils {
    *
    * @param list       a generic list of items
    * @return a shuffled list
+   * @throws IllegalArgumentException if given List is or contains null
    */
-  public static <T> List<T> shuffle(List<T> list) {
-    if (list.size() > 1) {
+  public static <T> List<T> shuffle(List<T> list) throws IllegalArgumentException {
+    if (list == null || list.contains(null)) {
+      throw new IllegalArgumentException("Cannot give a list that is or contains null.");
+    } else if (list.size() > 1) {
       List<T> shuffledList = new ArrayList<>();
       List<T> tempList = new ArrayList<>();
       for (T t : list) {
@@ -59,13 +65,17 @@ public class Utils {
    * Returns the given {@code List}, without any of the items in the given filter {@code List}.
    *
    * @param list       a generic list of items
-   * @param filters    a generic list of items to be filtered
+   * @param filt    a generic list of items to be filtered
    * @return a filtered list
+   * @throws IllegalArgumentException if either of the given Lists are or contain null
    */
-  public static <T> List<T> filterList(List<T> list, List<T> filters) {
+  public static <T> List<T> filterList(List<T> list, List<T> filt) throws IllegalArgumentException {
+    if (list == null || filt == null || list.contains(null) || filt.contains(null)) {
+      throw new IllegalArgumentException("Cannot give a list that is or contains null.");
+    }
     List<T> finalList = new ArrayList<>();
     for (T item : list) {
-      if (!filters.contains(item)) {
+      if (!filt.contains(item)) {
         finalList.add(item);
       }
     }
@@ -77,8 +87,12 @@ public class Utils {
    *
    * @param list       a generic list of items
    * @return a string representation of the given {@code List}
+   * @throws IllegalArgumentException if the given List is or contains null
    */
-  public static <T> String listToString(List<T> list) {
+  public static <T> String listToString(List<T> list) throws IllegalArgumentException {
+    if (list == null || list.contains(null)) {
+      throw new IllegalArgumentException("Cannot give a list that is or contains null.");
+    }
     String str = "";
     for (T item : list) {
       str += " " + item.toString();
@@ -94,11 +108,13 @@ public class Utils {
    *
    * @param list       a generic list of items
    * @return the last element
-   * @throws IndexOutOfBoundsException if the given {@code List} is empty
+   * @throws IllegalArgumentException if the given {@code List} is empty, null, or contains null
    */
-  public static <T> T getLast(List<T> list) throws IndexOutOfBoundsException {
-    if (list.size() == 0) {
-      throw new IndexOutOfBoundsException("Can't get the last item of an empty list.");
+  public static <T> T getLast(List<T> list) throws IllegalArgumentException {
+    if (list == null || list.contains(null)) {
+      throw new IllegalArgumentException("Cannot give a list that is or contains null.");
+    } else if (list.size() == 0) {
+      throw new IllegalArgumentException("Can't get the last item of an empty list.");
     }
     return list.get(list.size() - 1);
   }
@@ -108,10 +124,12 @@ public class Utils {
    *
    * @param list       a generic list of items
    * @return the last element
-   * @throws IndexOutOfBoundsException if the given {@code List} is empty
+   * @throws IllegalArgumentException if the given {@code List} is or contains null
    */
-  public static <T> List<T> reverse(List<T> list) {
-    if (list.size() > 1) {
+  public static <T> List<T> reverse(List<T> list) throws IllegalArgumentException {
+    if (list == null || list.contains(null)) {
+      throw new IllegalArgumentException("Cannot give a list that is or contains null.");
+    } else if (list.size() > 1) {
       List<T> copy = new ArrayList<>();
       for (T item : list) {
         copy.add(0, item);

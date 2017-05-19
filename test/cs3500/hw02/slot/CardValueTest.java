@@ -38,6 +38,11 @@ public class CardValueTest {
   }
 
   // Tests for the getDifference() method
+  @Test(expected = IllegalArgumentException.class)
+  public void getDifferenceNull() {
+    CardValue.KING.getDifference(null);
+  }
+
   @Test
   public void getDifferenceFaceFace() {
     assertEquals(1, CardValue.KING.getDifference(CardValue.QUEEN));

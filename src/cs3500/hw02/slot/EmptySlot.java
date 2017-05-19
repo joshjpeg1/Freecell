@@ -42,22 +42,30 @@ public class EmptySlot implements ISlot {
    * @param to         the slot to be move on
    * @param where      the pile the desired slot is located
    * @return whether this empty can move to the other in the given pile
+   * @throws IllegalArgumentException if given ISlot or PileType are null
    */
   @Override
   public boolean moveTo(ISlot to, PileType where) {
+    if (to == null || where == null) {
+      throw new IllegalArgumentException("ISlot or pile type are invalid.");
+    }
     return true;
   }
 
   /**
-   * Returns whether moving the given {@code CardSlot} onto this {@code EmptySlot} in the given
-   * pile is possible.
+   * Helper to the {@code moveTo} method. Returns whether moving the given {@code CardSlot} onto
+   * this {@code EmptySlot} in the given pile is possible.
    *
-   * @param from       the card moving on this ISlot
+   * @param from       the card moving on this EmptySlot
    * @param where      the pile this is located
    * @return whether the given card can be moved on this ISlot in the given pile
+   * @throws IllegalArgumentException if given CardSlot or PileType are null
    */
   @Override
   public boolean moveFrom(CardSlot from, PileType where) {
+    if (from == null || where == null) {
+      throw new IllegalArgumentException("CardSlot or pile type are invalid.");
+    }
     if (where.equals(PileType.FOUNDATION)) {
       return from.value.equals(CardValue.ACE);
     }

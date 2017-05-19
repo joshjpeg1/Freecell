@@ -178,14 +178,18 @@ public class FreecellModel implements FreecellOperations<ISlot> {
   }
 
   /**
-   * Removes a slot (card or empty) safely from a pile, by adding a new empty in case the list is
-   * empty.
+   * Helper to the move method. Removes a slot (card or empty) safely from a pile, by adding a new
+   * empty in case the list is empty.
    *
    * @param pile           a singular pile
    * @param index          the index to remove the slot from the pile
    * @return the removed {@code ISlot}
+   * @throws IllegalArgumentException if given List is or contains null
    */
-  private ISlot removeSafelyPile(List<ISlot> pile, int index) {
+  private ISlot removeSafelyPile(List<ISlot> pile, int index) throws IllegalArgumentException {
+    if (pile == null || pile.contains(null)) {
+      throw new IllegalArgumentException("The given pile cannot be used.");
+    }
     ISlot slot = pile.remove(index);
     if (pile.size() == 0) {
       pile.add(new EmptySlot());
@@ -194,12 +198,19 @@ public class FreecellModel implements FreecellOperations<ISlot> {
   }
 
   /**
-   * Adds a slot (card or empty) safely to a pile, by removing any empties the given pile had.
+   * Helper to the move method. Adds a slot (card or empty) safely to a pile, by removing any
+   * empties the given pile had.
    *
    * @param pile           a singular pile
    * @param slot           the {@code ISlot} to add to the pile
+   * @throws IllegalArgumentException if given List is/contains null, or if the given ISlot is null
    */
-  private void addSafelyPile(List<ISlot> pile, ISlot slot) {
+  private void addSafelyPile(List<ISlot> pile, ISlot slot) throws IllegalArgumentException {
+    if (pile == null || pile.contains(null)) {
+      throw new IllegalArgumentException("The given pile cannot be used.");
+    } else if (slot == null) {
+      throw new IllegalArgumentException("Must give a non-null ISlot.");
+    }
     pile.add(slot);
     if (pile.contains(new EmptySlot())) {
       pile.remove(new EmptySlot());
