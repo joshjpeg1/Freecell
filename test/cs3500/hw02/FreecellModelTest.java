@@ -213,122 +213,122 @@ public class FreecellModelTest {
         fcm.getGameState());
   }
 
-  // Tests for the move() method
+  // Tests for the move()
   @Test(expected = IllegalArgumentException.class)
   public void moveNullSource() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
-    fcm.move(null, -1, 0, PileType.OPEN, 0);
+    fcm.move(null, 3, 6, PileType.OPEN, 0);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void moveNullDestination() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
-    fcm.move(null, -1, 0, null, 0);
+    fcm.move(PileType.CASCADE, 3, 6, null, 0);
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void moveCascadeSourcePileTooLow() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
     fcm.move(PileType.CASCADE, -1, 0, PileType.OPEN, 0);
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void moveOpenSourcePileTooLow() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
     fcm.move(PileType.OPEN, -1, 0, PileType.CASCADE, 0);
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void moveFoundationSourcePileTooLow() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
     fcm.move(PileType.FOUNDATION, -1, 0, PileType.CASCADE, 0);
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void moveCascadeSourcePileTooHigh() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
     fcm.move(PileType.CASCADE, 8, 0, PileType.OPEN, 0);
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void moveOpenSourcePileTooHigh() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
     fcm.move(PileType.OPEN, 4, 0, PileType.CASCADE, 0);
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void moveFoundationSourcePileTooHigh() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
     fcm.move(PileType.FOUNDATION, 4, 0, PileType.CASCADE, 0);
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void moveCascadeSourceCardTooLow() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
     fcm.move(PileType.CASCADE, 0, 5, PileType.OPEN, 0);
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void moveOpenSourceCardTooLow() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
     fcm.move(PileType.OPEN, 0, -1, PileType.CASCADE, 0);
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void moveFoundationSourceCardTooLow() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
     fcm.move(PileType.FOUNDATION, 0, -1, PileType.CASCADE, 0);
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void moveCascadeSourceCardTooHigh() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
     fcm.move(PileType.CASCADE, 0, 7, PileType.OPEN, 0);
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void moveOpenSourceCardTooHigh() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
     fcm.move(PileType.OPEN, 0, 1, PileType.CASCADE, 0);
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void moveFoundationSourceCardTooHigh() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
     fcm.move(PileType.FOUNDATION, 0, 1, PileType.CASCADE, 0);
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void moveCascadeDestPileTooLow() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
     fcm.move(PileType.CASCADE, 0, 6, PileType.CASCADE, -1);
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void moveOpenDestPileTooLow() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
     fcm.move(PileType.CASCADE, 0, 6, PileType.OPEN, -1);
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void moveFoundationDestPileTooLow() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
     fcm.move(PileType.CASCADE, -1, 0, PileType.FOUNDATION, -1);
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void moveCascadeDestPileTooHigh() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
     fcm.move(PileType.CASCADE, 0, 6, PileType.CASCADE, 8);
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void moveOpenDestPileTooHigh() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
     fcm.move(PileType.CASCADE, 0, 6, PileType.OPEN, 4);
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void moveFoundationDestPileTooHigh() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
     fcm.move(PileType.CASCADE, -1, 0, PileType.FOUNDATION, 4);
@@ -488,11 +488,23 @@ public class FreecellModelTest {
       }
     }
     assertEquals("F1: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠\n"
-        + "F2: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
-        + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
-        + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
-        + "O1:\nO2:\nO3:\nO4:\n"
-        + "C1:\nC2:\nC3:\nC4:\nC5:\nC6:\nC7:\nC8:", fcm.getGameState());
+      + "F2: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
+      + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
+      + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
+      + "O1:\nO2:\nO3:\nO4:\n"
+      + "C1:\nC2:\nC3:\nC4:\nC5:\nC6:\nC7:\nC8:", fcm.getGameState());
+  }
+
+  @Test
+  public void moveCantAfterGameOver() {
+    moveWin8Cascade();
+    fcm.move(PileType.FOUNDATION, 0, 12, PileType.OPEN, 0);
+    assertEquals("F1: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠\n"
+      + "F2: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
+      + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
+      + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
+      + "O1:\nO2:\nO3:\nO4:\n"
+      + "C1:\nC2:\nC3:\nC4:\nC5:\nC6:\nC7:\nC8:", fcm.getGameState());
   }
 
   @Test
@@ -535,13 +547,6 @@ public class FreecellModelTest {
   }
 
   @Test
-  public void isGameOverOneMoveAway() {
-    moveWin8Cascade();
-    fcm.move(PileType.FOUNDATION, 0, 12, PileType.CASCADE, 0);
-    assertFalse(fcm.isGameOver());
-  }
-
-  @Test
   public void isGameOverWin4Cascade() {
     moveWin4Cascade();
     assertTrue(fcm.isGameOver());
@@ -557,5 +562,13 @@ public class FreecellModelTest {
   public void isGameOverWin52Cascade() {
     moveWin52Cascade();
     assertTrue(fcm.isGameOver());
+  }
+
+  @Test
+  public void isGameOverAfterRestart() {
+    moveWin52Cascade();
+    assertTrue(fcm.isGameOver());
+    fcm.startGame(fcm.getDeck(), 8, 4, false);
+    assertFalse(fcm.isGameOver());
   }
 }

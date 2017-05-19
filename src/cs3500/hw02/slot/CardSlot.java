@@ -44,8 +44,10 @@ public class CardSlot implements ISlot {
         return (this.value.id * 10) + 2;
       case SPADES:
         return (this.value.id * 10) + 3;
-      default:
+      case HEARTS:
         return (this.value.id * 10) + 4;
+      default:
+        return this.value.id * 10;
     }
   }
 

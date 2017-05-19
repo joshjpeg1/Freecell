@@ -8,6 +8,7 @@ import cs3500.hw02.slot.ISlot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ public class FreecellModel implements FreecellOperations<ISlot> {
   private List<List<ISlot>> cascades;
   private List<ISlot> opens;
   private List<List<ISlot>> foundations;
+  private HashMap<PileType, List> piles;
 
   /**
    * Constructs a {@code FreecellModel} object.
@@ -25,6 +27,7 @@ public class FreecellModel implements FreecellOperations<ISlot> {
     this.cascades = new ArrayList<>();
     this.opens = new ArrayList<>();
     this.foundations = new ArrayList<>();
+    this.piles = new HashMap<>();
   }
 
   @Override
@@ -56,7 +59,7 @@ public class FreecellModel implements FreecellOperations<ISlot> {
     }
 
     this.foundations = new ArrayList<>();
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < CardSuit.values().length; i++) {
       this.foundations.add(new ArrayList<>(Arrays.asList(new EmptySlot())));
     }
     this.cascades = new ArrayList<>();
@@ -67,15 +70,19 @@ public class FreecellModel implements FreecellOperations<ISlot> {
     for (int i = 0; i < numOpenPiles; i++) {
       this.opens.add(new EmptySlot());
     }
+    this.piles = new HashMap<>();
+    this.piles.put(PileType.CASCADE, this.cascades);
+    this.piles.put(PileType.FOUNDATION, this.foundations);
+    this.piles.put(PileType.OPEN, this.opens);
 
     List<ISlot> deckCopy = new ArrayList<>();
     if (shuffle) {
-      deck = Utils.shuffle(deck);
+      deckCopy = Utils.shuffle(deck);
+    } else {
+      for (ISlot card : deck) {
+        deckCopy.add(card);
+      }
     }
-    for (ISlot card : deck) {
-      deckCopy.add(card);
-    }
-
     while (deckCopy.size() > 0) {
       for (int i = 0; i < this.cascades.size(); i++) {
         if (deckCopy.size() > 0) {
@@ -90,105 +97,108 @@ public class FreecellModel implements FreecellOperations<ISlot> {
 
   @Override
   public void move(PileType source, int pileNumber, int cardIndex, PileType destination,
-                   int destPileNumber) throws IllegalArgumentException, IndexOutOfBoundsException {
+                   int destPileNumber) throws IllegalArgumentException {
+    if (!isGameOver()) {
+      this.moveExceptionChecking(source, pileNumber, cardIndex, destination, destPileNumber);
+      ISlot from;
+      if (source.equals(PileType.CASCADE) || source.equals(PileType.FOUNDATION)) {
+        List<List<ISlot>> pile = this.piles.get(source);
+        from = this.removeSafelyPile(pile.get(pileNumber), cardIndex);
+      } else {
+        from = this.opens.remove(pileNumber);
+        this.opens.add(pileNumber, new EmptySlot());
+      }
+      if (destination.equals(PileType.CASCADE) || destination.equals(PileType.FOUNDATION)) {
+        List<List<ISlot>> pile = this.piles.get(destination);
+        this.addSafelyPile(pile.get(destPileNumber), from);
+      } else {
+        this.opens.add(destPileNumber, from);
+        this.opens.remove(destPileNumber + 1);
+      }
+    }
+  }
+
+  /**
+   * Helper to the move method. Checks for any errors in the given arguments or in the desired moves
+   * and, if found, throws an argument, stopping the move method from proceeding.
+   *
+   * @param source         the type of the source pile see @link{PileType}
+   * @param pileNumber     the pile number of the given type, starting at 0
+   * @param cardIndex      the index of the card to be moved from the source
+   *                       pile, starting at 0
+   * @param destination    the type of the destination pile (see
+   * @param destPileNumber the pile number of the given type, starting at 0
+   * @throws IllegalArgumentException if the move is not possible
+   */
+  private void moveExceptionChecking(PileType source, int pileNumber, int cardIndex,
+                                     PileType destination, int destPileNumber)
+                                     throws IllegalArgumentException {
     if (source == null || destination == null) {
       throw new IllegalArgumentException("Invalid PileType given.");
     }
     ISlot from;
     if (source.equals(PileType.CASCADE) || source.equals(PileType.FOUNDATION)) {
-      List<List<ISlot>> pile = getPile(source);
+      List<List<ISlot>> pile = this.piles.get(source);
       if (pileNumber < 0 || pileNumber >= pile.size()) {
-        throw new IndexOutOfBoundsException(source.toString() + " pile does not exist at "
-          + "given source index.");
+        throw new IllegalArgumentException("Pile does not exist at given source index.");
       }
       if (cardIndex != pile.get(pileNumber).size() - 1) {
-        throw new IndexOutOfBoundsException("Card does not exist at given source index.");
+        throw new IllegalArgumentException("Invalid move, must move last card in pile.");
       }
       from = pile.get(pileNumber).get(cardIndex);
-    } else {
-      if (pileNumber < 0 || pileNumber >= opens.size()) {
-        throw new IndexOutOfBoundsException("Open pile does not exist at "
-          + "given source index.");
+    } else if (source.equals(PileType.OPEN)) {
+      if (pileNumber < 0 || pileNumber >= this.opens.size()) {
+        throw new IllegalArgumentException("Pile does not exist at given source index.");
       }
       if (cardIndex != 0) {
-        throw new IndexOutOfBoundsException("Card does not exist at given source index.");
+        throw new IllegalArgumentException("Card does not exist at given source index.");
       }
-      from = opens.get(pileNumber);
+      from = this.opens.get(pileNumber);
+    } else {
+      throw new IllegalArgumentException("Given pile type does not exist.");
     }
-
     if (destination.equals(PileType.CASCADE) || destination.equals(PileType.FOUNDATION)) {
-      List<List<ISlot>> pile = getPile(destination);
+      List<List<ISlot>> pile = this.piles.get(destination);
       if (destPileNumber < 0 || destPileNumber >= pile.size()) {
-        throw new IndexOutOfBoundsException(destination.toString() + " pile does not exist at "
-          + "given destination index.");
+        throw new IllegalArgumentException("Pile does not exist at given destination index.");
       }
       if (!from.moveTo(Utils.getLast(pile.get(destPileNumber)), destination)) {
         throw new IllegalArgumentException("Move is illegal.");
       }
-    } else {
-      if (destPileNumber < 0 || destPileNumber >= opens.size()) {
-        throw new IndexOutOfBoundsException("Open pile does not exist at "
-          + "given destination index.");
+    } else if (destination.equals(PileType.OPEN)) {
+      if (destPileNumber < 0 || destPileNumber >= this.opens.size()) {
+        throw new IllegalArgumentException("Pile does not exist at given destination index.");
       }
-      if (!from.moveTo(opens.get(destPileNumber), PileType.OPEN)) {
+      if (!from.moveTo(this.opens.get(destPileNumber), destination)) {
         throw new IllegalArgumentException("Move is illegal.");
       }
-    }
-
-    switch (source) {
-      case CASCADE:
-        this.removeSafelyPile(cascades.get(pileNumber), cascades.get(pileNumber).indexOf(from));
-        break;
-      case FOUNDATION:
-        removeSafelyPile(foundations.get(pileNumber), foundations.get(pileNumber).indexOf(from));
-        break;
-      case OPEN:
-        opens.remove(pileNumber);
-        opens.add(pileNumber, new EmptySlot());
-        break;
-      default:
-        throw new IllegalArgumentException("Source PileType unknown.");
-    }
-
-    switch (destination) {
-      case CASCADE:
-        addSafelyPile(cascades.get(destPileNumber), from);
-        break;
-      case FOUNDATION:
-        addSafelyPile(foundations.get(destPileNumber), from);
-        break;
-      case OPEN:
-        opens.add(destPileNumber, from);
-        opens.remove(destPileNumber + 1);
-        break;
-      default:
-        throw new IllegalArgumentException("Source PileType unknown.");
-    }
-  }
-
-  private List getPile(PileType type) {
-    switch (type) {
-      case CASCADE:
-        return cascades;
-      case FOUNDATION:
-        return foundations;
-      case OPEN:
-        return opens;
-      default:
-        return new ArrayList();
-    }
-  }
-
-  private void removeSafelyPile(List<ISlot> pile, int index) {
-    if (Utils.filterList(pile, new ArrayList<>(Arrays.asList(new EmptySlot()))).size() == 1
-        && index == 0) {
-      pile.remove(0);
-      pile.add(new EmptySlot());
     } else {
-      pile.remove(index);
+      throw new IllegalArgumentException("Given pile type does not exist.");
     }
   }
 
+  /**
+   * Removes a slot (card or empty) safely from a pile, by adding a new empty in case the list is
+   * empty.
+   *
+   * @param pile           a singular pile
+   * @param index          the index to remove the slot from the pile
+   * @return the removed {@code ISlot}
+   */
+  private ISlot removeSafelyPile(List<ISlot> pile, int index) {
+    ISlot slot = pile.remove(index);
+    if (pile.size() == 0) {
+      pile.add(new EmptySlot());
+    }
+    return slot;
+  }
+
+  /**
+   * Adds a slot (card or empty) safely to a pile, by removing any empties the given pile had.
+   *
+   * @param pile           a singular pile
+   * @param slot           the {@code ISlot} to add to the pile
+   */
   private void addSafelyPile(List<ISlot> pile, ISlot slot) {
     pile.add(slot);
     if (pile.contains(new EmptySlot())) {
@@ -198,7 +208,7 @@ public class FreecellModel implements FreecellOperations<ISlot> {
 
   @Override
   public boolean isGameOver() {
-    for (List<ISlot> pile : foundations) {
+    for (List<ISlot> pile : this.foundations) {
       if (pile.size() != CardValue.values().length || !Utils.noDuplicates(pile)) {
         return false;
       }
