@@ -25,7 +25,7 @@ public enum CardValue {
    */
   @Override
   public String toString() {
-    switch(this) {
+    switch (this) {
       case ACE:
         return "A";
       case JACK:

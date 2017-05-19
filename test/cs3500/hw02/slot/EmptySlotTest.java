@@ -1,10 +1,15 @@
 package cs3500.hw02.slot;
 
 import cs3500.hw02.PileType;
+
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
+
 import static org.junit.Assert.assertNotEquals;
+
 import static org.junit.Assert.assertTrue;
+
 import static org.junit.Assert.assertFalse;
 
 /** Tests for {@link EmptySlot}. */

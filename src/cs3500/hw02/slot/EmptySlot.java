@@ -9,17 +9,16 @@ public class EmptySlot implements ISlot {
   /**
    * Constructs a {@code EmptySlot} object.
    */
-  public EmptySlot() {}
+  public EmptySlot() {
+    // EmptySlot has no fields to be initialized
+  }
 
   @Override
   public boolean equals(Object that) {
     if (this == that) {
       return true;
     }
-    if (!(that instanceof EmptySlot)) {
-      return false;
-    }
-    return true;
+    return that instanceof EmptySlot;
   }
 
   @Override

@@ -21,7 +21,9 @@ public class FreecellModel implements FreecellOperations<ISlot> {
   /**
    * Constructs a {@code FreecellModel} object.
    */
-  public FreecellModel() {}
+  public FreecellModel() {
+    // nothing is initially set in the constructor, but rather in the startGame() method
+  }
 
   @Override
   public List<ISlot> getDeck() {
@@ -86,8 +88,8 @@ public class FreecellModel implements FreecellOperations<ISlot> {
     if (source.equals(PileType.CASCADE) || source.equals(PileType.FOUNDATION)) {
       List<List<ISlot>> pile = getPile(source);
       if (pileNumber < 0 || pileNumber >= pile.size()) {
-        throw new IndexOutOfBoundsException(source.toString() + " pile does not exist at " +
-          "given source index.");
+        throw new IndexOutOfBoundsException(source.toString() + " pile does not exist at "
+          + "given source index.");
       }
       if (cardIndex != pile.get(pileNumber).size() - 1) {
         throw new IndexOutOfBoundsException("Card does not exist at given source index.");
@@ -95,8 +97,8 @@ public class FreecellModel implements FreecellOperations<ISlot> {
       from = pile.get(pileNumber).get(cardIndex);
     } else {
       if (pileNumber < 0 || pileNumber >= opens.size()) {
-        throw new IndexOutOfBoundsException("Open pile does not exist at " +
-          "given source index.");
+        throw new IndexOutOfBoundsException("Open pile does not exist at "
+          + "given source index.");
       }
       if (cardIndex != 0) {
         throw new IndexOutOfBoundsException("Card does not exist at given source index.");
@@ -107,16 +109,16 @@ public class FreecellModel implements FreecellOperations<ISlot> {
     if (destination.equals(PileType.CASCADE) || destination.equals(PileType.FOUNDATION)) {
       List<List<ISlot>> pile = getPile(destination);
       if (destPileNumber < 0 || destPileNumber >= pile.size()) {
-        throw new IndexOutOfBoundsException(destination.toString() + " pile does not exist at " +
-          "given destination index.");
+        throw new IndexOutOfBoundsException(destination.toString() + " pile does not exist at "
+          + "given destination index.");
       }
       if (!from.moveTo(Utils.getLast(pile.get(destPileNumber)), destination)) {
         throw new IllegalArgumentException("Move is illegal.");
       }
     } else {
       if (destPileNumber < 0 || destPileNumber >= opens.size()) {
-        throw new IndexOutOfBoundsException("Open pile does not exist at " +
-          "given destination index.");
+        throw new IndexOutOfBoundsException("Open pile does not exist at "
+          + "given destination index.");
       }
       if (!from.moveTo(opens.get(destPileNumber), PileType.OPEN)) {
         throw new IllegalArgumentException("Move is illegal.");
@@ -169,7 +171,7 @@ public class FreecellModel implements FreecellOperations<ISlot> {
 
   private void removeSafelyPile(List<ISlot> pile, int index) {
     if (Utils.filterList(pile, new ArrayList<>(Arrays.asList(new EmptySlot()))).size() == 1
-      && index == 0) {
+        && index == 0) {
       pile.remove(0);
       pile.add(new EmptySlot());
     } else {

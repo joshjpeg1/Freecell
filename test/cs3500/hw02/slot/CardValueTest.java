@@ -1,6 +1,7 @@
 package cs3500.hw02.slot;
 
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 
 /** Tests for {@link CardValue}. */
