@@ -1,4 +1,5 @@
-package cs3500.hw02;
+import cs3500.hw02.FreecellModel;
+import cs3500.hw02.PileType;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
 public class Hw02TypeChecks {
 
   public static void main(String[] args) {
-    helper(new FreecellModel.Builder().build());
+    helper(new FreecellModel());
   }
 
   private static <T> void helper(cs3500.hw02.FreecellOperations<T> model) {

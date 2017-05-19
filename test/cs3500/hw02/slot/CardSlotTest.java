@@ -1,6 +1,7 @@
 package cs3500.hw02.slot;
 
 import cs3500.hw02.PileType;
+
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -9,6 +10,17 @@ import static org.junit.Assert.assertFalse;
 
 /** Tests for {@link CardSlot}. */
 public class CardSlotTest {
+  // Tests for the constructor
+  @Test(expected = IllegalArgumentException.class)
+  public void constructorNullValue() {
+    new CardSlot(null, CardSuit.DIAMONDS);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void constructorNullSuit() {
+    new CardSlot(CardValue.ACE, null);
+  }
+
   // Tests for the equals() method
   @Test
   public void equalsSameObject() {

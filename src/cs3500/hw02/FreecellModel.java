@@ -1,72 +1,27 @@
 package cs3500.hw02;
 
-import cs3500.hw02.slot.*;
+import cs3500.hw02.slot.CardSlot;
+import cs3500.hw02.slot.CardSuit;
+import cs3500.hw02.slot.CardValue;
+import cs3500.hw02.slot.EmptySlot;
+import cs3500.hw02.slot.ISlot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Reprsents the model of a game of Freecell.
+ * Represents the model of a game of Freecell.
  */
 public class FreecellModel implements FreecellOperations<ISlot> {
-  protected List<List<ISlot>> cascades;
+  private List<List<ISlot>> cascades;
   private List<ISlot> opens;
   private List<List<ISlot>> foundations;
-
-  public static final class Builder {
-    private int numCascadePiles;
-    private int numOpenPiles;
-    private boolean shuffle;
-
-    public Builder() {
-      numCascadePiles(8);
-      numOpenPiles(4);
-      shuffle(false);
-    }
-
-    public Builder numCascadePiles(int numCascadePiles) {
-      this.numCascadePiles = numCascadePiles;
-      return this;
-    }
-
-    public Builder numOpenPiles(int numOpenPiles) {
-      this.numOpenPiles = numOpenPiles;
-      return this;
-    }
-
-    public Builder shuffle(boolean shuffle) {
-      this.shuffle = shuffle;
-      return this;
-    }
-
-    public FreecellModel build() {
-      return new FreecellModel(this);
-    }
-  }
-
-  public FreecellModel(Builder builder) {
-    this.startGame(this.getDeck(), builder.numCascadePiles, builder.numOpenPiles, builder.shuffle);
-  }
 
   /**
    * Constructs a {@code FreecellModel} object.
    */
-  /*private FreecellModel() {
-    this(8, 4, false);
-  }*/
-
-  /**
-   * Constructs a {@code FreecellModel} object, with a defined number of cascade piles, open piles,
-   * and whether the deck is shuffled from the beginning.
-   *
-   * //@param numCascadePiles  number of cascade piles, ranging from 4 to 8
-   * //@param numOpenPiles     number of open piles, ranging from 1 to 4
-   * //@param shuffle          if true, shuffle the deck else deal the deck as-is
-   */
-  /*private FreecellModel(int numCascadePiles, int numOpenPiles, boolean shuffle) {
-    this.startGame(this.getDeck(), numCascadePiles, numOpenPiles, shuffle);
-  }*/
+  public FreecellModel() {}
 
   @Override
   public List<ISlot> getDeck() {
@@ -88,7 +43,7 @@ public class FreecellModel implements FreecellOperations<ISlot> {
     if (numOpenPiles < 1 || numOpenPiles > 4) {
       throw new IllegalArgumentException("Invalid number of open piles.");
     }
-    if (deck.size() != 52 || !Utils.noDuplicates(deck)) {
+    if (deck == null || deck.size() != 52 || !Utils.noDuplicates(deck)) {
       throw new IllegalArgumentException("Invalid deck.");
     }
 
@@ -124,6 +79,9 @@ public class FreecellModel implements FreecellOperations<ISlot> {
   @Override
   public void move(PileType source, int pileNumber, int cardIndex, PileType destination,
                    int destPileNumber) throws IllegalArgumentException, IndexOutOfBoundsException {
+    if (source == null || destination == null) {
+      throw new IllegalArgumentException("Invalid PileType given.");
+    }
     ISlot from;
     if (source.equals(PileType.CASCADE) || source.equals(PileType.FOUNDATION)) {
       List<List<ISlot>> pile = getPile(source);
@@ -244,7 +202,11 @@ public class FreecellModel implements FreecellOperations<ISlot> {
           new ArrayList<>(Arrays.asList(new EmptySlot())))) + "\n";
     }
     for (int i = 0; i < this.opens.size(); i++) {
-      str += "O" + (i + 1) + ":" + this.opens.get(i).toString() + "\n";
+      String card = this.opens.get(i).toString();
+      if (!card.equals("")) {
+        card = " " + card;
+      }
+      str += "O" + (i + 1) + ":" + card + "\n";
     }
     for (int i = 0; i < this.cascades.size(); i++) {
       str += "C" + (i + 1) + ":" + Utils.listToString(Utils.filterList(this.cascades.get(i),

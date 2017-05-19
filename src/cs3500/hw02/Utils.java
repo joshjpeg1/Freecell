@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * A Utilities class for use with generic Lists.
+ * A utilities class for use with generic {@code List}s.
  */
 public class Utils {
   /**

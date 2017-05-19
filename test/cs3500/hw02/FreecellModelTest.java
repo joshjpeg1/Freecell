@@ -1,17 +1,21 @@
 package cs3500.hw02;
 
-import cs3500.hw02.slot.*;
-import org.junit.Test;
+import cs3500.hw02.slot.CardSuit;
+import cs3500.hw02.slot.CardValue;
+import cs3500.hw02.slot.ISlot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 /** Tests for {@link FreecellModel}. */
 public class FreecellModelTest {
-  FreecellModel fcm = new FreecellModel.Builder().build();
+  FreecellModel fcm = new FreecellModel();
 
   // Tests for the getDeck() method
   @Test
@@ -43,6 +47,11 @@ public class FreecellModelTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
+  public void startGameNullDeck() {
+    fcm.startGame(null, 6, 2, true);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
   public void startGameEmptyDeck() {
     fcm.startGame(new ArrayList<>(), 6, 2, true);
   }
@@ -65,23 +74,33 @@ public class FreecellModelTest {
   @Test
   public void startGameHighCascades() {
     List<ISlot> deck = fcm.getDeck();
-    fcm.startGame(deck, deck.size(), 3, true);
-    for (List<ISlot> pile : fcm.cascades) {
-      assertEquals(pile.size(), 1);
-    }
+    fcm.startGame(deck, deck.size(), 3, false);
+    assertEquals("F1:\nF2:\nF3:\nF4:\n"
+        + "O1:\nO2:\nO3:\n"
+        + "C1: A♣\nC2: A♦\nC3: A♥\nC4: A♠\nC5: 2♣\nC6: 2♦\nC7: 2♥\nC8: 2♠\n"
+        + "C9: 3♣\nC10: 3♦\nC11: 3♥\nC12: 3♠\nC13: 4♣\nC14: 4♦\nC15: 4♥\nC16: 4♠\n"
+        + "C17: 5♣\nC18: 5♦\nC19: 5♥\nC20: 5♠\nC21: 6♣\nC22: 6♦\nC23: 6♥\nC24: 6♠\n"
+        + "C25: 7♣\nC26: 7♦\nC27: 7♥\nC28: 7♠\nC29: 8♣\nC30: 8♦\nC31: 8♥\nC32: 8♠\n"
+        + "C33: 9♣\nC34: 9♦\nC35: 9♥\nC36: 9♠\nC37: 10♣\nC38: 10♦\nC39: 10♥\nC40: 10♠\n"
+        + "C41: J♣\nC42: J♦\nC43: J♥\nC44: J♠\nC45: Q♣\nC46: Q♦\nC47: Q♥\nC48: Q♠\n"
+        + "C49: K♣\nC50: K♦\nC51: K♥\nC52: K♠",
+        fcm.getGameState());
   }
 
   @Test
   public void startGameVeryHighCascades() {
-    int emptyPiles = 20;
     List<ISlot> deck = fcm.getDeck();
-    fcm.startGame(deck, deck.size() + emptyPiles, 3, true);
-    for (List<ISlot> pile : fcm.cascades) {
-      if (pile.contains(new EmptySlot())) {
-        emptyPiles -= 1;
-      }
-    }
-    assertEquals(emptyPiles, 0);
+    fcm.startGame(deck, deck.size() + 7, 3, false);
+    assertEquals("F1:\nF2:\nF3:\nF4:\n"
+        + "O1:\nO2:\nO3:\n"
+        + "C1: A♣\nC2: A♦\nC3: A♥\nC4: A♠\nC5: 2♣\nC6: 2♦\nC7: 2♥\nC8: 2♠\n"
+        + "C9: 3♣\nC10: 3♦\nC11: 3♥\nC12: 3♠\nC13: 4♣\nC14: 4♦\nC15: 4♥\nC16: 4♠\n"
+        + "C17: 5♣\nC18: 5♦\nC19: 5♥\nC20: 5♠\nC21: 6♣\nC22: 6♦\nC23: 6♥\nC24: 6♠\n"
+        + "C25: 7♣\nC26: 7♦\nC27: 7♥\nC28: 7♠\nC29: 8♣\nC30: 8♦\nC31: 8♥\nC32: 8♠\n"
+        + "C33: 9♣\nC34: 9♦\nC35: 9♥\nC36: 9♠\nC37: 10♣\nC38: 10♦\nC39: 10♥\nC40: 10♠\n"
+        + "C41: J♣\nC42: J♦\nC43: J♥\nC44: J♠\nC45: Q♣\nC46: Q♦\nC47: Q♥\nC48: Q♠\n"
+        + "C49: K♣\nC50: K♦\nC51: K♥\nC52: K♠\nC53:\nC54:\nC55:\nC56:\nC57:\nC58:\nC59:",
+        fcm.getGameState());
   }
 
   // Tests for the getGameState() method
@@ -111,44 +130,74 @@ public class FreecellModelTest {
   }
 
   @Test
-  public void getGameStateWinningGame4Cascade() {
-    moveWin4Cascade();
-    assertEquals("F1: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠\n"
-      + "F2: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
-      + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
-      + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
-      + "O1:\nO2:\nO3:\nO4:\n"
-      + "C1:\nC2:\nC3:\nC4:", fcm.getGameState());
+  public void getGameStateMoveOpen() {
+    fcm.startGame(fcm.getDeck(), 8, 4, false);
+    fcm.move(PileType.CASCADE, 0, 6, PileType.OPEN, 2);
+    assertEquals("F1:\nF2:\nF3:\nF4:\n"
+        + "O1:\nO2:\nO3: K♣\nO4:\n"
+        + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣\n"
+        + "C2: A♦, 3♦, 5♦, 7♦, 9♦, J♦, K♦\n"
+        + "C3: A♥, 3♥, 5♥, 7♥, 9♥, J♥, K♥\n"
+        + "C4: A♠, 3♠, 5♠, 7♠, 9♠, J♠, K♠\n"
+        + "C5: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣\n"
+        + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
+        + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
+        + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠",
+        fcm.getGameState());
+    fcm.move(PileType.OPEN, 2, 0, PileType.OPEN, 3);
+    assertEquals("F1:\nF2:\nF3:\nF4:\n"
+        + "O1:\nO2:\nO3:\nO4: K♣\n"
+        + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣\n"
+        + "C2: A♦, 3♦, 5♦, 7♦, 9♦, J♦, K♦\n"
+        + "C3: A♥, 3♥, 5♥, 7♥, 9♥, J♥, K♥\n"
+        + "C4: A♠, 3♠, 5♠, 7♠, 9♠, J♠, K♠\n"
+        + "C5: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣\n"
+        + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
+        + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
+        + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠",
+        fcm.getGameState());
   }
 
   @Test
-  public void getGameStateWinningGame8Cascade() {
-    moveWin8Cascade();
-    assertEquals("F1: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠\n"
-      + "F2: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
-      + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
-      + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
-      + "O1:\nO2:\nO3:\nO4:\n"
-      + "C1:\nC2:\nC3:\nC4:\nC5:\nC6:\nC7:\nC8:", fcm.getGameState());
-  }
-
-  @Test
-  public void getGameStateWinningGame52Cascade() {
-    moveWin52Cascade();
-    assertEquals("F1: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n" +
-        "F2: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n" +
-        "F3: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n" +
-        "F4: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠\n"
-        + "O1:\nO2:\nO3:\nO4:\n"
-        + "C1:\nC2:\nC3:\nC4:\nC5:\nC6:\nC7:\nC8:\nC9:\nC10:\n"
-        + "C11:\nC12:\nC13:\nC14:\nC15:\nC16:\nC17:\nC18:\nC19:\nC20:\n"
-        + "C21:\nC22:\nC23:\nC24:\nC25:\nC26:\nC27:\nC28:\nC29:\nC30:\n"
-        + "C31:\nC32:\nC33:\nC34:\nC35:\nC36:\nC37:\nC38:\nC39:\nC40:\n"
-        + "C41:\nC42:\nC43:\nC44:\nC45:\nC46:\nC47:\nC48:\nC49:\nC50:\nC51:\nC52:",
-      fcm.getGameState());
+  public void getGameStateTakenOpenTakenFoundation() {
+    fcm.startGame(Utils.reverse(fcm.getDeck()), 8, 4, false);
+    for (int i = 0; i < 4; i++) {
+      for (int j = 0; j < 2; j++) {
+        fcm.move(PileType.CASCADE, i + (j*4), 6 - j, PileType.FOUNDATION, i);
+      }
+    }
+    for (int i = 0; i < 4; i++) {
+      fcm.move(PileType.CASCADE, i, 5, PileType.OPEN, i);
+    }
+    assertEquals("F1: A♠, 2♠\n"
+        + "F2: A♥, 2♥\n"
+        + "F3: A♦, 2♦\n"
+        + "F4: A♣, 2♣\n"
+        + "O1: 3♠\nO2: 3♥\nO3: 3♦\nO4: 3♣\n"
+        + "C1: K♠, J♠, 9♠, 7♠, 5♠\n"
+        + "C2: K♥, J♥, 9♥, 7♥, 5♥\n"
+        + "C3: K♦, J♦, 9♦, 7♦, 5♦\n"
+        + "C4: K♣, J♣, 9♣, 7♣, 5♣\n"
+        + "C5: Q♠, 10♠, 8♠, 6♠, 4♠\n"
+        + "C6: Q♥, 10♥, 8♥, 6♥, 4♥\n"
+        + "C7: Q♦, 10♦, 8♦, 6♦, 4♦\n"
+        + "C8: Q♣, 10♣, 8♣, 6♣, 4♣",
+        fcm.getGameState());
   }
 
   // Tests for the move() method
+  @Test(expected = IllegalArgumentException.class)
+  public void moveNullSource() {
+    fcm.startGame(fcm.getDeck(), 8, 4, false);
+    fcm.move(null, -1, 0, PileType.OPEN, 0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void moveNullDestination() {
+    fcm.startGame(fcm.getDeck(), 8, 4, false);
+    fcm.move(null, -1, 0, null, 0);
+  }
+
   @Test(expected = IndexOutOfBoundsException.class)
   public void moveCascadeSourcePileTooLow() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
@@ -291,6 +340,12 @@ public class FreecellModelTest {
     fcm.move(PileType.CASCADE, 4, 4, PileType.FOUNDATION, 2);
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void moveOntoSelf() {
+    fcm.startGame(Utils.reverse(fcm.getDeck()), 8, 4, false);
+    fcm.move(PileType.CASCADE, 0, 6, PileType.CASCADE, 0);
+  }
+
   @Test
   public void moveCardToOpen() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);
@@ -330,10 +385,12 @@ public class FreecellModelTest {
         fcm.move(PileType.CASCADE, j, 12 - i, PileType.FOUNDATION, j);
       }
     }
-    for (List<ISlot> pile : fcm.cascades) {
-      assertEquals(Utils.filterList(pile,
-          new ArrayList<>(Arrays.asList(new EmptySlot()))).size(), 0);
-    }
+    assertEquals("F1: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠\n"
+      + "F2: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
+      + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
+      + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
+      + "O1:\nO2:\nO3:\nO4:\n"
+      + "C1:\nC2:\nC3:\nC4:", fcm.getGameState());
   }
 
   @Test
@@ -347,10 +404,12 @@ public class FreecellModelTest {
         }
       }
     }
-    for (List<ISlot> pile : fcm.cascades) {
-      assertEquals(Utils.filterList(pile,
-        new ArrayList<>(Arrays.asList(new EmptySlot()))).size(), 0);
-    }
+    assertEquals("F1: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠\n"
+      + "F2: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
+      + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
+      + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
+      + "O1:\nO2:\nO3:\nO4:\n"
+      + "C1:\nC2:\nC3:\nC4:\nC5:\nC6:\nC7:\nC8:", fcm.getGameState());
   }
 
   @Test
@@ -361,10 +420,17 @@ public class FreecellModelTest {
         fcm.move(PileType.CASCADE, (i * 4) + j, 0, PileType.FOUNDATION, j);
       }
     }
-    for (List<ISlot> pile : fcm.cascades) {
-      assertEquals(Utils.filterList(pile,
-        new ArrayList<>(Arrays.asList(new EmptySlot()))).size(), 0);
-    }
+    assertEquals("F1: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n" +
+        "F2: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n" +
+        "F3: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n" +
+        "F4: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠\n"
+        + "O1:\nO2:\nO3:\nO4:\n"
+        + "C1:\nC2:\nC3:\nC4:\nC5:\nC6:\nC7:\nC8:\nC9:\nC10:\n"
+        + "C11:\nC12:\nC13:\nC14:\nC15:\nC16:\nC17:\nC18:\nC19:\nC20:\n"
+        + "C21:\nC22:\nC23:\nC24:\nC25:\nC26:\nC27:\nC28:\nC29:\nC30:\n"
+        + "C31:\nC32:\nC33:\nC34:\nC35:\nC36:\nC37:\nC38:\nC39:\nC40:\n"
+        + "C41:\nC42:\nC43:\nC44:\nC45:\nC46:\nC47:\nC48:\nC49:\nC50:\nC51:\nC52:",
+      fcm.getGameState());
   }
 
   // Tests for the isGameOver() method
