@@ -60,24 +60,24 @@ public class EmptySlotTest {
   @Test
   public void moveFromCascade() {
     assertTrue(new EmptySlot().moveFrom(new CardSlot(CardValue.ACE,
-      CardSuit.CLUBS), PileType.CASCADE));
+        CardSuit.CLUBS), PileType.CASCADE));
   }
 
   @Test
   public void moveFromOpen() {
     assertTrue(new EmptySlot().moveFrom(new CardSlot(CardValue.ACE,
-      CardSuit.CLUBS), PileType.OPEN));
+        CardSuit.CLUBS), PileType.OPEN));
   }
 
   @Test
   public void moveFromFoundationNotAce() {
     assertFalse(new EmptySlot().moveFrom(new CardSlot(CardValue.TWO,
-      CardSuit.CLUBS), PileType.FOUNDATION));
+        CardSuit.CLUBS), PileType.FOUNDATION));
   }
 
   @Test
   public void moveFromFoundationAce() {
     assertTrue(new EmptySlot().moveFrom(new CardSlot(CardValue.ACE,
-      CardSuit.CLUBS), PileType.FOUNDATION));
+        CardSuit.CLUBS), PileType.FOUNDATION));
   }
 }

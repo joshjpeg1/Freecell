@@ -22,7 +22,9 @@ public class FreecellModel implements FreecellOperations<ISlot> {
    * Constructs a {@code FreecellModel} object.
    */
   public FreecellModel() {
-    // nothing is initially set in the constructor, but rather in the startGame() method
+    this.cascades = new ArrayList<>();
+    this.opens = new ArrayList<>();
+    this.foundations = new ArrayList<>();
   }
 
   @Override
@@ -40,12 +42,16 @@ public class FreecellModel implements FreecellOperations<ISlot> {
   public void startGame(List<ISlot> deck, int numCascadePiles, int numOpenPiles,
                         boolean shuffle) throws IllegalArgumentException {
     if (numCascadePiles < 4) {
-      throw new IllegalArgumentException("Invalid number of cascade piles.");
+      throw new IllegalArgumentException("Invalid number of cascade piles. Given: "
+          + numCascadePiles);
     }
-    if (numOpenPiles < 1 || numOpenPiles > 4) {
-      throw new IllegalArgumentException("Invalid number of open piles.");
+    if (numOpenPiles < 1) {
+      throw new IllegalArgumentException("Invalid number of open piles. Given: "
+          + numOpenPiles);
     }
-    if (deck == null || deck.size() != 52 || !Utils.noDuplicates(deck)) {
+    if (deck == null || deck.contains(null)
+        || deck.size() != (CardValue.values().length * CardSuit.values().length)
+        || !Utils.noDuplicates(deck)) {
       throw new IllegalArgumentException("Invalid deck.");
     }
 
@@ -62,17 +68,21 @@ public class FreecellModel implements FreecellOperations<ISlot> {
       this.opens.add(new EmptySlot());
     }
 
+    List<ISlot> deckCopy = new ArrayList<>();
     if (shuffle) {
       deck = Utils.shuffle(deck);
     }
+    for (ISlot card : deck) {
+      deckCopy.add(card);
+    }
 
-    while (deck.size() > 0) {
+    while (deckCopy.size() > 0) {
       for (int i = 0; i < this.cascades.size(); i++) {
-        if (deck.size() > 0) {
+        if (deckCopy.size() > 0) {
           if (this.cascades.get(i).contains(new EmptySlot())) {
             this.cascades.get(i).remove(new EmptySlot());
           }
-          this.cascades.get(i).add(deck.remove(0));
+          this.cascades.get(i).add(deckCopy.remove(0));
         }
       }
     }

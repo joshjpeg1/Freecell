@@ -24,7 +24,6 @@ public class FreecellModelTest {
   // Tests for the getDeck() method
   @Test
   public void getDeckSizeCheck() {
-    assertEquals(52, fcm.getDeck().size());
     assertEquals(CardValue.values().length * CardSuit.values().length,
         fcm.getDeck().size());
   }
@@ -46,13 +45,16 @@ public class FreecellModelTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void startGameHighOpens() {
-    fcm.startGame(fcm.getDeck(), 6, 5, true);
+  public void startGameNullDeck() {
+    fcm.startGame(null, 6, 2, true);
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void startGameNullDeck() {
-    fcm.startGame(null, 6, 2, true);
+  public void startGameNullInDeck() {
+    List<ISlot> deck = fcm.getDeck();
+    deck.remove(0);
+    deck.add(null);
+    fcm.startGame(deck, 6, 2, true);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -73,6 +75,22 @@ public class FreecellModelTest {
     deck.remove(deck.size() - 1);
     deck.add(deck.get(0));
     fcm.startGame(deck, 6, 2, true);
+  }
+
+  @Test
+  public void startGameHighOpens() {
+    fcm.startGame(fcm.getDeck(), 8, 10, false);
+    assertEquals("F1:\nF2:\nF3:\nF4:\n"
+        + "O1:\nO2:\nO3:\nO4:\nO5:\nO6:\nO7:\nO8:\nO9:\nO10:\n"
+        + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n"
+        + "C2: A♦, 3♦, 5♦, 7♦, 9♦, J♦, K♦\n"
+        + "C3: A♥, 3♥, 5♥, 7♥, 9♥, J♥, K♥\n"
+        + "C4: A♠, 3♠, 5♠, 7♠, 9♠, J♠, K♠\n"
+        + "C5: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣\n"
+        + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
+        + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
+        + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠",
+        fcm.getGameState());
   }
 
   @Test
@@ -108,6 +126,12 @@ public class FreecellModelTest {
   }
 
   // Tests for the getGameState() method
+  @Test
+  public void getGameStateEmpty() {
+    FreecellModel empty = new FreecellModel();
+    assertEquals("", empty.getGameState());
+  }
+
   @Test
   public void getGameStateRegular() {
     fcm.startGame(fcm.getDeck(), 8, 4, false);

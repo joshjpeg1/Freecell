@@ -134,7 +134,7 @@ public class UtilsTest {
     List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3));
     List<Integer> filter = new ArrayList<>(Arrays.asList(4, 2, 6));
     assertEquals(new ArrayList<>(Arrays.asList(1, 3)),
-      Utils.filterList(list, filter));
+        Utils.filterList(list, filter));
   }
 
   @Test
