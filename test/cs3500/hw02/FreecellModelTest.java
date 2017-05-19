@@ -461,6 +461,29 @@ public class FreecellModelTest {
   }
 
   @Test
+  public void moveToEmptyCascade() {
+    fcm.startGame(Utils.reverse(fcm.getDeck()), 8, 4, false);
+    for (int i = 0; i < 7; i++) {
+      fcm.move(PileType.CASCADE, 0, 6 - i, PileType.FOUNDATION, 0);
+      if (6 - (i + 1) >= 0) {
+        fcm.move(PileType.CASCADE, 4, 6 - (i + 1), PileType.FOUNDATION, 0);
+      }
+    }
+    fcm.move(PileType.CASCADE, 1, 6, PileType.CASCADE, 0);
+    assertEquals("F1: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠\nF2:\nF3:\nF4:\n"
+        + "O1:\nO2:\nO3:\nO4:\n"
+        + "C1: A♥\n"
+        + "C2: K♥, J♥, 9♥, 7♥, 5♥, 3♥\n"
+        + "C3: K♦, J♦, 9♦, 7♦, 5♦, 3♦, A♦\n"
+        + "C4: K♣, J♣, 9♣, 7♣, 5♣, 3♣, A♣\n"
+        + "C5:\n"
+        + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n"
+        + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
+        + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣",
+        fcm.getGameState());
+  }
+
+  @Test
   public void moveWin4Cascade() {
     fcm.startGame(Utils.reverse(fcm.getDeck()), 4, 4, false);
     for (int j = 0; j < 4; j++) {
@@ -473,7 +496,8 @@ public class FreecellModelTest {
         + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
         + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
         + "O1:\nO2:\nO3:\nO4:\n"
-        + "C1:\nC2:\nC3:\nC4:", fcm.getGameState());
+        + "C1:\nC2:\nC3:\nC4:",
+        fcm.getGameState());
   }
 
   @Test
@@ -487,19 +511,6 @@ public class FreecellModelTest {
         }
       }
     }
-    assertEquals("F1: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠\n"
-        + "F2: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
-        + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
-        + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
-        + "O1:\nO2:\nO3:\nO4:\n"
-        + "C1:\nC2:\nC3:\nC4:\nC5:\nC6:\nC7:\nC8:",
-        fcm.getGameState());
-  }
-
-  @Test
-  public void moveCantAfterGameOver() {
-    moveWin8Cascade();
-    fcm.move(PileType.FOUNDATION, 0, 12, PileType.OPEN, 0);
     assertEquals("F1: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠\n"
         + "F2: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
         + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
@@ -530,7 +541,26 @@ public class FreecellModelTest {
         fcm.getGameState());
   }
 
+  @Test
+  public void moveCantAfterGameOver() {
+    moveWin8Cascade();
+    fcm.move(PileType.FOUNDATION, 0, 12, PileType.OPEN, 0);
+    assertEquals("F1: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠\n"
+        + "F2: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
+        + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
+        + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
+        + "O1:\nO2:\nO3:\nO4:\n"
+        + "C1:\nC2:\nC3:\nC4:\nC5:\nC6:\nC7:\nC8:",
+        fcm.getGameState());
+  }
+
   // Tests for the isGameOver() method
+  @Test
+  public void isGameOverFresh() {
+    FreecellModel empty = new FreecellModel();
+    assertFalse(empty.isGameOver());
+  }
+
   @Test
   public void isGameOverStart() {
     fcm.startGame(fcm.getDeck(), 8, 4, true);

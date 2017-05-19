@@ -86,10 +86,7 @@ public class FreecellModel implements FreecellOperations<ISlot> {
     while (deckCopy.size() > 0) {
       for (int i = 0; i < this.cascades.size(); i++) {
         if (deckCopy.size() > 0) {
-          if (this.cascades.get(i).contains(new EmptySlot())) {
-            this.cascades.get(i).remove(new EmptySlot());
-          }
-          this.cascades.get(i).add(deckCopy.remove(0));
+          this.addSafelyPile(this.cascades.get(i), deckCopy.remove(0));
         }
       }
     }
@@ -162,6 +159,7 @@ public class FreecellModel implements FreecellOperations<ISlot> {
       if (destPileNumber < 0 || destPileNumber >= pile.size()) {
         throw new IllegalArgumentException("Pile does not exist at given destination index.");
       }
+
       if (!from.moveTo(Utils.getLast(pile.get(destPileNumber)), destination)) {
         throw new IllegalArgumentException("Move is illegal.");
       }
@@ -219,6 +217,9 @@ public class FreecellModel implements FreecellOperations<ISlot> {
 
   @Override
   public boolean isGameOver() {
+    if (this.foundations.size() == 0 || this.opens.size() == 0 || this.cascades.size() == 0) {
+      return false;
+    }
     for (List<ISlot> pile : this.foundations) {
       if (pile.size() != CardValue.values().length || !Utils.noDuplicates(pile)) {
         return false;
