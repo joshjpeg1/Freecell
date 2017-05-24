@@ -19,7 +19,8 @@ public interface IFreecellController<K> {
    * @param numCascades     number of cascade piles
    * @param numOpens        number of open piles
    * @param shuffle         if true, shuffle the deck else deal the deck as-is
-   * @throws IllegalStateException if the controller cannot receive input and transmit output
+   * @throws IllegalStateException if the input or output are uninitialized
+   * @throws IllegalArgumentException if the deck or model are uninitialized
    */
   void playGame(List<K> deck, FreecellOperations<K> model, int numCascades, int numOpens,
                 boolean shuffle) throws IllegalStateException;
