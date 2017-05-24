@@ -2,6 +2,7 @@ package cs3500.hw03;
 
 import cs3500.hw02.FreecellModel;
 import cs3500.hw02.FreecellOperations;
+import cs3500.hw02.Utils;
 import cs3500.hw02.slot.ISlot;
 
 import java.io.StringReader;
@@ -157,11 +158,221 @@ public class FreecellControllerTest {
   // null input? StringReader throws a NullPointerException when given null
 
   @Test
-  public void playGameTest() {
-    reader = new StringReader("C1 fe l eee\n4 \n5\n 23");
+  public void playGameCascadeToCascadeLegal() {
+    //reader = new StringReader("e1 23 f30 c1");
+    reader = new StringReader("C5 5 C0 q");
     fcc = new FreecellController(reader, buffer);
     fcc.playGame(model.getDeck(), model, 8, 4, false);
+    assertEquals("F1:\nF2:\nF3:\nF4:\n"
+      + "O1:\nO2:\nO3:\nO4:\n"
+      + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n"
+      + "C2: A♦, 3♦, 5♦, 7♦, 9♦, J♦, K♦\n"
+      + "C3: A♥, 3♥, 5♥, 7♥, 9♥, J♥, K♥\n"
+      + "C4: A♠, 3♠, 5♠, 7♠, 9♠, J♠, K♠\n"
+      + "C5: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣\n"
+      + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
+      + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
+      + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n"
+      + "F1:\nF2:\nF3:\nF4:\n"
+      + "O1:\nO2:\nO3:\nO4:\n"
+      + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣, Q♦\n"
+      + "C2: A♦, 3♦, 5♦, 7♦, 9♦, J♦, K♦\n"
+      + "C3: A♥, 3♥, 5♥, 7♥, 9♥, J♥, K♥\n"
+      + "C4: A♠, 3♠, 5♠, 7♠, 9♠, J♠, K♠\n"
+      + "C5: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣\n"
+      + "C6: 2♦, 4♦, 6♦, 8♦, 10♦\n"
+      + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
+      + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n"
+      + "Game quit prematurely.", buffer.toString());
+  }
 
+  /*@Test
+  public void playGameCascadeToCascadeIllegal() {
+    //reader = new StringReader("e1 23 f30 c1");
+    reader = new StringReader("C5 4 C0 q");
+    fcc = new FreecellController(reader, buffer);
+    fcc.playGame(model.getDeck(), model, 8, 4, false);
+    assertEquals("F1:\nF2:\nF3:\nF4:\n"
+      + "O1:\nO2:\nO3:\nO4:\n"
+      + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n"
+      + "C2: A♦, 3♦, 5♦, 7♦, 9♦, J♦, K♦\n"
+      + "C3: A♥, 3♥, 5♥, 7♥, 9♥, J♥, K♥\n"
+      + "C4: A♠, 3♠, 5♠, 7♠, 9♠, J♠, K♠\n"
+      + "C5: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣\n"
+      + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
+      + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
+      + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n"
+      + "Invalid move. Try again.", buffer.toString());
+  }*/
+
+  @Test
+  public void playGameCascadeToFoundationLegal() {
+    reader = new StringReader("C0 6 f1 q");
+    fcc = new FreecellController(reader, buffer);
+    fcc.playGame(Utils.reverse(model.getDeck()), model, 8, 4, false);
+    assertEquals("F1:\nF2:\nF3:\nF4:\n"
+      + "O1:\nO2:\nO3:\nO4:\n"
+      + "C1: K♠, J♠, 9♠, 7♠, 5♠, 3♠, A♠\n"
+      + "C2: K♥, J♥, 9♥, 7♥, 5♥, 3♥, A♥\n"
+      + "C3: K♦, J♦, 9♦, 7♦, 5♦, 3♦, A♦\n"
+      + "C4: K♣, J♣, 9♣, 7♣, 5♣, 3♣, A♣\n"
+      + "C5: Q♠, 10♠, 8♠, 6♠, 4♠, 2♠\n"
+      + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n"
+      + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
+      + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣\n"
+      + "F1:\nF2: A♠\nF3:\nF4:\n"
+      + "O1:\nO2:\nO3:\nO4:\n"
+      + "C1: K♠, J♠, 9♠, 7♠, 5♠, 3♠\n"
+      + "C2: K♥, J♥, 9♥, 7♥, 5♥, 3♥, A♥\n"
+      + "C3: K♦, J♦, 9♦, 7♦, 5♦, 3♦, A♦\n"
+      + "C4: K♣, J♣, 9♣, 7♣, 5♣, 3♣, A♣\n"
+      + "C5: Q♠, 10♠, 8♠, 6♠, 4♠, 2♠\n"
+      + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n"
+      + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
+      + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣\n"
+      + "Game quit prematurely.", buffer.toString());
+  }
+
+  @Test
+  public void playGameCascadeToOpenLegal() {
+    reader = new StringReader("C3 6 o2 q");
+    fcc = new FreecellController(reader, buffer);
+    fcc.playGame(model.getDeck(), model, 8, 4, false);
+    assertEquals("F1:\nF2:\nF3:\nF4:\n"
+      + "O1:\nO2:\nO3:\nO4:\n"
+      + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n"
+      + "C2: A♦, 3♦, 5♦, 7♦, 9♦, J♦, K♦\n"
+      + "C3: A♥, 3♥, 5♥, 7♥, 9♥, J♥, K♥\n"
+      + "C4: A♠, 3♠, 5♠, 7♠, 9♠, J♠, K♠\n"
+      + "C5: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣\n"
+      + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
+      + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
+      + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n"
+      + "F1:\nF2:\nF3:\nF4:\n"
+      + "O1:\nO2:\nO3: K♠\nO4:\n"
+      + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n"
+      + "C2: A♦, 3♦, 5♦, 7♦, 9♦, J♦, K♦\n"
+      + "C3: A♥, 3♥, 5♥, 7♥, 9♥, J♥, K♥\n"
+      + "C4: A♠, 3♠, 5♠, 7♠, 9♠, J♠\n"
+      + "C5: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣\n"
+      + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
+      + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
+      + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n"
+      + "Game quit prematurely.", buffer.toString());
+  }
+
+  @Test
+  public void playGameOpenToCascadeLegal() {
+    reader = new StringReader("c7 5 O2 o2 0 C1 q");
+    fcc = new FreecellController(reader, buffer);
+    fcc.playGame(model.getDeck(), model, 8, 4, false);
+    assertEquals("F1:\nF2:\nF3:\nF4:\n"
+      + "O1:\nO2:\nO3:\nO4:\n"
+      + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n"
+      + "C2: A♦, 3♦, 5♦, 7♦, 9♦, J♦, K♦\n"
+      + "C3: A♥, 3♥, 5♥, 7♥, 9♥, J♥, K♥\n"
+      + "C4: A♠, 3♠, 5♠, 7♠, 9♠, J♠, K♠\n"
+      + "C5: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣\n"
+      + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
+      + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
+      + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n"
+      + "F1:\nF2:\nF3:\nF4:\n"
+      + "O1:\nO2:\nO3: Q♠\nO4:\n"
+      + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n"
+      + "C2: A♦, 3♦, 5♦, 7♦, 9♦, J♦, K♦\n"
+      + "C3: A♥, 3♥, 5♥, 7♥, 9♥, J♥, K♥\n"
+      + "C4: A♠, 3♠, 5♠, 7♠, 9♠, J♠, K♠\n"
+      + "C5: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣\n"
+      + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
+      + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
+      + "C8: 2♠, 4♠, 6♠, 8♠, 10♠\n"
+      + "F1:\nF2:\nF3:\nF4:\n"
+      + "O1:\nO2:\nO3:\nO4:\n"
+      + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n"
+      + "C2: A♦, 3♦, 5♦, 7♦, 9♦, J♦, K♦, Q♠\n"
+      + "C3: A♥, 3♥, 5♥, 7♥, 9♥, J♥, K♥\n"
+      + "C4: A♠, 3♠, 5♠, 7♠, 9♠, J♠, K♠\n"
+      + "C5: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣\n"
+      + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
+      + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
+      + "C8: 2♠, 4♠, 6♠, 8♠, 10♠\n"
+      + "Game quit prematurely.", buffer.toString());
+  }
+
+  @Test
+  public void playGameOpenToOpenLegal() {
+    reader = new StringReader("c7 5 O2 o2 0 o1 q");
+    fcc = new FreecellController(reader, buffer);
+    fcc.playGame(model.getDeck(), model, 8, 4, false);
+    assertEquals("F1:\nF2:\nF3:\nF4:\n"
+      + "O1:\nO2:\nO3:\nO4:\n"
+      + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n"
+      + "C2: A♦, 3♦, 5♦, 7♦, 9♦, J♦, K♦\n"
+      + "C3: A♥, 3♥, 5♥, 7♥, 9♥, J♥, K♥\n"
+      + "C4: A♠, 3♠, 5♠, 7♠, 9♠, J♠, K♠\n"
+      + "C5: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣\n"
+      + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
+      + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
+      + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n"
+      + "F1:\nF2:\nF3:\nF4:\n"
+      + "O1:\nO2:\nO3: Q♠\nO4:\n"
+      + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n"
+      + "C2: A♦, 3♦, 5♦, 7♦, 9♦, J♦, K♦\n"
+      + "C3: A♥, 3♥, 5♥, 7♥, 9♥, J♥, K♥\n"
+      + "C4: A♠, 3♠, 5♠, 7♠, 9♠, J♠, K♠\n"
+      + "C5: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣\n"
+      + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
+      + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
+      + "C8: 2♠, 4♠, 6♠, 8♠, 10♠\n"
+      + "F1:\nF2:\nF3:\nF4:\n"
+      + "O1:\nO2: Q♠\nO3:\nO4:\n"
+      + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n"
+      + "C2: A♦, 3♦, 5♦, 7♦, 9♦, J♦, K♦\n"
+      + "C3: A♥, 3♥, 5♥, 7♥, 9♥, J♥, K♥\n"
+      + "C4: A♠, 3♠, 5♠, 7♠, 9♠, J♠, K♠\n"
+      + "C5: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣\n"
+      + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
+      + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
+      + "C8: 2♠, 4♠, 6♠, 8♠, 10♠\n"
+      + "Game quit prematurely.", buffer.toString());
+  }
+
+  @Test
+  public void playGameOpenToFoundationLegal() {
+    reader = new StringReader("C0 6 o0 O0 0 F3 q");
+    fcc = new FreecellController(reader, buffer);
+    fcc.playGame(Utils.reverse(model.getDeck()), model, 8, 4, false);
+    assertEquals("F1:\nF2:\nF3:\nF4:\n"
+      + "O1:\nO2:\nO3:\nO4:\n"
+      + "C1: K♠, J♠, 9♠, 7♠, 5♠, 3♠, A♠\n"
+      + "C2: K♥, J♥, 9♥, 7♥, 5♥, 3♥, A♥\n"
+      + "C3: K♦, J♦, 9♦, 7♦, 5♦, 3♦, A♦\n"
+      + "C4: K♣, J♣, 9♣, 7♣, 5♣, 3♣, A♣\n"
+      + "C5: Q♠, 10♠, 8♠, 6♠, 4♠, 2♠\n"
+      + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n"
+      + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
+      + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣\n"
+      + "F1:\nF2:\nF3:\nF4:\n"
+      + "O1: A♠\nO2:\nO3:\nO4:\n"
+      + "C1: K♠, J♠, 9♠, 7♠, 5♠, 3♠\n"
+      + "C2: K♥, J♥, 9♥, 7♥, 5♥, 3♥, A♥\n"
+      + "C3: K♦, J♦, 9♦, 7♦, 5♦, 3♦, A♦\n"
+      + "C4: K♣, J♣, 9♣, 7♣, 5♣, 3♣, A♣\n"
+      + "C5: Q♠, 10♠, 8♠, 6♠, 4♠, 2♠\n"
+      + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n"
+      + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
+      + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣\n"
+      + "F1:\nF2:\nF3:\nF4: A♠\n"
+      + "O1:\nO2:\nO3:\nO4:\n"
+      + "C1: K♠, J♠, 9♠, 7♠, 5♠, 3♠\n"
+      + "C2: K♥, J♥, 9♥, 7♥, 5♥, 3♥, A♥\n"
+      + "C3: K♦, J♦, 9♦, 7♦, 5♦, 3♦, A♦\n"
+      + "C4: K♣, J♣, 9♣, 7♣, 5♣, 3♣, A♣\n"
+      + "C5: Q♠, 10♠, 8♠, 6♠, 4♠, 2♠\n"
+      + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n"
+      + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
+      + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣\n"
+      + "Game quit prematurely.", buffer.toString());
   }
 
   // test if game is over

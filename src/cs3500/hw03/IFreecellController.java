@@ -23,5 +23,5 @@ public interface IFreecellController<K> {
    * @throws IllegalArgumentException if the deck or model are uninitialized
    */
   void playGame(List<K> deck, FreecellOperations<K> model, int numCascades, int numOpens,
-                boolean shuffle) throws IllegalStateException;
+                boolean shuffle) throws IllegalStateException, IllegalArgumentException;
 }

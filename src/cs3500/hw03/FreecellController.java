@@ -5,6 +5,8 @@ import cs3500.hw02.PileType;
 import cs3500.hw02.slot.ISlot;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,7 +30,8 @@ public class FreecellController implements IFreecellController<ISlot> {
 
   @Override
   public void playGame(List<ISlot> deck, FreecellOperations<ISlot> model, int numCascades,
-                       int numOpens, boolean shuffle) throws IllegalStateException {
+                       int numOpens, boolean shuffle)
+                       throws IllegalStateException, IllegalArgumentException {
     if (rd == null || ap == null) {
       throw new IllegalStateException("Cannot read or append to null.");
     } else if (deck == null || model == null) {
@@ -46,26 +49,23 @@ public class FreecellController implements IFreecellController<ISlot> {
 
       while (scan.hasNext()) {
         this.ap.append(model.getGameState());
+        Move nextMove = new Move();
         if (model.isGameOver()) {
           this.ap.append("\nGame over.");
           return;
-        } else {
-          String next = scan.next().toLowerCase();
-          if (next == null) {
-            this.ap.append("\nCannot give null as an argument. Try again.");
-          } else if (next.equals("q")) {
+        }
+        while (!nextMove.tryMove(model) && scan.hasNext()) {
+          String next = scan.next();
+          if (next.equalsIgnoreCase("q")) {
             this.ap.append("\nGame quit prematurely.");
             return;
-          } else if (validCommand(next) != null) {
-
-          } else {
+          }
+          if (!validateCommand(next, nextMove)) {
             this.ap.append("\nUnkown input. Try again.");
           }
-          System.out.println("NEW: " + next);
         }
+        this.ap.append("\n");
       }
-
-      scan.close();
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -78,29 +78,29 @@ public class FreecellController implements IFreecellController<ISlot> {
    * @param input         the possible command
    * @return true if the input is a command, false otherwise
    */
-  private Command validCommand(String input) {
-    if (input != null || input.length() > 0) {
+  private boolean validateCommand(String input, Move move) {
+    if (input != null && input.length() > 0) {
+      input = input.toLowerCase();
       Character identifier = input.charAt(0);
-      if (Character.isDigit(identifier)) {
-        return new CardCommand(Integer.parseInt(input));
-      } else if (Character.isLetter(identifier)) {
-        if (identifier == 'c' || identifier == 'o' || identifier == 'f') {
-          try {
-            int pileNumber = Integer.parseInt(input);
-            switch (identifier) {
-              case 'c':
-                return new PileCommand(PileType.CASCADE, pileNumber);
-              case 'o':
-                return new PileCommand(PileType.OPEN, pileNumber);
-              case 'f':
-                return new PileCommand(PileType.FOUNDATION, pileNumber);
-              default:
-                return null;
+      try {
+        if (Character.isDigit(identifier)) {
+          move.setCardIndex(Integer.parseInt(input));
+          return true;
+        } else if (Character.isLetter(identifier)) {
+          if (identifier == 'c' || identifier == 'o' || identifier == 'f') {
+            int pileNumber = Integer.parseInt(input.substring(1));
+            if (identifier ==  'c') {
+              move.setPile(PileType.CASCADE, pileNumber);
+            } else if (identifier == 'o') {
+              move.setPile(PileType.OPEN, pileNumber);
+            } else {
+              move.setPile(PileType.FOUNDATION, pileNumber);
             }
-          } catch (NumberFormatException e) {}
+            return true;
+          }
         }
-      }
+      } catch (NumberFormatException e) {}
     }
-    return null;
+    return false;
   }
 }
