@@ -3,16 +3,17 @@ package cs3500.hw03;
 import cs3500.hw02.FreecellOperations;
 import cs3500.hw02.slot.ISlot;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
 /**
- * Created by josh_jpeg on 5/23/17.
+ * Represents the controller for a game of Freecell.
  */
 public class FreecellController implements IFreecellController<ISlot> {
-  private Readable rd;
-  private Appendable ap;
-  private Scanner scan;
+  private final Readable rd;
+  private final Appendable ap;
+  private final Scanner scan;
 
   /**
    * Constructs a {@code FreecellController} object.
@@ -35,6 +36,17 @@ public class FreecellController implements IFreecellController<ISlot> {
                        int numOpens, boolean shuffle) throws IllegalStateException {
     if (deck == null || model == null) {
       throw new IllegalArgumentException("Cannot start a game with a null deck or model.");
+    }
+    try {
+      try {
+        model.startGame(deck, numCascades, numOpens, shuffle);
+      } catch (IllegalArgumentException e) {
+        ap.append("The given arguments are invalid. Reason: " + e.getMessage());
+        return;
+      }
+      ap.append(model.getGameState());
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 }
