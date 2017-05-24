@@ -108,6 +108,7 @@ public class FreecellControllerTest {
 
   @Test
   public void playGameGameStateRegular() {
+    fcc = new FreecellController(new StringReader("q"), writer);
     fcc.playGame(model.getDeck(), model, 8, 4, false);
     assertEquals("F1:\nF2:\nF3:\nF4:\n"
       + "O1:\nO2:\nO3:\nO4:\n"
@@ -118,17 +119,27 @@ public class FreecellControllerTest {
       + "C5: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣\n"
       + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
       + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
-      + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠", writer.toString());
+      + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n"
+      + "Game quit prematurely.", writer.toString());
   }
 
   @Test
   public void playGameGameStateLowCascHighOpen() {
+    fcc = new FreecellController(new StringReader("q"), writer);
     fcc.playGame(model.getDeck(), model, 4, 10, false);
     assertEquals("F1:\nF2:\nF3:\nF4:\n"
       + "O1:\nO2:\nO3:\nO4:\nO5:\nO6:\nO7:\nO8:\nO9:\nO10:\n"
       + "C1: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
       + "C2: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
       + "C3: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
-      + "C4: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠", writer.toString());
+      + "C4: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠\n"
+      + "Game quit prematurely.", writer.toString());
+  }
+
+  @Test
+  public void playGameNoInput() {
+    fcc = new FreecellController(reader, writer);
+    fcc.playGame(model.getDeck(), model, 8, 4, false);
+    assertEquals("", writer.toString());
   }
 }

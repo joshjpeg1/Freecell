@@ -13,7 +13,6 @@ import java.util.Scanner;
 public class FreecellController implements IFreecellController<ISlot> {
   private final Readable rd;
   private final Appendable ap;
-  private final Scanner scan;
 
   /**
    * Constructs a {@code FreecellController} object.
@@ -28,7 +27,6 @@ public class FreecellController implements IFreecellController<ISlot> {
     }
     this.rd = rd;
     this.ap = ap;
-    this.scan = new Scanner(this.rd);
   }
 
   @Override
@@ -44,7 +42,22 @@ public class FreecellController implements IFreecellController<ISlot> {
         ap.append("The given arguments are invalid. Reason: " + e.getMessage());
         return;
       }
-      ap.append(model.getGameState());
+
+      Scanner scan = new Scanner(this.rd);
+
+      while (scan.hasNext()) {
+        this.ap.append(model.getGameState());
+        String next = scan.next();
+        if (next.equals("q") || next.equals("Q")) {
+          this.ap.append("\nGame quit prematurely.");
+        }
+        System.out.println(next);
+      }
+
+      scan.close();
+
+
+
     } catch (IOException e) {
       e.printStackTrace();
     }
