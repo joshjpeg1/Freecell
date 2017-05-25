@@ -7,8 +7,6 @@ import cs3500.hw02.slot.ISlot;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -40,79 +38,110 @@ public class FreecellController implements IFreecellController<ISlot> {
   public void playGame(List<ISlot> deck, FreecellOperations<ISlot> model, int numCascades,
                        int numOpens, boolean shuffle)
                        throws IllegalStateException, IllegalArgumentException {
-    if (rd == null || ap == null) {
+    if (this.rd == null || this.ap == null) {
       throw new IllegalStateException("Cannot read or append to null.");
     } else if (deck == null || model == null) {
       throw new IllegalArgumentException("Cannot start a game with a null deck or model.");
     }
     try {
+      model.startGame(deck, numCascades, numOpens, shuffle);
+    } catch (IllegalArgumentException e) {
+      this.appendMsg("Could not start game.");
+      return;
+    }
+    while (true) {
+      this.appendMsg(model.getGameState());
+      if (model.isGameOver()) {
+        this.appendMsg("\nGame over.");
+        break;
+      }
       try {
-        model.startGame(deck, numCascades, numOpens, shuffle);
-      } catch (IllegalArgumentException e) {
-        this.ap.append("Could not start game.");
+        moveFromInput(model);
+      } catch (IllegalStateException e) {
+        System.out.println("HELP: " + e.getMessage());
         return;
       }
-      Scanner scan = new Scanner(this.rd);
-      while (true) {
-        this.ap.append(model.getGameState());
-        Move nextMove = new Move();
-        if (model.isGameOver()) {
-          this.ap.append("\nGame over.");
-          return;
+      this.appendMsg("\n");
+    }
+  }
+
+  /**
+   * Performs a move using input from the {@code rd} object. Handles any errors in input and
+   * asks for more accordingly.
+   *
+   * @param model       the model of the Freecell game to be played
+   */
+  private void moveFromInput(FreecellOperations<ISlot> model) throws IllegalStateException {
+    Scanner scan = new Scanner(this.rd);
+    Move nextMove = new Move();
+    while (true) {
+      this.appendMsg("\nPlease enter a new move (e.g.: C1 7 O2).");
+      while (!nextMove.searchingFor().equals(SearchState.FINISHED)) {
+        String next = scan.next();
+        if (next.equalsIgnoreCase("q")) {
+          this.appendMsg("\nGame quit prematurely.");
+          throw new IllegalStateException(next/*"Exit out of grandparent while loop."*/);
         }
-        while (!nextMove.tryMove(model) && scan.hasNext()) {
-          String next = scan.next();
-          if (next.equalsIgnoreCase("q")) {
-            this.ap.append("\nGame quit prematurely.");
-            return;
-          }
-          Move prevMove = nextMove;
-          if (!validateCommand(next, nextMove, numCascades, numOpens)) {
-            this.ap.append("\nUnknown input. Try again.");
-          } else if (prevMove.equals(nextMove)) {
-            // VALID COMMAND, BUT INVALID PILE NUMBER
-          }
+        if (!validateCommand(next, nextMove)) {
+          this.appendMsg("\nInvalid " + nextMove.searchingFor().toString() +
+            " (Given: \"" + next + "\"). Try again.");
         }
-        this.ap.append("\n");
       }
+      try {
+        nextMove.tryMove(model);
+        return;
+      } catch (IllegalArgumentException e) {
+        this.appendMsg("\nInvalid move. Try again.\nREASON: " + e.getMessage());
+        nextMove = new Move();
+      }
+    }
+  }
+
+  /**
+   * Appends the given message to the {@code ad} object.
+   *
+   * @param message    the message to be appended
+   */
+  private void appendMsg(String message) {
+    try {
+      this.ap.append(message);
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
   /**
-   * Checks if the given String input is a valid command (either for a pile or card index, as
-   * indicated by the {@code lookForPile} boolean).
+   * Checks if the given String input is a valid command, and if so, gives the {@code Move} object
+   * the data.
    *
-   * @param input         the possible command
+   * @param input   the possible command
+   * @param move    the move to be mutated if the command is valid
    * @return true if the input is a command, false otherwise
+   * @throws IllegalArgumentException if the given {@code Move} object has not been initialized
    */
-  private boolean validateCommand(String input, Move move, int numCascades, int numOpens) {
+  private boolean validateCommand(String input, Move move) {
+    if (move == null) {
+      throw new IllegalArgumentException("Move has not been initialized.");
+    }
     if (input != null && input.length() > 0) {
+      SearchState which = move.searchingFor();
       input = input.toLowerCase();
       Character identifier = input.charAt(0);
       try {
-        if (Character.isDigit(identifier)) {
-          move.setCardIndex(Integer.parseInt(input));
+        if (Character.isDigit(identifier) && which.equals(SearchState.CARD_INDEX)) {
+          move.setCardIndex(Integer.parseInt(input) - 1);
           return true;
-        } else if (Character.isLetter(identifier)) {
+        } else if (Character.isLetter(identifier) && (which.equals(SearchState.SOURCE_PILE)
+                   || which.equals(SearchState.DEST_PILE))) {
+          boolean addToSource = which.equals(SearchState.SOURCE_PILE);
           if (identifier == 'c' || identifier == 'o' || identifier == 'f') {
-            int pileNumber = Integer.parseInt(input.substring(1));
-            switch (identifier) {
-              case 'c':
-                if (withinRange(pileNumber, 3, numCascades, true, false)) {
-                  move.setPile(PileType.CASCADE, pileNumber);
-                }
-                break;
-              case 'o':
-                if (withinRange(pileNumber, 3, numCascades, true, false)) {
-                  move.setPile(PileType.CASCADE, pileNumber);
-                }
-                break;
-              default:
-                if (withinRange(pileNumber, 0, 4, true, false)) {
-                  move.setPile(PileType.FOUNDATION, pileNumber);
-                }
+            int pileNumber = Integer.parseInt(input.substring(1)) - 1;
+            if (identifier == 'c') {
+              move.setPile(PileType.CASCADE, pileNumber, addToSource);
+            } else if (identifier == 'o') {
+              move.setPile(PileType.OPEN, pileNumber, addToSource);
+            } else {
+              move.setPile(PileType.FOUNDATION, pileNumber, addToSource);
             }
             return true;
           }
@@ -120,30 +149,5 @@ public class FreecellController implements IFreecellController<ISlot> {
       } catch (NumberFormatException e) {}
     }
     return false;
-  }
-
-  /**
-   * Checks if the given value is within range of the upper and lower, either inclusive or exclusive
-   * as determined by the given booleans.
-   *
-   * @param given   the value being checked
-   * @param lower   the lower bound of the range
-   * @param upper   the upper bound of the range
-   * @param lowInc  true if the lower bound is inclusive, false otherwise
-   * @param uppInc  true if the upper bound is inclusive, false otherwise
-   * @return whether the given value is within range of the lower and upper
-   */
-  private boolean withinRange(int given, int lower, int upper, boolean lowInc, boolean uppInc) {
-    boolean inRange;
-    if (lowInc) {
-      inRange = given >= lower;
-    } else {
-      inRange = given > lower;
-    }
-    if (uppInc) {
-      return inRange && (given <= upper);
-    } else {
-      return inRange && (given < upper);
-    }
   }
 }

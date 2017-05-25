@@ -120,6 +120,7 @@ public class FreecellControllerTest {
       + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
       + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
       + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n"
+      + "Please enter a new move (e.g.: C1 7 O2).\n"
       + "Game quit prematurely.", buffer.toString());
   }
 
@@ -145,6 +146,7 @@ public class FreecellControllerTest {
       + "C2: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
       + "C3: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
       + "C4: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠\n"
+      + "Please enter a new move (e.g.: C1 7 O2).\n"
       + "Game quit prematurely.", buffer.toString());
   }
 
@@ -165,7 +167,7 @@ public class FreecellControllerTest {
   @Test
   public void playGameCascadeToCascadeLegal() {
     //reader = new StringReader("e1 23 f30 c1");
-    reader = new StringReader("C5 5 C0 q");
+    reader = new StringReader("C6 6 C1 q");
     fcc = new FreecellController(reader, buffer);
     fcc.playGame(model.getDeck(), model, 8, 4, false);
     assertEquals("F1:\nF2:\nF3:\nF4:\n"
@@ -178,6 +180,7 @@ public class FreecellControllerTest {
       + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
       + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
       + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n"
+      + "Please enter a new move (e.g.: C1 7 O2).\n"
       + "F1:\nF2:\nF3:\nF4:\n"
       + "O1:\nO2:\nO3:\nO4:\n"
       + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣, Q♦\n"
@@ -188,6 +191,7 @@ public class FreecellControllerTest {
       + "C6: 2♦, 4♦, 6♦, 8♦, 10♦\n"
       + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
       + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n"
+      + "Please enter a new move (e.g.: C1 7 O2).\n"
       + "Game quit prematurely.", buffer.toString());
   }
 
@@ -212,7 +216,7 @@ public class FreecellControllerTest {
 
   @Test
   public void playGameCascadeToFoundationLegal() {
-    reader = new StringReader("C0 6 f1 q");
+    reader = new StringReader("C1 7 f2 q");
     fcc = new FreecellController(reader, buffer);
     fcc.playGame(Utils.reverse(model.getDeck()), model, 8, 4, false);
     assertEquals("F1:\nF2:\nF3:\nF4:\n"
@@ -225,6 +229,7 @@ public class FreecellControllerTest {
       + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n"
       + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
       + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣\n"
+      + "Please enter a new move (e.g.: C1 7 O2).\n"
       + "F1:\nF2: A♠\nF3:\nF4:\n"
       + "O1:\nO2:\nO3:\nO4:\n"
       + "C1: K♠, J♠, 9♠, 7♠, 5♠, 3♠\n"
@@ -235,12 +240,13 @@ public class FreecellControllerTest {
       + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n"
       + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
       + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣\n"
+      + "Please enter a new move (e.g.: C1 7 O2).\n"
       + "Game quit prematurely.", buffer.toString());
   }
 
   @Test
   public void playGameCascadeToOpenLegal() {
-    reader = new StringReader("C3 6 o2 q");
+    reader = new StringReader("C4 7 o3 q");
     fcc = new FreecellController(reader, buffer);
     fcc.playGame(model.getDeck(), model, 8, 4, false);
     assertEquals("F1:\nF2:\nF3:\nF4:\n"
@@ -253,6 +259,7 @@ public class FreecellControllerTest {
       + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
       + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
       + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n"
+      + "Please enter a new move (e.g.: C1 7 O2).\n"
       + "F1:\nF2:\nF3:\nF4:\n"
       + "O1:\nO2:\nO3: K♠\nO4:\n"
       + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n"
@@ -263,12 +270,13 @@ public class FreecellControllerTest {
       + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
       + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
       + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n"
+      + "Please enter a new move (e.g.: C1 7 O2).\n"
       + "Game quit prematurely.", buffer.toString());
   }
 
   @Test
   public void playGameOpenToCascadeLegal() {
-    reader = new StringReader("c7 5 O2 o2 0 C1 q");
+    reader = new StringReader("c8 6 O3 o3 1 C2 q");
     fcc = new FreecellController(reader, buffer);
     fcc.playGame(model.getDeck(), model, 8, 4, false);
     assertEquals("F1:\nF2:\nF3:\nF4:\n"
@@ -281,6 +289,7 @@ public class FreecellControllerTest {
       + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
       + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
       + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n"
+      + "Please enter a new move (e.g.: C1 7 O2).\n"
       + "F1:\nF2:\nF3:\nF4:\n"
       + "O1:\nO2:\nO3: Q♠\nO4:\n"
       + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n"
@@ -291,6 +300,7 @@ public class FreecellControllerTest {
       + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
       + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
       + "C8: 2♠, 4♠, 6♠, 8♠, 10♠\n"
+      + "Please enter a new move (e.g.: C1 7 O2).\n"
       + "F1:\nF2:\nF3:\nF4:\n"
       + "O1:\nO2:\nO3:\nO4:\n"
       + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n"
@@ -301,12 +311,13 @@ public class FreecellControllerTest {
       + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
       + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
       + "C8: 2♠, 4♠, 6♠, 8♠, 10♠\n"
+      + "Please enter a new move (e.g.: C1 7 O2).\n"
       + "Game quit prematurely.", buffer.toString());
   }
 
   @Test
   public void playGameOpenToOpenLegal() {
-    reader = new StringReader("c7 5 O2 o2 0 o1 q");
+    reader = new StringReader("c8 6 O3 o3 1 o2 q");
     fcc = new FreecellController(reader, buffer);
     fcc.playGame(model.getDeck(), model, 8, 4, false);
     assertEquals("F1:\nF2:\nF3:\nF4:\n"
@@ -319,6 +330,7 @@ public class FreecellControllerTest {
       + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
       + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
       + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n"
+      + "Please enter a new move (e.g.: C1 7 O2).\n"
       + "F1:\nF2:\nF3:\nF4:\n"
       + "O1:\nO2:\nO3: Q♠\nO4:\n"
       + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n"
@@ -329,6 +341,7 @@ public class FreecellControllerTest {
       + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
       + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
       + "C8: 2♠, 4♠, 6♠, 8♠, 10♠\n"
+      + "Please enter a new move (e.g.: C1 7 O2).\n"
       + "F1:\nF2:\nF3:\nF4:\n"
       + "O1:\nO2: Q♠\nO3:\nO4:\n"
       + "C1: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n"
@@ -339,12 +352,13 @@ public class FreecellControllerTest {
       + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
       + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
       + "C8: 2♠, 4♠, 6♠, 8♠, 10♠\n"
+      + "Please enter a new move (e.g.: C1 7 O2).\n"
       + "Game quit prematurely.", buffer.toString());
   }
 
   @Test
   public void playGameOpenToFoundationLegal() {
-    reader = new StringReader("C0 6 o0 O0 0 F3 q");
+    reader = new StringReader("C1 7 o1 O1 1 F4 q");
     fcc = new FreecellController(reader, buffer);
     fcc.playGame(Utils.reverse(model.getDeck()), model, 8, 4, false);
     assertEquals("F1:\nF2:\nF3:\nF4:\n"
@@ -357,6 +371,7 @@ public class FreecellControllerTest {
       + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n"
       + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
       + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣\n"
+      + "Please enter a new move (e.g.: C1 7 O2).\n"
       + "F1:\nF2:\nF3:\nF4:\n"
       + "O1: A♠\nO2:\nO3:\nO4:\n"
       + "C1: K♠, J♠, 9♠, 7♠, 5♠, 3♠\n"
@@ -367,6 +382,7 @@ public class FreecellControllerTest {
       + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n"
       + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
       + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣\n"
+      + "Please enter a new move (e.g.: C1 7 O2).\n"
       + "F1:\nF2:\nF3:\nF4: A♠\n"
       + "O1:\nO2:\nO3:\nO4:\n"
       + "C1: K♠, J♠, 9♠, 7♠, 5♠, 3♠\n"
@@ -377,6 +393,7 @@ public class FreecellControllerTest {
       + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n"
       + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
       + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣\n"
+      + "Please enter a new move (e.g.: C1 7 O2).\n"
       + "Game quit prematurely.", buffer.toString());
   }
 

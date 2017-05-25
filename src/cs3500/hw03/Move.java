@@ -2,69 +2,88 @@ package cs3500.hw03;
 
 import cs3500.hw02.FreecellOperations;
 import cs3500.hw02.PileType;
-import cs3500.hw02.slot.ISlot;
 
 /**
- * Created by josh_jpeg on 5/24/17.
+ * Represents a move in the game of Freecell. Contains all data needed to perform a move, as
+ * dictated by the {@link FreecellOperations} interface definition of move().
  */
 public class Move {
   private PileType source;
-  private int pileNumber;
-  private int cardIndex;
+  private Integer pileNumber;
+  private Integer cardIndex;
   private PileType destination;
-  private int destPileNumber;
+  private Integer destPileNumber;
 
+  /**
+   * Constructs a {@code Move} object, with all fields set to null.
+   */
   public Move() {
     this.source = null;
-    this.pileNumber = -1;
-    this.cardIndex = -1;
+    this.pileNumber = null;
+    this.cardIndex = null;
     this.destination = null;
-    this.destPileNumber = -1;
+    this.destPileNumber = null;
   }
 
-  @Override
-  public String toString() {
-    return "(" + pileToString(source) + ", " + pileNumber + ", " + cardIndex + ", "
-        + pileToString(destination) + ", " + destPileNumber + ")";
-  }
-
-  public String pileToString(PileType pt) {
-    if (pt == null) {
-      return "NULL";
+  /**
+   * Sets a pile (determined by the {@code setSource} boolean) to the given pile type and number.
+   *
+   * @param pileType      the type of pile
+   * @param pileNumber    the number of the pile
+   * @param setSource     true if setting the source pile, otherwise destination pile
+   * @throws IllegalArgumentException if the given pileType is null
+   */
+  public void setPile(PileType pileType, int pileNumber, boolean setSource)
+                      throws IllegalArgumentException{
+    if (pileType == null) {
+      throw new IllegalArgumentException("Cannot assign null to pile type.");
     }
-    switch (pt) {
-      case OPEN: return "open";
-      case FOUNDATION: return "foundation";
-      case CASCADE: return "cascade";
-      default: return "UNKNOWN";
-    }
-  }
-
-  public void setPile(PileType pileType, int pileNumber) {
-    if (pileType != null) {
-      if (this.source == null) {
-        this.source = pileType;
-        this.pileNumber = pileNumber;
-      } else {
-        this.destination = pileType;
-        this.destPileNumber = pileNumber;
-      }
+    if (setSource) {
+      this.source = pileType;
+      this.pileNumber = pileNumber;
+    } else {
+      this.destination = pileType;
+      this.destPileNumber = pileNumber;
     }
   }
 
+  /**
+   * Sets the card index to the given one.
+   *
+   * @param cardIndex     the index of the card
+   */
   public void setCardIndex(int cardIndex) {
     this.cardIndex = cardIndex;
   }
 
-  public boolean tryMove(FreecellOperations model) {
-    try {
-      model.move(this.source, this.pileNumber, this.cardIndex, this.destination,
-          this.destPileNumber);
-      //System.out.println(this.toString() + " : " + "PASS");
-      return true;
-    } catch (IllegalArgumentException e) {
-      //System.out.println(this.toString() + " : " + e.getMessage());
-      return false;
+  /**
+   * Returns what the {@code Move} object is looking to get next from the input.
+   *
+   * @return the {@code SearchState} of this, or null if the move is complete
+   */
+  public SearchState searchingFor() {
+    if (this.source == null) {
+      return SearchState.SOURCE_PILE;
+    } else if (this.cardIndex == null) {
+      return SearchState.CARD_INDEX;
+    } else if (this.destination == null) {
+      return SearchState.DEST_PILE;
+    } else {
+      return SearchState.FINISHED;
     }
+  }
+
+  /**
+   * Uses the move method from the given {@link FreecellOperations} object and fills in the
+   * arguments with this object's fields.
+   *
+   * @param model     the model of the current game
+   * @throws IllegalArgumentException if the given model is uninitialized
+   */
+  public void tryMove(FreecellOperations model) throws IllegalArgumentException {
+    if (model == null) {
+      throw new IllegalArgumentException("Cannot move a null.");
+    }
+    model.move(this.source, this.pileNumber, this.cardIndex, this.destination, this.destPileNumber);
   }
 }
