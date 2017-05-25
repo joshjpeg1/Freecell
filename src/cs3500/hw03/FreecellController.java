@@ -8,6 +8,7 @@ import cs3500.hw02.slot.ISlot;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -49,16 +50,17 @@ public class FreecellController implements IFreecellController<ISlot> {
       this.appendMsg("Could not start game.");
       return;
     }
+    Scanner scan = new Scanner(this.rd);
     while (true) {
       this.appendMsg(model.getGameState());
       if (model.isGameOver()) {
         this.appendMsg("\nGame over.");
-        break;
+        return;
       }
       try {
-        moveFromInput(model);
+        this.moveFromInput(scan, model);
       } catch (IllegalStateException e) {
-        System.out.println("HELP: " + e.getMessage());
+        this.appendMsg("\nGame quit prematurely.");
         return;
       }
       this.appendMsg("\n");
@@ -70,17 +72,17 @@ public class FreecellController implements IFreecellController<ISlot> {
    * asks for more accordingly.
    *
    * @param model       the model of the Freecell game to be played
+   * @throws IllegalStateException when the input is "q" or "Q" for quit
    */
-  private void moveFromInput(FreecellOperations<ISlot> model) throws IllegalStateException {
-    Scanner scan = new Scanner(this.rd);
+  private void moveFromInput(Scanner scan, FreecellOperations<ISlot> model)
+                             throws IllegalStateException {
     Move nextMove = new Move();
     while (true) {
       this.appendMsg("\nPlease enter a new move (e.g.: C1 7 O2).");
       while (!nextMove.searchingFor().equals(SearchState.FINISHED)) {
         String next = scan.next();
         if (next.equalsIgnoreCase("q")) {
-          this.appendMsg("\nGame quit prematurely.");
-          throw new IllegalStateException(next/*"Exit out of grandparent while loop."*/);
+          throw new IllegalStateException("Exit out of grandparent while loop.");
         }
         if (!validateCommand(next, nextMove)) {
           this.appendMsg("\nInvalid " + nextMove.searchingFor().toString() +

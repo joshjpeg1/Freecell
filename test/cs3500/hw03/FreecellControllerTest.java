@@ -166,7 +166,6 @@ public class FreecellControllerTest {
 
   @Test
   public void playGameCascadeToCascadeLegal() {
-    //reader = new StringReader("e1 23 f30 c1");
     reader = new StringReader("C6 6 C1 q");
     fcc = new FreecellController(reader, buffer);
     fcc.playGame(model.getDeck(), model, 8, 4, false);
