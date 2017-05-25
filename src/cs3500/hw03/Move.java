@@ -3,6 +3,8 @@ package cs3500.hw03;
 import cs3500.hw02.FreecellOperations;
 import cs3500.hw02.PileType;
 
+import java.util.Objects;
+
 /**
  * Represents a move in the game of Freecell. Contains all data needed to perform a move, as
  * dictated by the {@link FreecellOperations} interface definition of move().
@@ -23,6 +25,23 @@ public class Move {
     this.cardIndex = null;
     this.destination = null;
     this.destPileNumber = null;
+  }
+
+  @Override
+  public String toString() {
+    return "(" + toStringOrUndefined(this.source) + ", "
+        + toStringOrUndefined(this.pileNumber) + ", "
+        + toStringOrUndefined(this.cardIndex) + ", "
+        + toStringOrUndefined(this.destination) + ", "
+        + toStringOrUndefined(this.destPileNumber) + ")";
+  }
+
+  private String toStringOrUndefined(Object o) {
+    if (o == null) {
+      return "null";
+    } else {
+      return o.toString();
+    }
   }
 
   /**
@@ -62,11 +81,11 @@ public class Move {
    * @return the {@code SearchState} of this, or null if the move is complete
    */
   public SearchState searchingFor() {
-    if (this.source == null) {
+    if (this.source == null && this.pileNumber == null) {
       return SearchState.SOURCE_PILE;
     } else if (this.cardIndex == null) {
       return SearchState.CARD_INDEX;
-    } else if (this.destination == null) {
+    } else if (this.destination == null && this.destPileNumber == null) {
       return SearchState.DEST_PILE;
     } else {
       return SearchState.FINISHED;
@@ -78,12 +97,19 @@ public class Move {
    * arguments with this object's fields.
    *
    * @param model     the model of the current game
-   * @throws IllegalArgumentException if the given model is uninitialized
+   * @return true if the move is made, false otherwise
+   * @throws IllegalArgumentException if the given model is uninitialized or the move is invalid
    */
-  public void tryMove(FreecellOperations model) throws IllegalArgumentException {
+  public boolean tryMove(FreecellOperations model) throws IllegalArgumentException {
     if (model == null) {
       throw new IllegalArgumentException("Cannot move a null.");
     }
-    model.move(this.source, this.pileNumber, this.cardIndex, this.destination, this.destPileNumber);
+    if (this.searchingFor().equals(SearchState.FINISHED)) {
+      model.move(this.source, this.pileNumber, this.cardIndex,
+          this.destination, this.destPileNumber);
+      return true;
+    } else {
+      return false;
+    }
   }
 }

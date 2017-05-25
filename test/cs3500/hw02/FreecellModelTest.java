@@ -364,7 +364,7 @@ public class FreecellModelTest {
   public void moveFoundationDestWrongNextValue() {
     fcm.startGame(Utils.reverse(fcm.getDeck()), 8, 4, false);
     fcm.move(PileType.CASCADE, 0, 6, PileType.FOUNDATION, 2);
-    fcm.move(PileType.CASCADE, 4, 5, PileType.FOUNDATION, 2);
+    fcm.move(PileType.CASCADE, 4, 5, PileType.OPEN, 0);
     fcm.move(PileType.CASCADE, 4, 4, PileType.FOUNDATION, 2);
   }
 
