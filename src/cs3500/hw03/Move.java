@@ -60,10 +60,10 @@ public class Move {
     try {
       model.move(this.source, this.pileNumber, this.cardIndex, this.destination,
           this.destPileNumber);
-      System.out.println(this.toString() + " : " + "PASS");
+      //System.out.println(this.toString() + " : " + "PASS");
       return true;
     } catch (IllegalArgumentException e) {
-      System.out.println(this.toString() + " : " + e.getMessage());
+      //System.out.println(this.toString() + " : " + e.getMessage());
       return false;
     }
   }

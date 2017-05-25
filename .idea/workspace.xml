@@ -2,18 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3efa8d28-e143-4a8c-828e-20e69ae0bee5" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Assignment 2/cs3500/hw03/CardCommand.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Assignment 2/cs3500/hw03/Command.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Assignment 2/cs3500/hw03/PileCommand.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/cs3500/hw03/CardCommand.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/cs3500/hw03/PileCommand.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/cs3500/hw03/Command.java" afterPath="$PROJECT_DIR$/src/cs3500/hw03/Move.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Assignment 2/cs3500/hw03/FreecellController.class" afterPath="$PROJECT_DIR$/out/production/Assignment 2/cs3500/hw03/FreecellController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Assignment 2/cs3500/hw03/IFreecellController.class" afterPath="$PROJECT_DIR$/out/production/Assignment 2/cs3500/hw03/IFreecellController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/test/Assignment 2/cs3500/hw03/FreecellControllerTest.class" afterPath="$PROJECT_DIR$/out/test/Assignment 2/cs3500/hw03/FreecellControllerTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cs3500/hw03/FreecellController.java" afterPath="$PROJECT_DIR$/src/cs3500/hw03/FreecellController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cs3500/hw03/IFreecellController.java" afterPath="$PROJECT_DIR$/src/cs3500/hw03/IFreecellController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cs3500/hw03/Move.java" afterPath="$PROJECT_DIR$/src/cs3500/hw03/Move.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/cs3500/hw03/FreecellControllerTest.java" afterPath="$PROJECT_DIR$/test/cs3500/hw03/FreecellControllerTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -29,7 +19,7 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.39669862">
+    <splitter split-orientation="horizontal" split-proportion="0.4797657">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="IFreecellController.java" pinned="false" current-in-tab="false">
@@ -47,8 +37,8 @@
           <file leaf-file-name="FreecellController.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/cs3500/hw03/FreecellController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="468">
-                  <caret line="66" column="29" lean-forward="false" selection-start-line="66" selection-start-column="29" selection-end-line="66" selection-end-column="29" />
+                <state relative-caret-position="298">
+                  <caret line="72" column="53" lean-forward="false" selection-start-line="72" selection-start-column="53" selection-end-line="72" selection-end-column="53" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -59,8 +49,8 @@
           <file leaf-file-name="Move.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/cs3500/hw03/Move.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="576">
-                  <caret line="62" column="51" lean-forward="false" selection-start-line="62" selection-start-column="51" selection-end-line="62" selection-end-column="51" />
+                <state relative-caret-position="676">
+                  <caret line="62" column="8" lean-forward="false" selection-start-line="62" selection-start-column="8" selection-end-line="62" selection-end-column="8" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="e#1295#1296#0" expanded="true" />
@@ -137,11 +127,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="FreecellControllerTest.java" pinned="false" current-in-tab="false">
+          <file leaf-file-name="FreecellControllerTest.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/test/cs3500/hw03/FreecellControllerTest.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="467">
-                  <caret line="355" column="25" lean-forward="false" selection-start-line="355" selection-start-column="25" selection-end-line="355" selection-end-column="25" />
+                <state relative-caret-position="1407">
+                  <caret line="160" column="3" lean-forward="false" selection-start-line="160" selection-start-column="3" selection-end-line="160" selection-end-column="3" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="e#1524#1525#0" expanded="true" />
@@ -153,10 +143,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="FreecellModelTest.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="FreecellModelTest.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/test/cs3500/hw02/FreecellModelTest.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-3474">
+                <state relative-caret-position="-3708">
                   <caret line="163" column="27" lean-forward="false" selection-start-line="163" selection-start-column="27" selection-end-line="163" selection-end-column="27" />
                   <folding>
                     <element signature="imports" expanded="true" />
@@ -255,16 +245,17 @@
         <option value="$PROJECT_DIR$/src/cs3500/hw03/PileCommand.java" />
         <option value="$PROJECT_DIR$/src/cs3500/hw03/IFreecellController.java" />
         <option value="$PROJECT_DIR$/src/cs3500/hw03/Command.java" />
-        <option value="$PROJECT_DIR$/src/cs3500/hw03/FreecellController.java" />
         <option value="$PROJECT_DIR$/src/cs3500/hw03/Move.java" />
         <option value="$PROJECT_DIR$/test/cs3500/hw03/FreecellControllerTest.java" />
+        <option value="$PROJECT_DIR$/src/cs3500/hw03/FreecellController.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="22" />
-    <option name="width" value="1920" />
-    <option name="height" value="1174" />
+    <option name="x" value="881" />
+    <option name="y" value="287" />
+    <option name="width" value="2276" />
+    <option name="height" value="1385" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -638,6 +629,21 @@
       <listeners />
       <method />
     </configuration>
+    <configuration default="false" name="Play" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="cs3500.hw03.FreecellController" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="Assignment 2" />
+      <envs />
+      <method />
+    </configuration>
     <configuration default="false" name="RunTypeChecks" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="Hw02TypeChecks" />
@@ -675,9 +681,10 @@
       <patterns />
       <method />
     </configuration>
-    <list size="2">
-      <item index="0" class="java.lang.String" itemvalue="Application.RunTypeChecks" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.JUnit Testing" />
+    <list size="3">
+      <item index="0" class="java.lang.String" itemvalue="Application.Play" />
+      <item index="1" class="java.lang.String" itemvalue="Application.RunTypeChecks" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.JUnit Testing" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -694,24 +701,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="JUnit_Testing - 2017.05.24 at 19h 26m 57s.xml">
-      <configuration name="JUnit Testing" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="JUnit_Testing - 2017.05.24 at 19h 28m 00s.xml">
-      <configuration name="JUnit Testing" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="JUnit_Testing - 2017.05.24 at 19h 29m 04s.xml">
-      <configuration name="JUnit Testing" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="JUnit_Testing - 2017.05.24 at 19h 30m 55s.xml">
-      <configuration name="JUnit Testing" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="JUnit_Testing - 2017.05.24 at 19h 31m 01s.xml">
-      <configuration name="JUnit Testing" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="JUnit_Testing - 2017.05.24 at 19h 31m 15s.xml">
-      <configuration name="JUnit Testing" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="JUnit_Testing - 2017.05.24 at 19h 34m 23s.xml">
       <configuration name="JUnit Testing" configurationId="JUnit" />
     </history-entry>
@@ -722,6 +711,24 @@
       <configuration name="JUnit Testing" configurationId="JUnit" />
     </history-entry>
     <history-entry file="JUnit_Testing - 2017.05.24 at 19h 38m 20s.xml">
+      <configuration name="JUnit Testing" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="JUnit_Testing - 2017.05.24 at 19h 50m 22s.xml">
+      <configuration name="JUnit Testing" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="JUnit_Testing - 2017.05.24 at 19h 54m 09s.xml">
+      <configuration name="JUnit Testing" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="JUnit_Testing - 2017.05.24 at 19h 54m 10s.xml">
+      <configuration name="JUnit Testing" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="JUnit_Testing - 2017.05.24 at 19h 54m 33s.xml">
+      <configuration name="JUnit Testing" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="JUnit_Testing - 2017.05.24 at 20h 02m 46s.xml">
+      <configuration name="JUnit Testing" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="JUnit_Testing - 2017.05.24 at 20h 32m 32s.xml">
       <configuration name="JUnit Testing" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -735,7 +742,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1920" height="1174" extended-state="6" />
+    <frame x="881" y="287" width="2276" height="1385" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -748,7 +755,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.071969695" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22415154" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32696548" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1298,22 +1305,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cs3500/hw03/Move.java">
+    <entry file="file://$PROJECT_DIR$/test/cs3500/hw02/FreecellModelTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="62" column="51" lean-forward="false" selection-start-line="62" selection-start-column="51" selection-end-line="62" selection-end-column="51" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1295#1296#0" expanded="true" />
-            <element signature="e#1331#1332#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cs3500/hw03/FreecellController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="66" column="29" lean-forward="false" selection-start-line="66" selection-start-column="29" selection-end-line="66" selection-end-column="29" />
+        <state relative-caret-position="-3708">
+          <caret line="163" column="27" lean-forward="false" selection-start-line="163" selection-start-column="27" selection-end-line="163" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1322,8 +1317,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/cs3500/hw03/FreecellControllerTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="467">
-          <caret line="355" column="25" lean-forward="false" selection-start-line="355" selection-start-column="25" selection-end-line="355" selection-end-column="25" />
+        <state relative-caret-position="1407">
+          <caret line="160" column="3" lean-forward="false" selection-start-line="160" selection-start-column="3" selection-end-line="160" selection-end-column="3" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1524#1525#0" expanded="true" />
@@ -1334,10 +1329,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/cs3500/hw02/FreecellModelTest.java">
+    <entry file="file://$PROJECT_DIR$/src/cs3500/hw03/Move.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3474">
-          <caret line="163" column="27" lean-forward="false" selection-start-line="163" selection-start-column="27" selection-end-line="163" selection-end-column="27" />
+        <state relative-caret-position="676">
+          <caret line="62" column="8" lean-forward="false" selection-start-line="62" selection-start-column="8" selection-end-line="62" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1295#1296#0" expanded="true" />
+            <element signature="e#1331#1332#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs3500/hw03/FreecellController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="72" column="53" lean-forward="false" selection-start-line="72" selection-start-column="53" selection-end-line="72" selection-end-column="53" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

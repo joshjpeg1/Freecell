@@ -124,6 +124,18 @@ public class FreecellControllerTest {
   }
 
   @Test
+  public void playGameGameStateShuffled() {
+    fcc = new FreecellController(new StringReader("q"), buffer);
+    fcc.playGame(model.getDeck(), model, 4, 10, false);
+
+    Appendable buffer2 = new StringBuffer();
+    IFreecellController fcc2 = new FreecellController(new StringReader("q"), buffer2);
+    fcc2.playGame(model.getDeck(), model, 4, 10, true);
+
+    assertNotEquals(buffer2.toString(), buffer.toString());
+  }
+
+  @Test
   public void playGameGameStateLowCascHighOpen() {
     fcc = new FreecellController(new StringReader("q"), buffer);
     fcc.playGame(model.getDeck(), model, 4, 10, false);
@@ -146,13 +158,6 @@ public class FreecellControllerTest {
     fcc2.playGame(model.getDeck(), model, 4, 10, false);
 
     assertEquals(buffer.toString(), buffer2.toString());
-  }
-
-  @Test
-  public void playGameNoInput() {
-    fcc = new FreecellController(reader, buffer);
-    fcc.playGame(model.getDeck(), model, 8, 4, false);
-    assertEquals("", buffer.toString());
   }
 
   // null input? StringReader throws a NullPointerException when given null
