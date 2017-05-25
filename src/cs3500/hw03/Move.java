@@ -34,7 +34,7 @@ public class Move {
    * @throws IllegalArgumentException if the given pileType is null
    */
   public void setPile(PileType pileType, int pileNumber, boolean setSource)
-                      throws IllegalArgumentException{
+                      throws IllegalArgumentException {
     if (pileType == null) {
       throw new IllegalArgumentException("Cannot assign null to pile type.");
     }

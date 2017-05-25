@@ -8,7 +8,6 @@ import cs3500.hw02.slot.ISlot;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -30,7 +29,7 @@ public class FreecellController implements IFreecellController<ISlot> {
    * @param rd     a Readable object to receive input from
    * @param ap     an Appendable object to transmit output to
    */
-  public FreecellController(Readable rd, Appendable ap){
+  public FreecellController(Readable rd, Appendable ap) {
     this.rd = rd;
     this.ap = ap;
   }
@@ -76,17 +75,17 @@ public class FreecellController implements IFreecellController<ISlot> {
    */
   private void moveFromInput(Scanner scan, FreecellOperations<ISlot> model)
                              throws IllegalStateException {
-    Move nextMove = new Move();
     while (true) {
-      this.appendMsg("\nPlease enter a new move (e.g.: C1 7 O2).");
+      Move nextMove = new Move();
+      this.appendMsg("\nPlease enter a new move (e.g.: C1 7 F2).");
       while (!nextMove.searchingFor().equals(SearchState.FINISHED)) {
         String next = scan.next();
         if (next.equalsIgnoreCase("q")) {
-          throw new IllegalStateException("Exit out of grandparent while loop.");
+          throw new IllegalStateException("To exit out of grandparent while loop.");
         }
         if (!validateCommand(next, nextMove)) {
-          this.appendMsg("\nInvalid " + nextMove.searchingFor().toString() +
-            " (Given: \"" + next + "\"). Try again.");
+          this.appendMsg("\nInvalid " + nextMove.searchingFor().toString()
+              + " (Given: \"" + next + "\"). Try again.");
         }
       }
       try {
@@ -94,7 +93,6 @@ public class FreecellController implements IFreecellController<ISlot> {
         return;
       } catch (IllegalArgumentException e) {
         this.appendMsg("\nInvalid move. Try again.\nREASON: " + e.getMessage());
-        nextMove = new Move();
       }
     }
   }
@@ -148,7 +146,9 @@ public class FreecellController implements IFreecellController<ISlot> {
             return true;
           }
         }
-      } catch (NumberFormatException e) {}
+      } catch (NumberFormatException e) {
+        // only will catch if parseInt fails (invalid input), will fall to 'return false' statement
+      }
     }
     return false;
   }
