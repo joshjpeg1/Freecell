@@ -138,4 +138,19 @@ public class Utils {
     }
     return list;
   }
+
+  /**
+   * Helper to the toString() method. If the given object is null, returns the String "null".
+   * Otherwise, returns the result of the object's toString() method.
+   *
+   * @param o      an object
+   * @returns a string representation of the given object, or "null" is object is uninitialized
+   */
+  public static String toStringOrNull(Object o) {
+    if (o == null) {
+      return "null";
+    } else {
+      return o.toString();
+    }
+  }
 }

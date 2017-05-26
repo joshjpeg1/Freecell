@@ -159,7 +159,6 @@ public class FreecellModel implements FreecellOperations<ISlot> {
       if (destPileNumber < 0 || destPileNumber >= pile.size()) {
         throw new IllegalArgumentException("Pile does not exist at given destination index.");
       }
-
       if (!from.moveTo(Utils.getLast(pile.get(destPileNumber)), destination)) {
         throw new IllegalArgumentException("Move is illegal.");
       }
