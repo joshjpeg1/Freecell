@@ -1,12 +1,10 @@
 package cs3500.hw03;
 
-import cs3500.hw02.FreecellModel;
 import cs3500.hw02.FreecellOperations;
 import cs3500.hw02.PileType;
 import cs3500.hw02.slot.ISlot;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,12 +14,6 @@ import java.util.Scanner;
 public class FreecellController implements IFreecellController<ISlot> {
   private final Readable rd;
   private final Appendable ap;
-
-  public static void main(String[] argv) {
-    FreecellController fcc = new FreecellController(new InputStreamReader(System.in), System.out);
-    FreecellOperations<ISlot> fcm = new FreecellModel();
-    fcc.playGame(fcm.getDeck(), fcm, 8, 4, false);
-  }
 
   /**
    * Constructs a {@code FreecellController} object.

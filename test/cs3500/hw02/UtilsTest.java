@@ -7,6 +7,7 @@ import java.util.List;
 import cs3500.hw02.slot.CardSlot;
 import cs3500.hw02.slot.CardSuit;
 import cs3500.hw02.slot.CardValue;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

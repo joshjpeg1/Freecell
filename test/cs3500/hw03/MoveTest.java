@@ -4,6 +4,7 @@ import cs3500.hw02.FreecellModel;
 import cs3500.hw02.FreecellOperations;
 import cs3500.hw02.PileType;
 import cs3500.hw02.Utils;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
