@@ -116,16 +116,16 @@ public class FreecellController implements IFreecellController<ISlot> {
       throw new IllegalArgumentException("Move has not been initialized.");
     }
     if (input != null && input.length() > 0) {
-      SearchState which = move.searchingFor();
+      SearchState searchFor = move.searchingFor();
       input = input.toLowerCase();
       Character identifier = input.charAt(0);
       try {
-        if (Character.isDigit(identifier) && which.equals(SearchState.CARD_INDEX)) {
+        if (Character.isDigit(identifier) && searchFor.equals(SearchState.CARD_INDEX)) {
           move.setCardIndex(Integer.parseInt(input) - 1);
           return true;
-        } else if (Character.isLetter(identifier) && (which.equals(SearchState.SOURCE_PILE)
-                   || which.equals(SearchState.DEST_PILE))) {
-          boolean addToSource = which.equals(SearchState.SOURCE_PILE);
+        } else if (Character.isLetter(identifier) && (searchFor.equals(SearchState.SOURCE_PILE)
+                   || searchFor.equals(SearchState.DEST_PILE))) {
+          boolean addToSource = searchFor.equals(SearchState.SOURCE_PILE);
           if (identifier == 'c' || identifier == 'o' || identifier == 'f') {
             int pileNumber = Integer.parseInt(input.substring(1)) - 1;
             if (identifier == 'c') {

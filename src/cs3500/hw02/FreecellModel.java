@@ -47,17 +47,27 @@ public class FreecellModel implements FreecellOperations<ISlot> {
     if (numCascadePiles < 4) {
       throw new IllegalArgumentException("Invalid number of cascade piles. Given: "
           + numCascadePiles);
-    }
-    if (numOpenPiles < 1) {
+    } else if (numOpenPiles < 1) {
       throw new IllegalArgumentException("Invalid number of open piles. Given: "
           + numOpenPiles);
-    }
-    if (deck == null || deck.contains(null)
+    } else if (deck == null || deck.contains(null)
         || deck.size() != (CardValue.values().length * CardSuit.values().length)
         || !Utils.noDuplicates(deck)) {
       throw new IllegalArgumentException("Invalid deck.");
     }
+    initPilesAndDeck(deck, numCascadePiles, numOpenPiles, shuffle);
+  }
 
+  /**
+   * Helper to the startGame method. Initializes all of the piles and the deck.
+   *
+   * @param deck               the deck to be dealt
+   * @param numCascadePiles    the number of cascade piles
+   * @param numOpenPiles       the number of open piles
+   * @param shuffle            if true, shuffle the deck else deal the deck as-is
+   */
+  private void initPilesAndDeck(List<ISlot> deck, int numCascadePiles,
+                                int numOpenPiles, boolean shuffle) {
     this.foundations = new ArrayList<>();
     for (int i = 0; i < CardSuit.values().length; i++) {
       this.foundations.add(new ArrayList<>(Arrays.asList(new EmptySlot())));
