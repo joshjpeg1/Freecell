@@ -78,7 +78,7 @@ public class FreecellController implements IFreecellController<ISlot> {
     while (true) {
       Move nextMove = new Move();
       this.appendMsg("\nPlease enter a new move (e.g.: C1 7 F2).");
-      while (!nextMove.searchingFor().equals(SearchState.FINISHED)) {
+      while (!nextMove.searchingFor().equals(SearchState.FINISHED) && scan.hasNext()) {
         String next = scan.next();
         if (next.equalsIgnoreCase("q")) {
           throw new IllegalStateException("To exit out of grandparent while loop.");

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import cs3500.hw02.slot.CardSlot;
+import cs3500.hw02.slot.CardSuit;
+import cs3500.hw02.slot.CardValue;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -291,5 +294,21 @@ public class UtilsTest {
     List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3));
     List<Integer> rev = new ArrayList<>(Arrays.asList(3, 2, 1));
     assertEquals(rev, Utils.reverse(list));
+  }
+
+  // Tests for the toStringOrNull() method
+  @Test
+  public void toStringOrNullNullValue() {
+    assertEquals("null", Utils.toStringOrNull(null));
+  }
+
+  @Test
+  public void toStringOrNullPrimitiveValue() {
+    assertEquals("1", Utils.toStringOrNull(1));
+  }
+
+  @Test
+  public void toStringOrNullReferenceValue() {
+    assertEquals("A♣", Utils.toStringOrNull(new CardSlot(CardValue.ACE, CardSuit.CLUBS)));
   }
 }

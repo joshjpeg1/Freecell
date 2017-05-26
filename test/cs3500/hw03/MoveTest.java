@@ -8,8 +8,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-import static org.junit.Assert.assertNotEquals;
-
 import static org.junit.Assert.assertTrue;
 
 import static org.junit.Assert.assertFalse;
@@ -325,7 +323,7 @@ public class MoveTest {
 
     m.setPile(PileType.CASCADE, 4, true);
     m.setCardIndex(4);
-    m.setPile(PileType.FOUNDATION, 2, false);
+    m.setPile(PileType.FOUNDATION, 0, false);
     m.tryMove(model);
   }
 
@@ -338,7 +336,6 @@ public class MoveTest {
 
   @Test
   public void tryMoveCascadeToCascade() {
-    
     model.startGame(model.getDeck(), 8, 4, false);
 
     Move m = new Move();
@@ -419,15 +416,15 @@ public class MoveTest {
     assertTrue(m.tryMove(model));
 
     assertEquals("F1:\nF2:\nF3:\nF4: A♠, 2♠\n"
-      + "O1:\nO2:\nO3:\nO4:\n"
-      + "C1: K♠, J♠, 9♠, 7♠, 5♠, 3♠\n"
-      + "C2: K♥, J♥, 9♥, 7♥, 5♥, 3♥, A♥\n"
-      + "C3: K♦, J♦, 9♦, 7♦, 5♦, 3♦, A♦\n"
-      + "C4: K♣, J♣, 9♣, 7♣, 5♣, 3♣, A♣\n"
-      + "C5: Q♠, 10♠, 8♠, 6♠, 4♠\n"
-      + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n"
-      + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
-      + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣", model.getGameState());
+        + "O1:\nO2:\nO3:\nO4:\n"
+        + "C1: K♠, J♠, 9♠, 7♠, 5♠, 3♠\n"
+        + "C2: K♥, J♥, 9♥, 7♥, 5♥, 3♥, A♥\n"
+        + "C3: K♦, J♦, 9♦, 7♦, 5♦, 3♦, A♦\n"
+        + "C4: K♣, J♣, 9♣, 7♣, 5♣, 3♣, A♣\n"
+        + "C5: Q♠, 10♠, 8♠, 6♠, 4♠\n"
+        + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n"
+        + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
+        + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣", model.getGameState());
   }
 
   @Test
@@ -446,15 +443,15 @@ public class MoveTest {
     assertTrue(m.tryMove(model));
 
     assertEquals("F1:\nF2: A♣\nF3:\nF4:\n"
-      + "O1:\nO2:\nO3:\nO4:\n"
-      + "C1: K♠, J♠, 9♠, 7♠, 5♠, 3♠, A♠\n"
-      + "C2: K♥, J♥, 9♥, 7♥, 5♥, 3♥, A♥\n"
-      + "C3: K♦, J♦, 9♦, 7♦, 5♦, 3♦, A♦\n"
-      + "C4: K♣, J♣, 9♣, 7♣, 5♣, 3♣\n"
-      + "C5: Q♠, 10♠, 8♠, 6♠, 4♠, 2♠\n"
-      + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n"
-      + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
-      + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣", model.getGameState());
+        + "O1:\nO2:\nO3:\nO4:\n"
+        + "C1: K♠, J♠, 9♠, 7♠, 5♠, 3♠, A♠\n"
+        + "C2: K♥, J♥, 9♥, 7♥, 5♥, 3♥, A♥\n"
+        + "C3: K♦, J♦, 9♦, 7♦, 5♦, 3♦, A♦\n"
+        + "C4: K♣, J♣, 9♣, 7♣, 5♣, 3♣\n"
+        + "C5: Q♠, 10♠, 8♠, 6♠, 4♠, 2♠\n"
+        + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n"
+        + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
+        + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣", model.getGameState());
   }
 
   @Test
@@ -639,11 +636,11 @@ public class MoveTest {
     }
     assertTrue(model.isGameOver());
     assertEquals("F1: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠\n"
-      + "F2: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
-      + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
-      + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
-      + "O1:\nO2:\nO3:\nO4:\n"
-      + "C1:\nC2:\nC3:\nC4:", model.getGameState());
+        + "F2: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
+        + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
+        + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
+        + "O1:\nO2:\nO3:\nO4:\n"
+        + "C1:\nC2:\nC3:\nC4:", model.getGameState());
   }
 
   @Test
@@ -710,10 +707,10 @@ public class MoveTest {
     m.setPile(PileType.OPEN, 0, false);
     m.tryMove(model);
     assertEquals("F1: A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠\n"
-      + "F2: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
-      + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
-      + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
-      + "O1:\nO2:\nO3:\nO4:\n"
-      + "C1:\nC2:\nC3:\nC4:\nC5:\nC6:\nC7:\nC8:", model.getGameState());
+        + "F2: A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥\n"
+        + "F3: A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦\n"
+        + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
+        + "O1:\nO2:\nO3:\nO4:\n"
+        + "C1:\nC2:\nC3:\nC4:\nC5:\nC6:\nC7:\nC8:", model.getGameState());
   }
 }

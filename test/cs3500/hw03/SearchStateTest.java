@@ -18,18 +18,18 @@ public class SearchStateTest {
   @Test
   public void toStringCardIndex() {
     assertEquals("source card index",
-      SearchState.CARD_INDEX.toString());
+        SearchState.CARD_INDEX.toString());
   }
 
   @Test
   public void toStringDestPile() {
     assertEquals("destination pile type and number",
-      SearchState.DEST_PILE.toString());
+        SearchState.DEST_PILE.toString());
   }
 
   @Test
   public void toStringFinished() {
     assertEquals("",
-      SearchState.FINISHED.toString());
+        SearchState.FINISHED.toString());
   }
 }

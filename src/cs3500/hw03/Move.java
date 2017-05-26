@@ -3,7 +3,7 @@ package cs3500.hw03;
 import cs3500.hw02.FreecellOperations;
 import cs3500.hw02.PileType;
 
-import java.util.Objects;
+import static cs3500.hw02.Utils.toStringOrNull;
 
 /**
  * Represents a move in the game of Freecell. Contains all data needed to perform a move, as
@@ -29,19 +29,11 @@ public class Move {
 
   @Override
   public String toString() {
-    return "(" + toStringOrUndefined(this.source) + ", "
-        + toStringOrUndefined(this.pileNumber) + ", "
-        + toStringOrUndefined(this.cardIndex) + ", "
-        + toStringOrUndefined(this.destination) + ", "
-        + toStringOrUndefined(this.destPileNumber) + ")";
-  }
-
-  private String toStringOrUndefined(Object o) {
-    if (o == null) {
-      return "null";
-    } else {
-      return o.toString();
-    }
+    return "(" + toStringOrNull(this.source) + ", "
+        + toStringOrNull(this.pileNumber) + ", "
+        + toStringOrNull(this.cardIndex) + ", "
+        + toStringOrNull(this.destination) + ", "
+        + toStringOrNull(this.destPileNumber) + ")";
   }
 
   /**
