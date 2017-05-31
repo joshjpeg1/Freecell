@@ -55,8 +55,8 @@ public class FreecellModel implements FreecellOperations<ISlot> {
       throw new IllegalArgumentException("Invalid number of open piles. Given: "
         + numOpenPiles);
     } else if (deck == null || deck.contains(null)
-      || deck.size() != (CardValue.values().length * CardSuit.values().length)
-      || !Utils.noDuplicates(deck)) {
+        || deck.size() != (CardValue.values().length * CardSuit.values().length)
+        || !Utils.noDuplicates(deck)) {
       throw new IllegalArgumentException("Invalid deck.");
     }
     initPilesAndDeck(deck, numCascadePiles, numOpenPiles, shuffle);
@@ -145,8 +145,8 @@ public class FreecellModel implements FreecellOperations<ISlot> {
    * @throws IllegalArgumentException if the move is not possible
    */
   protected void moveExceptionChecking(PileType source, int pileNumber, int cardIndex,
-                                     PileType destination, int destPileNumber)
-    throws IllegalArgumentException {
+                                       PileType destination, int destPileNumber)
+                                       throws IllegalArgumentException {
     if (source == null || destination == null) {
       throw new IllegalArgumentException("Invalid PileType given.");
     }

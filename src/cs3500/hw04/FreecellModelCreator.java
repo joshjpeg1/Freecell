@@ -10,7 +10,7 @@ public class FreecellModelCreator {
   /**
    * Represents the different types of possible models.
    */
-  public enum GameType {SINGLEMOVE, MULTIMOVE}
+  public enum GameType { SINGLEMOVE, MULTIMOVE }
 
   /**
    * Creates a new Freecell model of the given {@code GameType}.

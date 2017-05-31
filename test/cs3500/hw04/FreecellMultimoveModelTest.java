@@ -27,7 +27,7 @@ public class FreecellMultimoveModelTest {
   @Test
   public void getDeckSizeCheck() {
     assertEquals(CardValue.values().length * CardSuit.values().length,
-      fcm.getDeck().size());
+        fcm.getDeck().size());
   }
 
   @Test
@@ -92,7 +92,7 @@ public class FreecellMultimoveModelTest {
         + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
         + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
         + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠",
-      fcm.getGameState());
+        fcm.getGameState());
   }
 
   @Test
@@ -108,7 +108,7 @@ public class FreecellMultimoveModelTest {
         + "C33: 9♣\nC34: 9♦\nC35: 9♥\nC36: 9♠\nC37: 10♣\nC38: 10♦\nC39: 10♥\nC40: 10♠\n"
         + "C41: J♣\nC42: J♦\nC43: J♥\nC44: J♠\nC45: Q♣\nC46: Q♦\nC47: Q♥\nC48: Q♠\n"
         + "C49: K♣\nC50: K♦\nC51: K♥\nC52: K♠",
-      fcm.getGameState());
+        fcm.getGameState());
   }
 
   @Test
@@ -124,7 +124,7 @@ public class FreecellMultimoveModelTest {
         + "C33: 9♣\nC34: 9♦\nC35: 9♥\nC36: 9♠\nC37: 10♣\nC38: 10♦\nC39: 10♥\nC40: 10♠\n"
         + "C41: J♣\nC42: J♦\nC43: J♥\nC44: J♠\nC45: Q♣\nC46: Q♦\nC47: Q♥\nC48: Q♠\n"
         + "C49: K♣\nC50: K♦\nC51: K♥\nC52: K♠\nC53:\nC54:\nC55:\nC56:\nC57:\nC58:\nC59:",
-      fcm.getGameState());
+        fcm.getGameState());
   }
 
   // Tests for the getGameState() method
@@ -147,7 +147,7 @@ public class FreecellMultimoveModelTest {
         + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
         + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
         + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠",
-      fcm.getGameState());
+        fcm.getGameState());
   }
 
   @Test
@@ -173,7 +173,7 @@ public class FreecellMultimoveModelTest {
         + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
         + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
         + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠",
-      fcm.getGameState());
+        fcm.getGameState());
     fcm.move(PileType.OPEN, 2, 0, PileType.OPEN, 3);
     assertEquals("F1:\nF2:\nF3:\nF4:\n"
         + "O1:\nO2:\nO3:\nO4: K♣\n"
@@ -185,7 +185,7 @@ public class FreecellMultimoveModelTest {
         + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
         + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
         + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠",
-      fcm.getGameState());
+        fcm.getGameState());
   }
 
   @Test
@@ -212,7 +212,7 @@ public class FreecellMultimoveModelTest {
         + "C6: Q♥, 10♥, 8♥, 6♥, 4♥\n"
         + "C7: Q♦, 10♦, 8♦, 6♦, 4♦\n"
         + "C8: Q♣, 10♣, 8♣, 6♣, 4♣",
-      fcm.getGameState());
+        fcm.getGameState());
   }
 
   // Tests for the move()
@@ -390,7 +390,7 @@ public class FreecellMultimoveModelTest {
         + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
         + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
         + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠",
-      fcm.getGameState());
+        fcm.getGameState());
   }
 
   @Test
@@ -407,7 +407,7 @@ public class FreecellMultimoveModelTest {
         + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
         + "C7: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
         + "C8: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠",
-      fcm.getGameState());
+        fcm.getGameState());
   }
 
   @Test
@@ -424,7 +424,7 @@ public class FreecellMultimoveModelTest {
         + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥, A♠\n"
         + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
         + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣",
-      fcm.getGameState());
+        fcm.getGameState());
   }
 
   @Test
@@ -441,7 +441,7 @@ public class FreecellMultimoveModelTest {
         + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n"
         + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
         + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣",
-      fcm.getGameState());
+        fcm.getGameState());
   }
 
   @Test
@@ -459,7 +459,7 @@ public class FreecellMultimoveModelTest {
         + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n"
         + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
         + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣",
-      fcm.getGameState());
+        fcm.getGameState());
   }
 
   @Test
@@ -482,7 +482,7 @@ public class FreecellMultimoveModelTest {
         + "C6: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n"
         + "C7: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n"
         + "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣",
-      fcm.getGameState());
+        fcm.getGameState());
   }
 
   @Test
@@ -499,7 +499,7 @@ public class FreecellMultimoveModelTest {
         + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
         + "O1:\nO2:\nO3:\nO4:\n"
         + "C1:\nC2:\nC3:\nC4:",
-      fcm.getGameState());
+        fcm.getGameState());
   }
 
   @Test
@@ -519,7 +519,7 @@ public class FreecellMultimoveModelTest {
         + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
         + "O1:\nO2:\nO3:\nO4:\n"
         + "C1:\nC2:\nC3:\nC4:\nC5:\nC6:\nC7:\nC8:",
-      fcm.getGameState());
+        fcm.getGameState());
   }
 
   @Test
@@ -540,7 +540,7 @@ public class FreecellMultimoveModelTest {
         + "C21:\nC22:\nC23:\nC24:\nC25:\nC26:\nC27:\nC28:\nC29:\nC30:\n"
         + "C31:\nC32:\nC33:\nC34:\nC35:\nC36:\nC37:\nC38:\nC39:\nC40:\n"
         + "C41:\nC42:\nC43:\nC44:\nC45:\nC46:\nC47:\nC48:\nC49:\nC50:\nC51:\nC52:",
-      fcm.getGameState());
+        fcm.getGameState());
   }
 
   @Test
@@ -553,7 +553,7 @@ public class FreecellMultimoveModelTest {
         + "F4: A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣\n"
         + "O1:\nO2:\nO3:\nO4:\n"
         + "C1:\nC2:\nC3:\nC4:\nC5:\nC6:\nC7:\nC8:",
-      fcm.getGameState());
+        fcm.getGameState());
   }
 
   // Tests for the isGameOver() method

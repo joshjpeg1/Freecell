@@ -22,7 +22,6 @@ public class FreecellMultimoveModel extends FreecellModel {
       List<ISlot> cascadePile = this.cascades.get(pileNumber);
       if (source.equals(PileType.CASCADE)) {
         while (cascadePile.size() > cardIndex && !cascadePile.contains(new EmptySlot())) {
-          //build.push(cascadePile.remove(cascadePile.size() - 1));
           build.push(this.removeSafelyPile(cascadePile, cascadePile.size() - 1));
         }
       } else if (source.equals(PileType.FOUNDATION)) {
@@ -66,11 +65,11 @@ public class FreecellMultimoveModel extends FreecellModel {
       throw new IllegalArgumentException("Trying to move " + build.size() + " cards, but maximum "
           + "number currently allowed is " + maxBuildSize + ".");
     }
-    while(build.size() > 1) {
+    while (build.size() > 1) {
       ISlot top = build.pop();
       if (!top.moveTo(build.peek(), destination)) {
-        throw new IllegalArgumentException("Chosen cards do not form a valid cascade build and " +
-          "cannot be moved altogether at once.");
+        throw new IllegalArgumentException("Chosen cards do not form a valid cascade build and "
+            + "cannot be moved altogether at once.");
       }
     }
   }

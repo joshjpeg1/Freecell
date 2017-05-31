@@ -27,8 +27,7 @@ public class Hw04TypeChecks {
   static void checkSignatures() {
     Reader stringReader;
     StringBuffer out;
-    FreecellOperations<?> model = FreecellModelCreator.create
-            (FreecellModelCreator.GameType
+    FreecellOperations<?> model = FreecellModelCreator.create(FreecellModelCreator.GameType
             .MULTIMOVE);
 
     checkNewModel(
