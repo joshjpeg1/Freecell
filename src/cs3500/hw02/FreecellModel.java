@@ -15,10 +15,14 @@ import java.util.List;
  * Represents the model of a game of Freecell.
  */
 public class FreecellModel implements FreecellOperations<ISlot> {
-  private List<List<ISlot>> cascades;
-  private List<ISlot> opens;
-  private List<List<ISlot>> foundations;
-  private HashMap<PileType, List> piles;
+  /**
+   * CHANGELOG:
+   * Changed visibility of al fields from private to protected for use in subclasses.
+   */
+  protected List<List<ISlot>> cascades;
+  protected List<ISlot> opens;
+  protected List<List<ISlot>> foundations;
+  protected HashMap<PileType, List> piles;
 
   /**
    * Constructs a {@code FreecellModel} object.
@@ -46,13 +50,13 @@ public class FreecellModel implements FreecellOperations<ISlot> {
                         boolean shuffle) throws IllegalArgumentException {
     if (numCascadePiles < 4) {
       throw new IllegalArgumentException("Invalid number of cascade piles. Given: "
-          + numCascadePiles);
+        + numCascadePiles);
     } else if (numOpenPiles < 1) {
       throw new IllegalArgumentException("Invalid number of open piles. Given: "
-          + numOpenPiles);
+        + numOpenPiles);
     } else if (deck == null || deck.contains(null)
-        || deck.size() != (CardValue.values().length * CardSuit.values().length)
-        || !Utils.noDuplicates(deck)) {
+      || deck.size() != (CardValue.values().length * CardSuit.values().length)
+      || !Utils.noDuplicates(deck)) {
       throw new IllegalArgumentException("Invalid deck.");
     }
     initPilesAndDeck(deck, numCascadePiles, numOpenPiles, shuffle);
@@ -129,17 +133,20 @@ public class FreecellModel implements FreecellOperations<ISlot> {
    * Helper to the move method. Checks for any errors in the given arguments or in the desired moves
    * and, if found, throws an argument, stopping the move method from proceeding.
    *
-   * @param source         the type of the source pile see @link{PileType}
+   * <p>CHANGELOG:
+   * Changed visibility of the method from private to protected for use in subclasses.
+   *
+   * @param source         the type of the source pile {@link PileType}
    * @param pileNumber     the pile number of the given type, starting at 0
    * @param cardIndex      the index of the card to be moved from the source
    *                       pile, starting at 0
-   * @param destination    the type of the destination pile (see
+   * @param destination    the type of the destination pile
    * @param destPileNumber the pile number of the given type, starting at 0
    * @throws IllegalArgumentException if the move is not possible
    */
-  private void moveExceptionChecking(PileType source, int pileNumber, int cardIndex,
+  protected void moveExceptionChecking(PileType source, int pileNumber, int cardIndex,
                                      PileType destination, int destPileNumber)
-                                     throws IllegalArgumentException {
+    throws IllegalArgumentException {
     if (source == null || destination == null) {
       throw new IllegalArgumentException("Invalid PileType given.");
     }
@@ -149,8 +156,10 @@ public class FreecellModel implements FreecellOperations<ISlot> {
       if (pileNumber < 0 || pileNumber >= pile.size()) {
         throw new IllegalArgumentException("Pile does not exist at given source index.");
       }
-      if (cardIndex != pile.get(pileNumber).size() - 1) {
+      if (source.equals(PileType.FOUNDATION) && (cardIndex != pile.get(pileNumber).size() - 1)) {
         throw new IllegalArgumentException("Invalid move, must move last card in pile.");
+      } else if (source.equals(PileType.CASCADE)) {
+        validateMoveFromCascade(pileNumber, cardIndex, destination);
       }
       from = pile.get(pileNumber).get(cardIndex);
     } else if (source.equals(PileType.OPEN)) {
@@ -185,15 +194,39 @@ public class FreecellModel implements FreecellOperations<ISlot> {
   }
 
   /**
+   * Helper to the moveExceptionChecking method. Checks if the given parameters allow for a valid
+   * move, if from a cascade pile.
+   *
+   * <p>CHANGELOG:
+   * Added this new helper method for exception checking in subclasses, without the need of having
+   * to rewrite the moveExceptionChecking method again.
+   *
+   * @param pileNumber     the pile number of the given type, starting at 0
+   * @param cardIndex      the index of the card to be moved from the source
+   *                       pile, starting at 0
+   * @param destination    the type of the destination pile
+   * @throws IllegalArgumentException if the move is not possible
+   */
+  protected void validateMoveFromCascade(int pileNumber, int cardIndex,
+                                         PileType destination) throws IllegalArgumentException {
+    if (cardIndex != this.cascades.get(pileNumber).size() - 1) {
+      throw new IllegalArgumentException("Invalid move, must move last card in pile.");
+    }
+  }
+
+  /**
    * Helper to the move method. Removes a slot (card or empty) safely from a pile, by adding a new
    * empty in case the list is empty.
+   *
+   * <p>CHANGELOG:
+   * Changed visibility of the method from private to protected for use in subclasses.
    *
    * @param pile           a singular pile
    * @param index          the index to remove the slot from the pile
    * @return the removed {@code ISlot}
    * @throws IllegalArgumentException if given List is or contains null
    */
-  private ISlot removeSafelyPile(List<ISlot> pile, int index) throws IllegalArgumentException {
+  protected ISlot removeSafelyPile(List<ISlot> pile, int index) throws IllegalArgumentException {
     if (pile == null || pile.contains(null)) {
       throw new IllegalArgumentException("The given pile cannot be used.");
     }
@@ -208,11 +241,14 @@ public class FreecellModel implements FreecellOperations<ISlot> {
    * Helper to the move method. Adds a slot (card or empty) safely to a pile, by removing any
    * empties the given pile had.
    *
+   * <p>CHANGELOG:
+   * Changed visibility of the method from private to protected for use in subclasses.
+   *
    * @param pile           a singular pile
    * @param slot           the {@code ISlot} to add to the pile
    * @throws IllegalArgumentException if given List is/contains null, or if the given ISlot is null
    */
-  private void addSafelyPile(List<ISlot> pile, ISlot slot) throws IllegalArgumentException {
+  protected void addSafelyPile(List<ISlot> pile, ISlot slot) throws IllegalArgumentException {
     if (pile == null || pile.contains(null)) {
       throw new IllegalArgumentException("The given pile cannot be used.");
     } else if (slot == null) {
@@ -242,7 +278,7 @@ public class FreecellModel implements FreecellOperations<ISlot> {
     String str = "";
     for (int i = 0; i < this.foundations.size(); i++) {
       str += "F" + (i + 1) + ":" +  Utils.listToString(Utils.filterList(this.foundations.get(i),
-          new ArrayList<>(Arrays.asList(new EmptySlot())))) + "\n";
+        new ArrayList<>(Arrays.asList(new EmptySlot())))) + "\n";
     }
     for (int i = 0; i < this.opens.size(); i++) {
       String card = this.opens.get(i).toString();
@@ -253,7 +289,7 @@ public class FreecellModel implements FreecellOperations<ISlot> {
     }
     for (int i = 0; i < this.cascades.size(); i++) {
       str += "C" + (i + 1) + ":" + Utils.listToString(Utils.filterList(this.cascades.get(i),
-          new ArrayList<>(Arrays.asList(new EmptySlot()))));
+        new ArrayList<>(Arrays.asList(new EmptySlot()))));
       if (i < this.cascades.size() - 1) {
         str += "\n";
       }

@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
  * Tests for {@link FreecellModelCreator}.
  */
 public class FreecellModelCreatorTest {
+  // Tests for the create() method
   @Test(expected = IllegalArgumentException.class)
   public void createNullType() {
     FreecellModelCreator.create(null);
