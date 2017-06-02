@@ -1,5 +1,6 @@
 package cs3500.hw04;
 
+import cs3500.hw02.FreecellOperations;
 import cs3500.hw02.PileType;
 import cs3500.hw02.Utils;
 
@@ -9,7 +10,8 @@ import static org.junit.Assert.assertEquals;
 
 /** Tests for {@link FreecellMultimoveModel}. */
 public class FreecellMultimoveModelTest {
-  FreecellMultimoveModel fcm = new FreecellMultimoveModel();
+  FreecellOperations fcm = new FreecellMultimoveModel();
+
   // Tests for the move()
   @Test(expected = IllegalArgumentException.class)
   public void moveNullSource() {

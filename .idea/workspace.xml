@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3efa8d28-e143-4a8c-828e-20e69ae0bee5" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assignment 4.zip" afterPath="$PROJECT_DIR$/Assignment 4.zip" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/cs3500/hw03/FreecellControllerTest.java" afterPath="$PROJECT_DIR$/test/cs3500/hw03/FreecellControllerTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/cs3500/hw04/FreecellMultimoveModelTest.java" afterPath="$PROJECT_DIR$/test/cs3500/hw04/FreecellMultimoveModelTest.java" />
     </list>
@@ -54,9 +55,11 @@
           <file leaf-file-name="FreecellMultimoveModelTest.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/test/cs3500/hw04/FreecellMultimoveModelTest.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="54">
-                  <caret line="3" column="25" lean-forward="false" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
-                  <folding />
+                <state relative-caret-position="216">
+                  <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -78,8 +81,8 @@
           <file leaf-file-name="FreecellModelTest.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/test/cs3500/hw02/FreecellModelTest.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="148">
-                  <caret line="504" column="58" lean-forward="false" selection-start-line="504" selection-start-column="58" selection-end-line="504" selection-end-column="58" />
+                <state relative-caret-position="378">
+                  <caret line="40" column="0" lean-forward="true" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -88,8 +91,8 @@
           <file leaf-file-name="FreecellControllerTest.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/test/cs3500/hw03/FreecellControllerTest.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="50544">
-                  <caret line="2831" column="68" lean-forward="false" selection-start-line="2831" selection-start-column="68" selection-end-line="2831" selection-end-column="68" />
+                <state relative-caret-position="255">
+                  <caret line="1932" column="0" lean-forward="false" selection-start-line="1932" selection-start-column="0" selection-end-line="1932" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -187,8 +190,8 @@
         <option value="$PROJECT_DIR$/src/cs3500/hw04/jijj.java" />
         <option value="$PROJECT_DIR$/test/cs3500/hw02/FreecellModelTest.java" />
         <option value="$PROJECT_DIR$/src/cs3500/hw03/FreecellController.java" />
-        <option value="$PROJECT_DIR$/test/cs3500/hw03/FreecellControllerTest.java" />
         <option value="$PROJECT_DIR$/test/cs3500/hw04/FreecellMultimoveModelTest.java" />
+        <option value="$PROJECT_DIR$/test/cs3500/hw03/FreecellControllerTest.java" />
       </list>
     </option>
   </component>
@@ -742,9 +745,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="JUnit_Testing - 2017.06.02 at 18h 59m 30s.xml">
-      <configuration name="JUnit Testing" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="JUnit_Testing - 2017.06.02 at 19h 04m 21s.xml">
       <configuration name="JUnit Testing" configurationId="JUnit" />
     </history-entry>
@@ -770,6 +770,9 @@
       <configuration name="JUnit Testing" configurationId="JUnit" />
     </history-entry>
     <history-entry file="JUnit_Testing - 2017.06.02 at 19h 15m 17s.xml">
+      <configuration name="JUnit Testing" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="JUnit_Testing - 2017.06.02 at 19h 22m 21s.xml">
       <configuration name="JUnit Testing" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -1188,14 +1191,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/cs3500/hw02/FreecellModelTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="504" column="58" lean-forward="false" selection-start-line="504" selection-start-column="58" selection-end-line="504" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/cs3500/hw04/FreecellModelCreator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -1204,18 +1199,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/cs3500/hw03/FreecellControllerTest.java">
+    <entry file="file://$PROJECT_DIR$/test/cs3500/hw04/FreecellMultimoveModelTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50544">
-          <caret line="2831" column="68" lean-forward="false" selection-start-line="2831" selection-start-column="68" selection-end-line="2831" selection-end-column="68" />
+        <state relative-caret-position="216">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/cs3500/hw02/FreecellModelTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="40" column="0" lean-forward="true" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/cs3500/hw04/FreecellMultimoveModelTest.java">
+    <entry file="file://$PROJECT_DIR$/test/cs3500/hw03/FreecellControllerTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="25" lean-forward="false" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
+        <state relative-caret-position="255">
+          <caret line="1932" column="0" lean-forward="false" selection-start-line="1932" selection-start-column="0" selection-end-line="1932" selection-end-column="0" />
           <folding />
         </state>
       </provider>
